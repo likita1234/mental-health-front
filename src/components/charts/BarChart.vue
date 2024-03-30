@@ -30,6 +30,11 @@ const props = defineProps({
 const barChartOptions = computed(() => {
     return {
         ...props.chartOptions,
+        layout: {
+            padding: {
+                top: 25,
+            }
+        },
         plugins: {
             legend: {
                 display: false
