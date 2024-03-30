@@ -6,10 +6,10 @@
                     <span class="text-lg text-900 font-bold">{{ headerContent }}</span>
                 </div>
             </template>
-            <Column field="title" header="METRIC TITLE" />
+            <Column field="title" header="TITLE" />
+            <Column field="respondentsCount" header="RESPONDENTS" />
             <Column field="weightedMean" header="WEIGHTED MEAN" />
             <Column field="standardDeviation" header="STANDARD DEVIATION" />
-            <template #footer> <span class="font-italic">{{ footerContent }}</span> </template>
         </DataTable>
     </div>
 </template>
@@ -37,11 +37,6 @@ const tableData = computed(() => {
 // Returns the number of respondents 
 const headerContent = computed(() => {
     return tableData.value?.length ? 'Comparative Analysis between ' + generateStringFromTitles(tableData.value) : null
-})
-const footerContent = computed(() => {
-    return tableData.value?.length ?
-        'In total there are ' + generateRespondentsStringFromData(tableData.value)
-        : null
 })
 
 function generateStringFromTitles(data) {
