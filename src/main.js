@@ -1,6 +1,5 @@
 import './assets/main.css'
-
-import { createApp } from 'vue'
+import { createApp, reactive } from 'vue'
 import { createPinia } from 'pinia'
 import PrimeVue from 'primevue/config'
 
@@ -102,6 +101,7 @@ import 'primeicons/primeicons.css'
 
 // My custom components
 import FormInputText from './components/form-inputs/FormInputText.vue'
+import BaseDropdown from './components/form-inputs/BaseDropdown.vue'
 
 const app = createApp(AppWrapper)
 
@@ -208,6 +208,7 @@ app.component('TriStateCheckbox', TriStateCheckbox)
 
 // My Custom Components goes here
 app.component('FormInputText', FormInputText)
+app.component('BaseDropdown', BaseDropdown)
 
 // Custom Event configuration
 app.config.globalProperties.$showToast = function ({ severity, summary, message }) {
@@ -228,5 +229,10 @@ EventBus.on('show-toast', (res) => {
     message: res.message
   })
 })
+
+// custom global states
+
+app.config.globalProperties.appState = reactive({ lang: 'english' })
+app.provide('appState', app.config.globalProperties.appState)
 
 app.mount('#app')
