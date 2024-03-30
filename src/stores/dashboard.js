@@ -7,7 +7,9 @@ import DashboardService from '@/services/dashboard-service'
 export const useDashboardStore = defineStore('dashboard', () => {
   // States
   const dashboards = ref([])
+  const totalDashboards = ref(null)
   // =========>Advanced filterings
+  const params = ref(null)
   const page = ref(1)
   const limit = ref(10)
   const sort = ref('createdDate')
@@ -21,7 +23,8 @@ export const useDashboardStore = defineStore('dashboard', () => {
     // Check if there are any params
     // At the moment it supports only type
 
-    const response = await DashboardService.getAllQuestions({
+    const response = await DashboardService.fetchDashboards({
+      params: params.value,
       page: page.value,
       limit: limit.value,
       sort: sort.value,
@@ -44,12 +47,14 @@ export const useDashboardStore = defineStore('dashboard', () => {
   // Returns
   return {
     // Filterings
+    params,
     page,
     limit,
     sort,
     fields,
     // States
     dashboards,
+    totalDashboards,
 
     // Getters
 
