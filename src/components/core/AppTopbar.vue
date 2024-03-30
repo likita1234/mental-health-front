@@ -71,7 +71,7 @@ const onTopbarSubItemClick = (event) => {
 
                 <ul class="layout-topbar-actions">
                     <li class="topbar-item settings" :class="{ 'active-topmenuitem': activeTopbarItem === 'settings' }">
-                        <BaseDropdown v-model="selectedLanguage" :options="languages" optionLabel="name" optionValue="value"
+                        <BaseDropdown v-model="selectedLanguage" :options="languages" optionValue="value"
                             placeholder="Select a language" :showClear="false" />
                     </li>
 
