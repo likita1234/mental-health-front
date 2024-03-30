@@ -30,7 +30,7 @@ const allMetricsLoaded = computed(() => {
 // Watches over allMetricsLoaded so that it can trigger what to do next after all data is loaded
 watch(() => allMetricsLoaded.value, () => {
     if (allMetricsLoaded.value) {
-        comparativeTableData.value = getComparativeAnalysisTableData(comparativeMetrics.value)
+        comparativeTableData.value = getComparativeAnalysisDashboardTableData(comparativeMetrics.value)
     }
 })
 
