@@ -72,26 +72,23 @@ const onPage = async (event) => {
                         </div>
                     </template>
                 </Column>
-                <Column field="description[appState.lang]" header="DESCRIPTION" style="width: 25%">
-
+                <Column field="description[appState.lang]" header="DESCRIPTION" style="width: 22%">
                     <template #body="slotProps">
                         <template v-if="slotProps.data.description[appState.lang]">
                             {{ slotProps.data.description[appState.lang] }}
                         </template>
-
                         <template v-else>
                             No Description
                         </template>
                     </template>
                 </Column>
-                <Column field="type" header="TYPE" style="width: 10%">
+                <Column field="type" header="TYPE" style="width: 8%">
 
                     <template #body="{ data }">
                         <DataTypeTag :entity="'form'" :type="data.type" />
                     </template>
                 </Column>
                 <Column field="sectionsCount" header="SECTIONS" style="width: 10%;">
-
                     <template #body="slotProps">
                         <template v-if="slotProps.data.sectionsCount">
                             <div :class="stockClass(slotProps.data.sectionsCount)">
@@ -109,7 +106,7 @@ const onPage = async (event) => {
             </template>
 
             <template #actions>
-                <Column header="ACTIONS" :exportable="false" style="width:15%">
+                <Column header="ACTIONS" :exportable="false" style="width:18%">
                     <template #body="slotProps">
                         <Button icon="pi pi-eye" rounded class="mr-2" @click="viewDetails(slotProps.data._id)" />
                         <Button icon="pi pi-pencil" rounded severity="secondary" class="mr-2"
