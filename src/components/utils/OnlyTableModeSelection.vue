@@ -25,7 +25,7 @@ onMounted(() => {
 
 <template>
     <div>
-        <BaseDropdown v-model="tableModeSelected" :options="modes" optionValue="value" placeholder="Table Mode Only"
-            :showClear="false" />
+        <BaseDropdown v-model="tableModeSelected" :options="modes" optionValue="value" label="Data Visualization Mode"
+            placeholder="Select an option" :showClear="false" />
     </div>
 </template>
