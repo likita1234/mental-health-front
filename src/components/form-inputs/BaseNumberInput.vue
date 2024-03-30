@@ -1,13 +1,13 @@
 <template>
     <div class="flex flex-column gap-2">
-        <label v-if="label"  :for="label">{{ label }}</label>
-        <InputNumber v-model="selectedValue" :useGrouping="useGrouping" :placeholder="placeholder" :disabled="disabled"
-            @input="updateSelectedValue($event.value)" :class="{ 'p-invalid': errorMessage }" aria-describedby="text-error"/>
+        <label v-if="label" :for="label">{{ label }}</label>
+        <InputNumber v-model="inputVal" :useGrouping="useGrouping" :placeholder="placeholder" :disabled="disabled"
+            :class="{ 'p-invalid': errorMessage }" aria-describedby="text-error" />
         <small class="p-error" id="text-error">{{ errorMessage || '&nbsp;' }}</small>
     </div>
 </template>
 <script setup>
-import { ref, watch, computed } from 'vue';
+import { ref, watch, onMounted } from 'vue';
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps({
     modelValue: Number,
@@ -27,19 +27,16 @@ const props = defineProps({
 });
 
 // state
-const selectedValue = ref(null);
+const inputVal = ref(null);
 
-//computed properties
-const inputValue = computed(() => {
-    return props.modelValue;
-});
 
-// watches for modelValue changes
-watch(inputValue, () => {
-    selectedValue.value = inputValue.value;
-});
+onMounted(() => {
+    if (props.modelValue) {
+        inputVal.value = props.modelValue
+    }
+})
 
-const updateSelectedValue = (event) => {
-    emit('update:modelValue', event);
-};
+watch(inputVal, () => {
+    emit('update:modelValue', inputVal.value);
+})
 </script>
