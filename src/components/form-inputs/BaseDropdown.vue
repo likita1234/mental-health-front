@@ -18,7 +18,6 @@ const props = defineProps({
         default: 'id',
     },
     errorMessage: String,
-
     disabled: {
         type: Boolean,
         default: false,
@@ -69,14 +68,12 @@ const updateSelectedOption = () => {
 </script>
 
 <template>
-    <div>
-        <div class="flex flex-column">
-            <label v-if="fieldLabel" class="mb-2" :class="{ 'font-bold': bold }" :for="fieldLabel">{{ fieldLabel }}:</label>
-            <Dropdown :id="fieldLabel" v-model="selectedOption" :options="fieldOptions" :optionLabel="optionLabel"
-                :optionValue="optionValue" :placeholder="placeholder" class="mb-1" :class="{ 'p-invalid': errorMessage }"
-                :filter="filter" :showClear="showClear" @change="emit('update:modelValue', selectedOption)"
-                :disabled="disabled" />
-            <small class="p-invalid" v-if="errorMessage"> {{ errorMessage }}</small>
-        </div>
+    <div class="flex flex-column">
+        <label v-if="fieldLabel" class="mb-2" :class="{ 'font-bold': bold }" :for="fieldLabel">{{ fieldLabel }}</label>
+        <Dropdown :id="fieldLabel" v-model="selectedOption" :options="fieldOptions" :optionLabel="optionLabel"
+            :optionValue="optionValue" :placeholder="placeholder" class="w-full md:w-14rem mb-1"
+            :class="{ 'p-invalid': errorMessage }" :filter="filter" :showClear="showClear"
+            @change="emit('update:modelValue', selectedOption)" :disabled="disabled" />
+        <small class="p-invalid" v-if="errorMessage"> {{ errorMessage }}</small>
     </div>
 </template>
