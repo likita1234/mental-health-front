@@ -3,6 +3,7 @@ import { onMounted, ref, computed, inject } from 'vue';
 
 import { formStore } from '@/stores';
 import { storeToRefs } from 'pinia';
+import { showToast } from '@/utils/show-toast';
 
 // props
 const props = defineProps({
@@ -54,12 +55,15 @@ const hasNextStep = computed(() => {
 
 // Navigate the steps
 const toggleStep = (stepFlag) => {
-    stepFlag ? activeStep.value++ : activeStep.value--
-    // Scroll window
-    window.scrollTo({
-        top: 0,
-        behavior: 'smooth'
-    });
+    // First check if you have fulfilled all required questions
+    if (checkRequiredAnswers()) {
+        stepFlag ? activeStep.value++ : activeStep.value--
+        // Scroll window
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
 }
 
 onMounted(() => {
@@ -77,6 +81,18 @@ const loadAssessmentDetails = async () => {
     await formStore.fetchFormDetails(formId)
 }
 
+const checkRequiredAnswers = () => {
+    // filter out all required questions with no answer 
+    const unansweredQuestions = activeSection.value?.questions?.filter(question => question.required && question.answer == null)
+
+    // If there is unanswered questions with required fields then
+    if (unansweredQuestions.length) {
+        showToast('info', 'Invalid Submission', 'Mandatory fields required')
+    } else {
+        return true
+    }
+
+}
 
 </script>
 <template>
