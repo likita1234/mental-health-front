@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -29,25 +30,21 @@ const router = createRouter({
   ]
 })
 
-// ============> Check if user is already logged in or has a valid token
-const checkAuthentication = () => {
-  return true
-}
-
 // ===========> Route guards
-const routeBeforeEnter = (to, from, next) => {
+router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore()
   // 1) Check if the user has a valid token or not
-  const isUserAuthenticated = checkAuthentication()
-
+  const isUserAuthenticated = authStore.isLoggedIn
   // If user is logged in and has a valid token then proceed user to go where he/she wants
   // If user wants to register then its okay to let them go there
-  if (isUserAuthenticated || to.name === 'register') {
-    next()
+  if (isUserAuthenticated && to.name === 'login') {
+    next('/')
+  } else if (!isUserAuthenticated) {
+    if (to.name !== 'login') {
+      next('/login')
+    }
   }
-  // If user doesnt have a valid token then redirect user to log in page
-  else {
-    next('/login')
-  }
-}
+  next()
+})
 
 export default router
