@@ -1,10 +1,12 @@
 <template>
-    <div>
-        <!-- <h4 class="text-center">{{ title }}</h4>
-        <p class="text-center">{{ description }}</p> -->
+    <!-- Overall Dashboard -->
+    <div class="card">
+        <h4 class="text-center">{{ title }}</h4>
+        <p class="text-center">{{ description }}</p>
+        <Divider />
         <div v-if="metrics && metrics.length > 0" class="grid">
             <metric-data v-for="metric in metrics" :metricId="metric.metricId" :key="metric.metricId"
-                class="col-12 md:col-6 xl:col-4" />
+                class="col-12 md:col-6 xl:col-3" />
         </div>
     </div>
 </template>

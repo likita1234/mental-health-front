@@ -1,7 +1,8 @@
 <template>
-    <div class="card">
+    <div class="p-card">
         <div id="card-header" class="order-tabs">
             <h5 class="text-center">{{ title }}</h5>
+            <Divider />
         </div>
         <div class="card-body">
             <base-chart :type="type" :groupBy="defaultGroupings" :jsonData="jsonData" />
