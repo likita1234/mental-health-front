@@ -1,5 +1,6 @@
 <template>
-    <DataTable :value="tableData">
+    <!-- scrollHeight="270px" -->
+    <DataTable :value="tableData" scrollable>
         <Column field="label" header="GROUP BY" />
         <Column field="count" header="RESPONDENTS" />
         <Column field="percent" header="% VALUE" />
