@@ -37,7 +37,7 @@ const questions = computed(() => {
             <h4>{{ title }}</h4>
             <!-- Section Description Here -->
             <p v-if="description">{{ description }}</p>
-            <Divider/>
+            <Divider />
         </div>
         <div class="questions-container">
             <!-- Section Questions Here -->
@@ -49,10 +49,6 @@ const questions = computed(() => {
 <style lang="scss">
 .section-container {
     height: 50vh;
-
-    .questions-container {
-        height: 40vh;
-        overflow-y: auto;
-    }
+    overflow-y: auto;
 }
 </style>
