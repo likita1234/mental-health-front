@@ -43,6 +43,11 @@ export const useDashboardStore = defineStore('dashboard', () => {
 
   // Returns
   return {
+    // Filterings
+    page,
+    limit,
+    sort,
+    fields,
     // States
     dashboards,
 
