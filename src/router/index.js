@@ -37,7 +37,7 @@ const router = createRouter({
               }
             },
             {
-              path: '/:id',
+              path: ':id',
               name: 'form-details',
               props: true,
               component: () => import('../components/assessment-form/CustomAssessment.vue'),
