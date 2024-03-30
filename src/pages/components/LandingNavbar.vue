@@ -35,8 +35,8 @@ const authActive = computed(() => {
         </div>
         <div class="icon" @mouseover="hover.auth = true" @mouseleave="hover.auth = false" v-tooltip="'Login'">
             <router-link :to="{ name: 'login' }">
-                <font-awesome-icon class="cursor-pointer" :class="{ 'text-white': authActive }" icon="right-to-bracket"
-                    size="3x" :bounce="hover.auth" />
+                <font-awesome-icon class="cursor-pointer" :class="{ 'text-white': hover.auth || authActive }"
+                    icon="right-to-bracket" size="3x" :bounce="hover.auth" />
             </router-link>
         </div>
         <!-- For Contacts -->
