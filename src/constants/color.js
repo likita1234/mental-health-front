@@ -23,19 +23,17 @@ export const Color = Object.freeze({
   Gray: '#BFBFBF' // Lighter version of Gray
 })
 
-export const generateRandomColors = (n = null) => {
-  const colorValues = Object.values(Color)
-  // If n has value then return array of colors
-  if (n) {
-    const randomColors = []
-    for (let i = 0; i < n; i++) {
-      const colorIndex = i % colorValues.length
-      randomColors.push(colorValues[i])
-    }
-    return randomColors
-  } else {
-    // Else just return a random color
-    const randomIndex = Math.floor(Math.random() * colorValues.length)
-    return colorValues[randomIndex]
+const colorValues = Object.values(Color)
+
+export const generateRandomColor = (index) => {
+  return colorValues[index]
+}
+
+export const generateRandomColors = (n) => {
+  const randomColors = []
+  for (let i = 0; i < n; i++) {
+    const colorIndex = i % colorValues.length
+    randomColors.push(colorValues[colorIndex])
   }
+  return randomColors
 }
