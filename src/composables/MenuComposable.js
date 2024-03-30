@@ -1,8 +1,21 @@
-import { useAuthStore } from '@/stores/auth'
+import { UserRole } from '@/contants/user-role'
+import { authStore } from '@/stores'
+import { computed } from 'vue'
 
 export function useMenu() {
-  const authStore = useAuthStore
+  // Computed property to check logged user role
+  const loggedUserRole = computed(() => {
+    return authStore.userRole
+  })
 
+  //   checks if current logged user have the allowed role of not
+  const isAccessible = (allowedRoles) => {
+    console.log('Allowed roles', allowedRoles)
+    console.log('Logged user role', loggedUserRole.value)
+    return allowedRoles?.includes(loggedUserRole.value)
+  }
+
+  // list of available menu items for the app
   const menuItems = [
     {
       icon: 'pi pi-fw pi-home',
@@ -34,12 +47,11 @@ export function useMenu() {
               visible: true //check user role
             }
           ],
-          visible: true
+          visible: isAccessible([UserRole.ADMIN, UserRole.SUPERADMIN])
         }
       ]
     }
   ]
-
   return {
     menuItems
   }
