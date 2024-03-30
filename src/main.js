@@ -108,6 +108,8 @@ import BaseDropdown from './components/form-inputs/BaseDropdown.vue'
 import BaseEditor from './components/form-inputs/BaseEditor.vue'
 import BaseNumberInput from './components/form-inputs/BaseNumberInput.vue'
 import BaseSelectionInput from './components/form-inputs/BaseSelectionInput.vue'
+
+import CustomTable from './components/utils/CustomTable.vue'
 import FormDialog from './components/utils/FormDialog.vue'
 
 const app = createApp(AppWrapper)
@@ -222,6 +224,8 @@ app.component('BaseDropdown', BaseDropdown)
 app.component('BaseEditor', BaseEditor)
 app.component('BaseNumberInput', BaseNumberInput)
 app.component('BaseSelectionInput', BaseSelectionInput)
+
+app.component('CustomTable', CustomTable)
 app.component('FormDialog', FormDialog)
 
 // Custom Event configuration
