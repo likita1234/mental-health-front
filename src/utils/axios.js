@@ -1,6 +1,6 @@
 import axios from 'axios'
 // import router from '@/router'
-import { authStore } from '@/stores'
+import { useAuthStore } from '@/stores/auth'
 import { showToast } from './show-toast'
 
 const authApi = axios.create({
@@ -11,6 +11,7 @@ authApi.defaults.headers.common['Content-Type'] = 'application/json'
 
 // ===============> Request interceptors
 authApi.interceptors.request.use((config) => {
+  const authStore = useAuthStore()
   config.headers.Authorization = `Bearer ${authStore.token}`
   return config
 })
