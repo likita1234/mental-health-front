@@ -111,6 +111,7 @@ import BaseSelectionInput from './components/form-inputs/BaseSelectionInput.vue'
 
 import CustomTable from './components/utils/CustomTable.vue'
 import FormDialog from './components/utils/FormDialog.vue'
+import DataTypeTag from './components/global/DataTypeTag.vue'
 
 const app = createApp(AppWrapper)
 
@@ -227,6 +228,7 @@ app.component('BaseSelectionInput', BaseSelectionInput)
 
 app.component('CustomTable', CustomTable)
 app.component('FormDialog', FormDialog)
+app.component('DataTypeTag', DataTypeTag)
 
 // Custom Event configuration
 app.config.globalProperties.$showToast = function ({ severity, summary, message }) {
