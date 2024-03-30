@@ -1,7 +1,7 @@
 <template>
     <div class="p-card my-2">
-        <div class="text-center">
-            <h5>{{ title }}</h5>
+        <div>
+            <h5 class="text-center">{{ title }}</h5>
             <Divider />
         </div>
         <div class="card-body">
