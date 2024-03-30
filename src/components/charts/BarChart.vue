@@ -5,6 +5,8 @@
 <script setup>
 import { computed } from 'vue';
 import { Bar } from 'vue-chartjs'
+
+import { ChartType } from '@/constants';
 import { generateRandomColor } from '@/constants/color';
 
 const props = defineProps({
@@ -17,6 +19,10 @@ const props = defineProps({
     },
     groupBy: {
         type: Array
+    },
+    type: {
+        type: String,
+        required: true
     }
 })
 
@@ -24,38 +30,49 @@ const props = defineProps({
 const barChartOptions = computed(() => {
     return {
         ...props.chartOptions,
-        scales: {
-            xAxes: [{
-                gridLines: {
-                    display: false, 
-                },
-                ticks: {
-                    fontColor: 'black', 
-                },
-            }],
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true,
-                    fontColor: 'black', 
-                },
-            }]
-        },
+        plugins: {
+            legend: {
+                display: false
+            },
+            datalabels: {
+                color: 'black',
+                anchor: 'end',
+                align: 'top',
+                formatter: function (value, context) {
+                    return value + "%";
+                }
+            },
+        }
     }
 })
 
 const chartData = computed(() => {
     const metricData = props.jsonData
-
-    return {
-        // metricData?.map(dataObj => dataObj.label)
-        labels: props.groupBy,
-        datasets: metricData?.map((dataObj, index) => {
-            return {
-                label: dataObj.label,
-                backgroundColor: generateRandomColor(index),
-                data: dataObj.count?.length ? dataObj.count : [dataObj.count]
-            }
-        })
+    const normalBarType = props.type === ChartType.BAR
+    // For question types returns
+    if (normalBarType) {
+        return {
+            labels: metricData?.map(metricObj => metricObj.label),
+            datasets: [{
+                backgroundColor: metricData?.map((dataObj, index) => {
+                    return generateRandomColor(index)
+                }),
+                data: metricData?.map(dataObj => {
+                    return dataObj.percent
+                })
+            }]
+        }
+    } else {
+        return {
+            labels: props.groupBy,
+            datasets: metricData?.map((dataObj, index) => {
+                return {
+                    label: dataObj.label,
+                    backgroundColor: generateRandomColor(index),
+                    data: dataObj.percent
+                }
+            })
+        }
     }
 })
 </script>
