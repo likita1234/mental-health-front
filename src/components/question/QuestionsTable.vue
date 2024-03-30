@@ -1,5 +1,6 @@
 <script setup>
 import QuestionForm from './QuestionForm.vue';
+import QuestionDetails from './QuestionDetails.vue'
 
 import { ref, onMounted, inject } from 'vue'
 import { questionStore } from '@/stores'
@@ -15,6 +16,8 @@ const { allQuestions, totalQuestions, limit, page } = storeToRefs(questionStore)
 // Component states
 const loading = ref(false)
 const formDialog = ref(false)
+const detailsDialog = ref(false)
+const questionDetails = ref(null)
 
 const appState = inject('appState')
 
@@ -30,9 +33,14 @@ const loadQuestions = async () => {
     }, Math.random() * 1000 + 250);
 }
 
-const editQuestion = async (questionId) => {
+const viewDetails = async (id) => {
+    questionDetails.value = await questionStore.fetchQuestionDetails(id)
+    detailsDialog.value = true
+}
+
+const editQuestion = async (id) => {
     // Fetch question details first
-    const questionDetails = await questionStore.fetchQuestionDetails(questionId)
+    const questionDetails = await questionStore.fetchQuestionDetails(id)
     // Then setup edit question
     if (questionDetails) {
         // Load question details on question state on store
@@ -42,9 +50,9 @@ const editQuestion = async (questionId) => {
     }
 }
 
-const confirmDelete = (questionId) => {
+const confirmDelete = (id) => {
     const message = 'Are you sure you want to delete this question?'
-    confirmRequest(questionId, questionStore.deleteQuestion, message)
+    confirmRequest(id, questionStore.deleteQuestion, message)
 }
 
 const onPage = async (event) => {
@@ -102,7 +110,10 @@ const onPage = async (event) => {
                 <Column header="ACTIONS" :exportable="false" style="width:15%">
                     <template #body="slotProps">
                         <!-- <Button icon="pi pi-eye" rounded severity="info" class="mr-2" /> -->
-                        <Button icon="pi pi-pencil" rounded class="mr-2" @click="editQuestion(slotProps.data._id)" />
+                        <Button icon="pi pi-eye" rounded severity="primary" class="mr-2"
+                            @click="viewDetails(slotProps.data._id)" />
+                        <Button icon="pi pi-pencil" rounded severity="secondary" class="mr-2"
+                            @click="editQuestion(slotProps.data._id)" />
                         <Button icon="pi pi-trash" rounded severity="danger"
                             @click="confirmDelete(slotProps.data._id)" />
                     </template>
@@ -112,5 +123,8 @@ const onPage = async (event) => {
 
         <!-- Question Form -->
         <QuestionForm v-if="formDialog" editMode @hide-dialog="formDialog = false" />
+
+        <!-- Question Details Dialog -->
+        <QuestionDetails v-if="detailsDialog" :question="questionDetails" @hide-dialog="detailsDialog = false" />
     </div>
 </template>
