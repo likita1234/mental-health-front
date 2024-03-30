@@ -25,7 +25,7 @@ export const useQuestionStore = defineStore('question', () => {
     type: null,
     options: [
       {
-        optionName: null,
+        optionLabel: null,
         optionValue: null
       }
     ]

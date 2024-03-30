@@ -28,7 +28,7 @@ export const QuestionSchema = yup.object().shape({
     then: () =>
       yup.array().of(
         yup.object({
-          optionName: yup.string().required('Option name is mandatory'),
+          optionLabel: yup.string().required('Option label is mandatory'),
           optionValue: yup.string().required('Option value is mandatory')
         })
       )

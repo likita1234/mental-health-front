@@ -23,8 +23,8 @@ const { formErrors } = storeToRefs(formErrorStore)
 <template>
     <div class="grid grid-cols-2 gap-2">
         <!-- Option Name -->
-        <BaseTextInput v-model="option.optionLabel" label="Option Name"
-            :errorMessage="formErrors[`options[${props.keyIndex}]` + '.optionName']" />
+        <BaseTextInput v-model="option.optionLabel" label="Option Label"
+            :errorMessage="formErrors[`options[${props.keyIndex}]` + '.optionLabel']" />
         <!-- Option Value -->
         <BaseNumberInput v-model="option.optionValue" label="Value"
             :errorMessage="formErrors[`options[${props.keyIndex}]` + '.optionValue']" />
