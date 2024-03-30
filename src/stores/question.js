@@ -46,7 +46,7 @@ export const useQuestionStore = defineStore('question', () => {
       fields: fields.value
     })
     if (response.statusCode === 200) {
-      console.log(response.data.questions)
+      // console.log(response.data.questions)
       questions.value = response.data.questions
       totalQuestions.value = response.data.total
     }
