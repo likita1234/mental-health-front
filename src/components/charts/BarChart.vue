@@ -1,5 +1,5 @@
 <template>
-    <Bar id="my-bar-chart-id" :data="chartData" :options="chartOptions" :style="{ 'min-height': '20rem' }" />
+    <Bar id="my-bar-chart-id" :data="chartData" :options="barChartOptions" :style="{ 'min-height': '20rem' }" />
 </template>
 
 <script setup>
@@ -21,6 +21,28 @@ const props = defineProps({
 })
 
 // Computed Properties
+const barChartOptions = computed(() => {
+    return {
+        ...props.chartOptions,
+        scales: {
+            xAxes: [{
+                gridLines: {
+                    display: false, 
+                },
+                ticks: {
+                    fontColor: 'black', 
+                },
+            }],
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true,
+                    fontColor: 'black', 
+                },
+            }]
+        },
+    }
+})
+
 const chartData = computed(() => {
     const metricData = props.jsonData
 
