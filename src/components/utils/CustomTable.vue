@@ -17,19 +17,19 @@ const props = defineProps({
 })
 
 const page = ref(1)
-const limit = ref(10)
+const rows = ref(10)
 
 const onPage = async (event) => {
     page.value = event.page + 1
-    limit.value = event.rows
-    emit('on-page', { page: page.value, limit: limit.value })
+    rows.value = event.rows
+    emit('on-page', { page: page.value, rows: rows.value })
 }
 
 </script>
 
 <template>
     <div>
-        <DataTable ref="dt" :value="allData" :lazy="true" :loading="loading" paginator :rows="limit"
+        <DataTable ref="dt" :value="allData" :lazy="true" :loading="loading" paginator :rows="rows"
             :totalRecords="totalRecords" @page="onPage($event)" tableStyle="min-width: 50rem"
             :rowsPerPageOptions="[5, 10, 20, 50]"
             paginatorTemplate="CurrentPageReport JumpToPageInput FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
@@ -39,9 +39,11 @@ const onPage = async (event) => {
                     <h4 class="m-0">Manage {{ entity }}</h4>
                 </div>
             </template>
+
             <template #empty>
                 No {{ entity }} found.
             </template>
+
             <template #loading>
                 Loading {{ entity }}. Please wait...
             </template>
