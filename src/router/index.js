@@ -128,12 +128,11 @@ router.beforeEach((to, from, next) => {
   const accessibleRoutes = ['login', 'register', 'landing', 'survey', 'survey-form']
   // 1) Check if the user has a valid token or not
   const isUserAuthenticated = authStore.isLoggedIn
-
   // If user is authenticated
   if (isUserAuthenticated) {
     // If user tries to login, redirect to app page (except for when user is trying to register)
-    if (to.name === 'login' && to.name !== 'register') {
-      next('/')
+    if ((to.name === 'login' || to.name === 'app') && to.name !== 'register') {
+      next('/dashboard')
     } else {
       // Allow navigation to other pages for authenticated users
       next()
