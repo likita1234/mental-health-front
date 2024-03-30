@@ -28,7 +28,10 @@ import {
     Tooltip,
 } from 'chart.js'
 
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+
 ChartJS.register(
+    ChartDataLabels,
     ArcElement,
     BarElement,
     CategoryScale,
@@ -38,6 +41,10 @@ ChartJS.register(
     Title,
     Legend,
     Tooltip)
+
+ChartJS.defaults.set('plugins.datalabels', {
+    color: '#FFF'
+});
 
 import { ChartType } from '@/constants';
 // Props
