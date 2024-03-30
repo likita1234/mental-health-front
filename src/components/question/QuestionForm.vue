@@ -31,11 +31,14 @@ const submit = async () => {
     loading.value = true
     // 1) Validate question form
     const validated = await handleValidation(question.value, QuestionSchema)
-    console.log(formErrors.value)
+    // console.log(formErrors.value)
     // 2) If validated is true, then submit, if there are issues in login, show invalid credentials toast
     if (validated) {
-        console.log('Form is valid')
-        // 3) If successful, then redirect to the home page
+        const questionAdded = await questionStore.addNewQuestion()
+        // 3) If successful, then close dialog
+        if (questionAdded) {
+            emit('hide-dialog')
+        }
 
     }
     loading.value = false
@@ -44,18 +47,17 @@ const submit = async () => {
 
 <template>
     <div>
-        <FormDialog header="Question Form" width="50vw" @hide-dialog="emit('hide - dialog')"
+        <FormDialog header="Question Form" width="60vw" @hide-dialog="emit('hide-dialog')"
             @submit.preventDefault();="submit">
             <div class="p-fluid">
                 <!-- Question Title Section -->
                 <div class="formgrid grid">
                     <div class="field col">
-                        {{ formErrors.title?.english }}
-                        <BaseTextInput v-model="question.title.english" label="Title" size="large"
+                        <BaseTextInput v-model="question.title.english" label="Title"
                             :errorMessage="formErrors['title.english']" />
                     </div>
                     <div class="field col">
-                        <BaseTextInput v-model="question.title.nepali" label="Title (Nepali)" size="large"
+                        <BaseTextInput v-model="question.title.nepali" label="Title (Nepali)"
                             :errorMessage="formErrors['title.nepali']" />
                     </div>
                 </div>
@@ -80,8 +82,9 @@ const submit = async () => {
                 </div>
                 <!-- Question Options -->
                 <template v-if="hasOptions">
-                    <QuestionOptions :options="question.options"/>
+                    <QuestionOptions :options="question.options" />
                 </template>
             </div>
         </FormDialog>
-</div></template>
+    </div>
+</template>

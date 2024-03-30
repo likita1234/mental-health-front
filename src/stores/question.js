@@ -3,12 +3,16 @@ import { defineStore } from 'pinia'
 
 import QuestionService from '@/services/question-service'
 import { formatDisplayDate } from '@/utils/date-formatter'
+import AppResponse from '@/utils/app-response'
 
 export const useQuestionStore = defineStore('question', () => {
   // states
   const questionOption = ref({
-    id: null,
-    optionName: null,
+    id: 1,
+    title: {
+      english: null,
+      nepali: null
+    },
     optionValue: null
   })
 
@@ -21,11 +25,14 @@ export const useQuestionStore = defineStore('question', () => {
       english: null,
       nepali: null
     },
-    label: null,
     type: null,
     options: [
       {
-        optionLabel: null,
+        id: null,
+        title: {
+          english: null,
+          nepali: null
+        },
         optionValue: null
       }
     ]
@@ -38,7 +45,7 @@ export const useQuestionStore = defineStore('question', () => {
   const limit = ref(null)
   const sort = ref(null)
   const fields = ref(null)
-  // =========>Advanced filterings
+  // =========>Advanced filterings Ends
   // getters
   const allQuestions = computed(() => {
     return questions.value?.map((question) => {
@@ -65,6 +72,29 @@ export const useQuestionStore = defineStore('question', () => {
     }
   }
 
+  const addNewQuestion = async () => {
+    //console.log(question.value)
+    const payloadBody = { ...question.value }
+    if (payloadBody.options?.length > 0) {
+      payloadBody.options = payloadBody.options?.map((option) => {
+        return {
+          title: option.title,
+          optionValue: option.optionValue
+        }
+      })
+    }
+    const response = await QuestionService.addQuestion(payloadBody)
+    if (response.statusCode === 201) {
+      // Push the newly added question into the questions array
+      questions.value.push(response.data)
+      // clean the question object
+      initQuestionData()
+      new AppResponse(response.statusCode, 'Question added successfully')
+      return true
+    }
+    return false
+  }
+
   // helpers
   const addQuestionOption = () => {
     // Check options length and place it as a new id on each
@@ -74,6 +104,30 @@ export const useQuestionStore = defineStore('question', () => {
 
   const removeQuestionOption = (keyIndex) => {
     question.value.options.splice(keyIndex, 1)
+  }
+
+  const initQuestionData = () => {
+    question.value = {
+      title: {
+        english: null,
+        nepali: null
+      },
+      description: {
+        english: null,
+        nepali: null
+      },
+      type: null,
+      options: [
+        {
+          id: null,
+          title: {
+            english: null,
+            nepali: null
+          },
+          optionValue: null
+        }
+      ]
+    }
   }
 
   return {
@@ -88,6 +142,7 @@ export const useQuestionStore = defineStore('question', () => {
     allQuestions,
     // actions
     fetchAllQuestions,
+    addNewQuestion,
 
     // helpers
     addQuestionOption,
