@@ -1,5 +1,7 @@
 <script setup>
 import SectionForm from './SectionForm.vue';
+import SectionDetails from './SectionDetails.vue'
+
 import { ref, onMounted, inject } from 'vue'
 import { sectionStore } from '@/stores'
 import { storeToRefs } from 'pinia';
@@ -14,6 +16,7 @@ const { allSections, totalSections, limit, page } = storeToRefs(sectionStore)
 // Component states
 const loading = ref(false)
 const formDialog = ref(false)
+const activeSectionId = ref(null)
 
 const appState = inject('appState')
 
@@ -29,7 +32,6 @@ const loadSections = async () => {
     }, Math.random() * 1000 + 250);
 }
 
-
 const editSection = async (sectionId) => {
     // Fetch details first
     const sectionDetails = await sectionStore.fetchSectionDetails(sectionId)
@@ -42,11 +44,14 @@ const editSection = async (sectionId) => {
     }
 }
 
+const viewDetails = (id) => {
+    activeSectionId.value = id
+}
+
 const confirmDelete = (sectionId) => {
     const message = 'Are you sure you want to delete this section?'
     confirmRequest(sectionId, sectionStore.deleteSection, message)
 }
-
 
 const onPage = async (event) => {
     page.value = event.page
@@ -68,22 +73,26 @@ const onPage = async (event) => {
                     </template>
                 </Column>
                 <Column field="description[appState.lang]" header="DESCRIPTION" style="width: 25%">
+
                     <template #body="slotProps">
                         <template v-if="slotProps.data.description[appState.lang]">
                             {{ slotProps.data.description[appState.lang] }}
                         </template>
+
                         <template v-else>
                             No Description
                         </template>
                     </template>
                 </Column>
                 <Column field="questionsCount" header="QUESTIONS" style="width: 10%;">
+
                     <template #body="slotProps">
                         <template v-if="slotProps.data.questionsCount">
                             <div :class="stockClass(slotProps.data.questionsCount)">
                                 {{ slotProps.data.questionsCount }}
                             </div>
                         </template>
+
                         <template v-else>
                             <div>
                                 None
@@ -92,11 +101,15 @@ const onPage = async (event) => {
                     </template>
                 </Column>
             </template>
+
             <template #actions>
                 <Column header="ACTIONS" :exportable="false" style="width:15%">
                     <template #body="slotProps">
-                        <Button icon="pi pi-pencil" rounded class="mr-2" @click="editSection(slotProps.data._id)" />
-                        <Button icon="pi pi-trash" rounded severity="danger" @click="confirmDelete(slotProps.data._id)" />
+                        <Button icon="pi pi-eye" rounded class="mr-2" @click="viewDetails(slotProps.data._id)" />
+                        <Button icon="pi pi-pencil" rounded severity="secondary" class="mr-2"
+                            @click="editSection(slotProps.data._id)" />
+                        <Button icon="pi pi-trash" rounded severity="danger"
+                            @click="confirmDelete(slotProps.data._id)" />
                     </template>
                 </Column>
             </template>
@@ -104,5 +117,8 @@ const onPage = async (event) => {
 
         <!-- Question Form -->
         <SectionForm v-if="formDialog" editMode @hide-dialog="formDialog = false" />
+
+        <!-- Section Details form -->
+        <SectionDetails v-if="activeSectionId" :id="activeSectionId" @hide-dialog="activeSectionId = null" />
     </div>
 </template>
