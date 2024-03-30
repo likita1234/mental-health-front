@@ -4,7 +4,7 @@
             <!-- Pie Chart -->
             <pie-chart v-if="type === ChartType.PIE" :chartOptions="chartOptions" :jsonData="jsonData" />
             <!-- Bar Chart -->
-            <bar-chart v-else-if="type === ChartType.BAR || type === ChartType.RATINGS_SUMMATION" :type="type"
+            <bar-chart v-else-if="type === ChartType.BAR || type === ChartType.QUESTION_OPTIONS_SUMMATION" :type="type"
                 :chartOptions="chartOptions" :groupBy="groupBy" :jsonData="jsonData" />
             <line-chart v-else-if="type === ChartType.LINE" :chartOptions="chartOptions" :groupBy="groupBy"
                 :jsonData="jsonData" />
