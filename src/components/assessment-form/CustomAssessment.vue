@@ -4,6 +4,7 @@ import CustomSection from '../section/components/CustomSection.vue'
 import { ref, onMounted, computed, inject } from 'vue'
 import { useRouter } from 'vue-router'
 import { formStore } from '@/stores'
+import { storeToRefs } from 'pinia';
 
 // import { storeToRefs } from 'pinia';
 
@@ -14,11 +15,8 @@ const props = defineProps({
 const router = useRouter()
 const appState = inject('appState')
 // Store states
-// const {}
+const { formDetails } = storeToRefs(formStore)
 
-// Component states
-const formDetails = ref(null)
-const loading = ref(false)
 // Steps
 const activeStep = ref(0) //starts with index 0
 // const steps = ref(null)
@@ -64,7 +62,7 @@ const sectionItems = computed(() => {
 })
 
 const sectionLoaded = computed(() => {
-    return !loading.value && activeSection.value !== null && sections.value?.length > 0
+    return activeSection.value !== null && sections.value?.length > 0
 })
 
 onMounted(() => {
@@ -73,10 +71,8 @@ onMounted(() => {
 
 // Actions
 const loadFormDetails = async () => {
-    loading.value = true
     const formId = props.id
-    formDetails.value = await formStore.fetchFormDetails(formId)
-    loading.value = false
+    await formStore.fetchFormDetails(formId)
 }
 
 // Navigate the steps

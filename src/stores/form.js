@@ -28,6 +28,7 @@ export const useFormStore = defineStore('form', () => {
 
   const forms = ref([])
   const totalForms = ref(null)
+  const formDetails = ref(null)
   // =========>Advanced filterings
   const page = ref(1)
   const limit = ref(10)
@@ -97,6 +98,7 @@ export const useFormStore = defineStore('form', () => {
   const fetchFormDetails = async (id) => {
     const response = await FormService.getFormDetails(id)
     if (response.statusCode === 200) {
+      formDetails.value = response.data
       return response.data
     }
     return null
@@ -198,6 +200,7 @@ export const useFormStore = defineStore('form', () => {
     sort,
     fields,
     form,
+    formDetails,
     // getters
     allForms,
     // activeForms,
