@@ -1,7 +1,8 @@
 <script setup>
 import QuestionOption from './QuestionOption.vue';
-import { questionStore } from '@/stores';
+import { questionStore, } from '@/stores';
 
+// Props
 const props = defineProps({
     options: {
         type: Array,
@@ -14,8 +15,8 @@ const addOption = () => {
     questionStore.addQuestionOption()
 }
 
-const removeOption = (id) => {
-    questionStore.removeQuestionOption(id)
+const removeOption = (keyIndex) => {
+    questionStore.removeQuestionOption(keyIndex)
 }
 
 </script>
@@ -29,12 +30,9 @@ const removeOption = (id) => {
         </div>
         <Divider />
         <template v-if="options.length">
-            <div v-for="option in options" :key="option.id" class="flex gap-2">
-                <QuestionOption :option="option" />
-                <div class="mt-4">
-                    <Button icon="pi pi-trash" severity="danger" rounded aria-label="Remove Option"
-                        @click="removeOption(option.id)" />
-                </div>
+            <div class="flex flex-column gap-3">
+                <QuestionOption v-for="option, keyIndex in options" :key="option.id" :option="option" :keyIndex="keyIndex"
+                    @remove-option="removeOption" />
             </div>
         </template>
         <template v-else>
