@@ -50,9 +50,13 @@ const onTopbarSubItemClick = (event) => {
                 <a class="menu-button" href="#" @click="$emit('menu-button-click', $event)">
                     <i class="pi pi-bars"></i>
                 </a>
-
                 <ul class="layout-topbar-actions">
-                    <li class="topbar-item settings" :class="{ 'active-topmenuitem': activeTopbarItem === 'settings' }">
+                    <li class="topbar-item mr-2">
+                        <div class="border-round p-2 bg-primary-100 font-bold">
+                            <RouterLink :to="{ name: 'survey' }">Go To Surveys</RouterLink>
+                        </div>
+                    </li>
+                    <li class="topbar-item mr-2">
                         <language-selection />
                     </li>
 
