@@ -7,6 +7,7 @@ import { formatDisplayDate } from '@/utils/date-formatter'
 export const useQuestionStore = defineStore('question', () => {
   // states
   const questionOption = ref({
+    id: null,
     optionName: null,
     optionValue: null
   })
@@ -59,6 +60,18 @@ export const useQuestionStore = defineStore('question', () => {
     }
   }
 
+  // helpers
+  const addQuestionOption = () => {
+    // Check options length and place it as a new id on each
+    const newId = question.value.options.length + 1
+    question.value.options.push({ ...questionOption.value, id: newId })
+  }
+
+  const removeQuestionOption = (optionId) => {
+    const optionIndex = question.value.options.findIndex((option) => option.id === optionId)
+    question.value.options.splice(optionIndex, 1)
+  }
+
   return {
     // filter states
     page,
@@ -70,6 +83,10 @@ export const useQuestionStore = defineStore('question', () => {
     // getters
     allQuestions,
     // actions
-    fetchAllQuestions
+    fetchAllQuestions,
+
+    // helpers
+    addQuestionOption,
+    removeQuestionOption
   }
 })

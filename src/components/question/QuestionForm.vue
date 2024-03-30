@@ -1,25 +1,29 @@
 <script setup>
-import { ref, onMounted } from 'vue';
-import { getLanguages, getQuestionType } from '@/utils/array-helpers';
+import QuestionOptions from './QuestionOptions.vue';
+
+import { computed, onMounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { questionStore } from '@/stores';
+import { QuestionType } from '@/constants';
+import { getQuestionType } from '@/utils/array-helpers';
 
 const emit = defineEmits(['hide-dialog'])
 
-const languages = getLanguages()
 // store states
 const { question } = storeToRefs(questionStore)
 // component states
-const selectedQuestionType = ref(null)
 const questionTypeOption = getQuestionType();
 
 // computed properties 
+const hasOptions = computed(() => {
+    return question.value.type === QuestionType.RADIO || question.value.type === QuestionType.CHECKBOX
+})
 
 onMounted(() => {
     // 
 })
 
-
+// Actions
 </script>
 
 <template>
@@ -52,6 +56,10 @@ onMounted(() => {
                             :optionValue="'value'" placeholder="Select a question type" :showClear="false" />
                     </div>
                 </div>
+                <!-- Question Options -->
+                <template v-if="hasOptions">
+                    <QuestionOptions :options="question.options" />
+                </template>
             </div>
         </FormDialog>
     </div>
