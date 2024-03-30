@@ -5,7 +5,6 @@
 </template>
 
 <script setup>
-import PieChart from './PieChart.vue';
 import { ref, computed } from 'vue';
 import { generateRandomColors } from '@/constants/color'
 

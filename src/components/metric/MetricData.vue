@@ -10,9 +10,7 @@
 </template>
 
 <script setup>
-import BaseChart from '@/components/charts/BaseChart.vue'
 import { onMounted, ref, computed } from 'vue';
-
 import { metricStore } from '@/stores';
 
 // Props
