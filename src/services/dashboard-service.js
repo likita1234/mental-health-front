@@ -9,7 +9,7 @@ class DashboardService {
     try {
       return await authApi.get(`${DASHBOARD_API}/${dashboardId}`)
     } catch (error) {
-      return new AppError(error.HttpStatusCode, 'Failed to fetch dashboard details')
+      return new AppError(error.statusCode, 'Failed to fetch dashboard details')
     }
   }
 }
