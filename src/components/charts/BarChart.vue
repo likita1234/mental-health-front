@@ -13,7 +13,7 @@ import {
     CategoryScale,
     LinearScale
 } from 'chart.js'
-import { generateRandomColors } from '@/constants/color';
+import { generateRandomColor } from '@/constants/color';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip)
 
@@ -37,11 +37,11 @@ const chartData = computed(() => {
     return {
         // metricData?.map(dataObj => dataObj.label)
         labels: props.groupBy,
-        datasets: metricData?.map(dataObj => {
+        datasets: metricData?.map((dataObj, index) => {
             return {
                 label: dataObj.label,
-                backgroundColor: generateRandomColors(),
-                data: [dataObj.count]
+                backgroundColor: generateRandomColor(index),
+                data: dataObj.count?.length ? dataObj.count : [dataObj.count]
             }
         })
     }
