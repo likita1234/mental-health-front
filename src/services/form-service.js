@@ -73,6 +73,16 @@ class FormService {
       return new AppError(error.statusCode, 'Failed to delete form')
     }
   }
+
+  // Submit Answer form
+  static async submitAnswerForm(body) {
+    try {
+      console.log(body)
+      return await authApi.post(`${SURVEY_FORM_API}`, body)
+    } catch (error) {
+      return new AppError(error.statusCode, 'Failed to submit answer form')
+    }
+  }
 }
 
 export default FormService
