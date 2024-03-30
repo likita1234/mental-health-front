@@ -1,8 +1,9 @@
 <template>
-    <div class="flex flex-column">
-        <label v-if="label" class="mb-2" :for="label">{{ label }}</label>
+    <div class="flex flex-column gap-2">
+        <label v-if="label"  :for="label">{{ label }}</label>
         <InputNumber v-model="selectedValue" :useGrouping="useGrouping" :placeholder="placeholder" :disabled="disabled"
-            @input="updateSelectedValue($event.value)" />
+            @input="updateSelectedValue($event.value)" :class="{ 'p-invalid': errorMessage }" aria-describedby="text-error"/>
+        <small class="p-error" id="text-error">{{ errorMessage || '&nbsp;' }}</small>
     </div>
 </template>
 <script setup>
@@ -19,6 +20,9 @@ const props = defineProps({
     disabled: {
         type: Boolean,
         default: false,
+    },
+    errorMessage: {
+        type: String
     },
 });
 
