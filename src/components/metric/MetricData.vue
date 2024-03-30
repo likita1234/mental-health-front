@@ -1,5 +1,5 @@
 <template>
-    <div class="p-card my-2 md:my-0">
+    <div class="p-card my-2">
         <div id="card-header" class="order-tabs">
             <h5 class="text-center">{{ title }}</h5>
             <Divider />
