@@ -4,7 +4,7 @@
 
 <template>
     <div class="grid grid-nogutter surface-section text-800 h-fit">
-        <div class="col-12 md:col-6 p-6 text-center md:text-left flex align-items-center ">
+        <div class="col-12 md:col-6 p-6 text-center md:text-left flex align-items-center">
             <section>
                 <span class="block text-6xl font-bold mb-1">Here's to your journey of self-discovery,</span>
                 <div class="text-6xl text-primary font-bold mb-3">meaningful connections, and overall well-being! 🌟
@@ -17,9 +17,9 @@
                     <router-link :to="{ name: 'register' }">
                         <Button label="Register" type="button" class="mr-3 p-button-raised" />
                     </router-link>
-                    <!-- <router-link :to="{ name: 'survey' }"> -->
+                    <router-link :to="{ name: 'survey' }">
                         <Button label="Participate our Surveys" type="button" class="p-button-outlined" />
-                    <!-- </router-link> -->
+                    </router-link>
                 </div>
             </section>
         </div>

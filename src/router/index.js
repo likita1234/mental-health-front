@@ -56,8 +56,12 @@ const router = createRouter({
         {
           path: '',
           name: 'landing',
-          exact: true,
           component: () => import('../pages/modules/Home.vue')
+        },
+        {
+          path: '/survey',
+          name: 'survey',
+          component: () => import('../pages/modules/Survey.vue')
         },
         {
           path: '/login',
@@ -90,7 +94,7 @@ router.beforeEach((to, from, next) => {
   // debugger
   const authStore = useAuthStore()
   // Routes that doesnt need authentication
-  const accessibleRoutes = ['login', 'register', 'landing']
+  const accessibleRoutes = ['login', 'register', 'landing', 'survey']
   // 1) Check if the user has a valid token or not
   const isUserAuthenticated = authStore.isLoggedIn
 
