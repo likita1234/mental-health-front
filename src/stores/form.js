@@ -116,7 +116,7 @@ export const useFormStore = defineStore('form', () => {
     form.value.sections = sections?.map((sectionObj) => {
       return {
         order: sectionObj.order,
-        sectionId: sectionObj.sectionId._id
+        sectionId: sectionObj._id
       }
     })
   }
