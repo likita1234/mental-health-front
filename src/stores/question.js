@@ -23,7 +23,12 @@ export const useQuestionStore = defineStore('question', () => {
     },
     label: null,
     type: null,
-    options: []
+    options: [
+      {
+        optionName: null,
+        optionValue: null
+      }
+    ]
   })
 
   const questions = ref([])
@@ -67,9 +72,8 @@ export const useQuestionStore = defineStore('question', () => {
     question.value.options.push({ ...questionOption.value, id: newId })
   }
 
-  const removeQuestionOption = (optionId) => {
-    const optionIndex = question.value.options.findIndex((option) => option.id === optionId)
-    question.value.options.splice(optionIndex, 1)
+  const removeQuestionOption = (keyIndex) => {
+    question.value.options.splice(keyIndex, 1)
   }
 
   return {
