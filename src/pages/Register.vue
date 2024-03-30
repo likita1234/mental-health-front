@@ -27,16 +27,16 @@ const form = ref({
             </template>
 
             <template #action-button>
-                <Button class="login-form-btn" label="Sign In" />
+                <Button class="login-form-btn" label="Register" />
             </template>
 
             <template #footer-section>
                 <span class="txt2">
-                    Not a member?
+                    Already have an account?
                 </span>
-                <a href="#" class="txt2 bo1">
-                    Sign up now
-                </a>
+                <RouterLink :to="{ name: 'login' }">
+                    Sign in
+                </RouterLink>
             </template>
         </AuthTemplate>
     </div>

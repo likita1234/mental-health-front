@@ -9,12 +9,12 @@
         <!-- style="background-image: url('images/bg-01.jpg');" -->
         <div class="login-container">
             <div class="login-wrapper p-l-110 p-r-110 p-t-62 p-b-33">
-                <form class="w-full flex-sb flex-w">
+                <div class="w-full flex-sb flex-w">
                     <span class="login-form-title p-b-53 font-semibold">
                         <slot name="form-title" />
                     </span>
 
-                    <div class="wrap-input">
+                    <div class="wrap-input flex flex-column gap-2">
                         <slot name="form-inputs" />
                     </div>
                     <div class="w-full m-t-17">
@@ -24,7 +24,7 @@
                     <div class="w-full text-center p-t-55">
                         <slot name="footer-section" />
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
