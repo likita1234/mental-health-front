@@ -33,7 +33,7 @@ const submit = async () => {
         const loggedIn = await authStore.login(form.value)
         // 3) If successful, then redirect to the home page
         if (loggedIn) {
-            router.push({ name: 'app' })
+            router.push({ name: 'default-dashboard' })
             return new AppResponse(200, 'Logged in successfully')
         }
     }
