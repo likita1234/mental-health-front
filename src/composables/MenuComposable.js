@@ -19,7 +19,18 @@ export function useMenu() {
       icon: 'pi pi-fw pi-home',
       //   in visiblity: check user role
       items: [
-        { label: 'Dashboard', icon: 'pi pi-fw pi-database', visible: true, to: { name: 'default-dashboard' } }
+        {
+          label: 'Dashboard',
+          icon: 'pi pi-fw pi-database',
+          visible: true,
+          to: { name: 'default-dashboard' }
+        },
+        {
+          label: 'WHO-5 Index Dashboard',
+          icon: 'pi pi-fw pi-database',
+          visible: true,
+          to: { name: 'who-5-dashboard' }
+        }
       ]
     },
     {

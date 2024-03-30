@@ -10,12 +10,25 @@ const router = createRouter({
       component: () => import('../App.vue'),
       children: [
         {
-          path: '',
-          name: 'default-dashboard',
-          component: () => import('../components/dashboard/DefaultDashboard.vue'),
-          meta: {
-            breadcrumb: [{ parent: 'Home', label: 'Default Dashboard' }]
-          }
+          path: 'dashboard',
+          children: [
+            {
+              path: '',
+              name: 'default-dashboard',
+              component: () => import('../components/dashboard/DefaultDashboard.vue'),
+              meta: {
+                breadcrumb: [{ parent: 'Home', label: 'Default Dashboard' }]
+              }
+            },
+            {
+              path: 'who-5',
+              name: 'who-5-dashboard',
+              component: () => import('../components/dashboard/WHO-5-Dashboard.vue'),
+              meta: {
+                breadcrumb: [{ parent: 'Home', label: 'WHO-5 Index Dashboard' }]
+              }
+            }
+          ]
         },
         {
           path: 'question',
