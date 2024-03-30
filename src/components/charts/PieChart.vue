@@ -31,7 +31,7 @@ const chartData = computed(() => {
         labels: metricData?.map(dataObj => dataObj.label),
         datasets: [{
             backgroundColor: bgColors,
-            data: metricData?.map(dataObj => dataObj.count),
+            data: metricData?.map(dataObj => dataObj.percent),
         }]
     }
 })
