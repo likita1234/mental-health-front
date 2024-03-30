@@ -1,11 +1,12 @@
 <template>
     <div class="flex flex-column">
         <label v-if="label" class="mb-2" :for="label">{{ label }}</label>
-        <InputNumber v-model="selectedValue" :useGrouping="props.useGrouping" :placeholder="'Type ' + label" :disabled="props.disabled" @input="updateSelectedValue($event.value)" />
+        <InputNumber v-model="selectedValue" :useGrouping="props.useGrouping" :placeholder="'Type ' + label"
+            :disabled="props.disabled" @input="updateSelectedValue($event.value)" />
     </div>
 </template>
 <script setup>
-import { ref, defineProps, watch, computed, defineEmits } from 'vue';
+import { ref, watch, computed } from 'vue';
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps({
     modelValue: {
