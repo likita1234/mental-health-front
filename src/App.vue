@@ -1,5 +1,5 @@
 <script setup>
-import {  RouterView } from 'vue-router'
+import { RouterView } from 'vue-router'
 // RouterLink,
 </script>
 
@@ -19,6 +19,8 @@ import {  RouterView } from 'vue-router'
 </template>
 
 <style scoped>
+@import "App.scss";
+
 header {
   line-height: 1.5;
   max-height: 100vh;
