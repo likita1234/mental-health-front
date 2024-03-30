@@ -4,6 +4,26 @@ import AppError from '@/utils/app-error'
 const DASHBOARD_API = 'dashboard'
 
 class DashboardService {
+  // Fetch all dashboards
+  static async fetchDashboards(queryParams) {
+    try {
+      try {
+        const { page, limit, sort, fields } = queryParams
+        return await authApi.get(DASHBOARD_API, {
+          params: {
+            page,
+            limit,
+            sort,
+            fields
+          }
+        })
+      } catch (error) {
+        return new AppError(error.statusCode, 'Failed to fetch all questions')
+      }
+    } catch (error) {
+      return new AppError(error.statusCode, 'Failed to fetch all dashboards')
+    }
+  }
   // Fetch dashboard details by id
   static async getDashboardDetails(dashboardId) {
     try {
