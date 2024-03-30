@@ -2,6 +2,7 @@ import authApi from '@/utils/axios'
 import AppError from '@/utils/app-error'
 
 const FORM_API = 'assessmentForm'
+const SURVEY_FORM_API = 'survey'
 
 class FormService {
   // Add a new form
@@ -26,6 +27,23 @@ class FormService {
       })
     } catch (error) {
       return new AppError(error.statusCode, 'Failed to fetch all forms')
+    }
+  }
+
+  // Fetch all survey forms
+  static async getSurveyForms(queryParams) {
+    try {
+      const { page, limit, sort, fields } = queryParams
+      return await authApi.get(SURVEY_FORM_API, {
+        params: {
+          page,
+          limit,
+          sort,
+          fields
+        }
+      })
+    } catch (error) {
+      return new AppError(error.statusCode, 'Failed to fetch survey forms')
     }
   }
 
