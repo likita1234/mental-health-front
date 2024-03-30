@@ -46,16 +46,29 @@ export const useFormStore = defineStore('form', () => {
       }
     })
   })
-  // Returns all the public assessment forms with active polls
-  const activeForms = computed(() => {
-    return allForms.value?.filter(
-      (form) => form.pollActive === true && form.type === AssessmentFormType.PUBLIC
-    )
-  })
+  // // Returns all the public assessment forms with active polls
+  // const activeForms = computed(() => {
+  //   return allForms.value?.filter(
+  //     (form) => form.pollActive === true && form.type === AssessmentFormType.PUBLIC
+  //   )
+  // })
 
   // actions
   const fetchAllForms = async () => {
     const response = await FormService.getAllForms({
+      page: page.value,
+      limit: limit.value,
+      sort: sort.value,
+      fields: fields.value
+    })
+    if (response.statusCode === 200) {
+      forms.value = response.data.forms
+      totalForms.value = response.data.total
+    }
+  }
+
+  const fetchSurveyForms = async () => {
+    const response = await FormService.getSurveyForms({
       page: page.value,
       limit: limit.value,
       sort: sort.value,
@@ -187,9 +200,10 @@ export const useFormStore = defineStore('form', () => {
     form,
     // getters
     allForms,
-    activeForms,
+    // activeForms,
     // actions
     fetchAllForms,
+    fetchSurveyForms,
     addForm,
     fetchFormDetails,
     editForm,
