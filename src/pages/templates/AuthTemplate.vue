@@ -2,28 +2,22 @@
 </script>
 
 <template>
-    <div class="limiter">
-        <div class="w-15rem m-3 absolute">
-            <img src="/images/logo/logo-transparent.png" alt="app-logo" class="app-logo w-full">
-        </div>
-        <!-- style="background-image: url('images/bg-01.jpg');" -->
-        <div class="login-container">
-            <div class="login-wrapper p-l-110 p-r-110 p-t-62 p-b-33">
-                <div class="w-full flex-sb flex-w">
-                    <span class="login-form-title p-b-53 font-semibold">
-                        <slot name="form-title" />
-                    </span>
+    <div class="login-container">
+        <div class="login-wrapper p-l-110 p-r-110 p-t-62 p-b-33">
+            <div class="w-full flex-sb flex-w">
+                <span class="login-form-title p-b-53 font-semibold">
+                    <slot name="form-title" />
+                </span>
 
-                    <div class="wrap-input flex flex-column gap-2">
-                        <slot name="form-inputs" />
-                    </div>
-                    <div class="w-full m-t-17">
-                        <slot name="action-button" />
-                    </div>
+                <div class="wrap-input flex flex-column gap-2">
+                    <slot name="form-inputs" />
+                </div>
+                <div class="w-full m-t-17">
+                    <slot name="action-button" />
+                </div>
 
-                    <div class="w-full text-center p-t-55">
-                        <slot name="footer-section" />
-                    </div>
+                <div class="w-full text-center p-t-55">
+                    <slot name="footer-section" />
                 </div>
             </div>
         </div>
@@ -31,21 +25,8 @@
 </template>
 
 <style lang="scss">
-/*==================================================================
-[ Main Container ]*/
-.limiter {
-    width: 100%;
-    margin: 0 auto;
-
-    background: -webkit-linear-gradient(90deg, #359CA0, #38B98C);
-    background: -o-linear-gradient(90deg, #359CA0, #38B98C);
-    background: -moz-linear-gradient(90deg, #359CA0, #38B98C);
-    background: linear-gradient(90deg, #359CA0, #38B98C);
-}
-
 .login-container {
     width: 100%;
-    min-height: 100vh;
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-box;
