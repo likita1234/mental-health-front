@@ -31,7 +31,7 @@ export const Color = Object.freeze({
 
 const colorValues = Object.values(Color)
 
-export const generateRandomColor = (index) => {
+export const generateRandomColor = (index = 0) => {
   return colorValues[index]
 }
 
