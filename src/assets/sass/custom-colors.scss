@@ -2,3 +2,27 @@ $red: #ff6384;
 $blue: #36a2eb;
 $green: #65ac65;
 $yellow: #ffcc56;
+$grey: #747a82;
+$deep-blue: #4F46E5;
+
+.question {
+    color: white;
+    .type-text{
+        background-color: $red;
+    }
+    .type-number{
+        background-color: $blue;
+    }
+    .type-dropdown{
+        background-color: $green;
+    }
+    .type-radio{
+        background-color: $yellow;
+    }
+    .type-checkbox{
+        background-color: $grey;
+    }
+    .type-ratings{
+        background-color: $deep-blue;
+    }
+}
