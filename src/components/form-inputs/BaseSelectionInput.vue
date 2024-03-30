@@ -12,7 +12,7 @@
     </div>
 </template>
 <script setup>
-import { ref, computed, onMounted, defineProps, defineEmits, watch } from 'vue';
+import { ref, computed, onMounted, watch } from 'vue';
 
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps({
