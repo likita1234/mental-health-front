@@ -1,6 +1,5 @@
 <template>
-    <!-- {{ chartData }} -->
-    <Bar id="my-bar-chart-id" :data="chartData" :options="chartOptions" />
+    <Bar id="my-bar-chart-id" :data="chartData" :options="chartOptions" :style="{ 'min-height': '20rem' }" />
 </template>
 
 <script setup>
@@ -32,8 +31,6 @@ const props = defineProps({
 })
 
 // Computed Properties
-
-// Computed properties
 const chartData = computed(() => {
     const metricData = props.jsonData
 
