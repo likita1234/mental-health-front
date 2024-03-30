@@ -35,5 +35,5 @@ export const calculateWeightedMeanAndSD = (values, frequencies) => {
   const standardDeviation = calculateStandardDeviation(variance)
 
   // Return an object containing both mean and standard deviation
-  return { mean, standardDeviation }
+  return { weightedMean, standardDeviation }
 }
