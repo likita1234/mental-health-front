@@ -32,7 +32,7 @@ const onPage = async (event) => {
         <DataTable ref="dt" :value="allData" :lazy="true" :loading="loading" paginator :rows="limit"
             :totalRecords="totalRecords" @page="onPage($event)" tableStyle="min-width: 50rem"
             :rowsPerPageOptions="[5, 10, 20, 50]"
-            paginatorTemplate="CurrentPageReport JumpToPageInput FirstPageLink PrevPageLink PageLinks NextPageLink RowsPerPageDropdown"
+            paginatorTemplate="CurrentPageReport JumpToPageInput FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries :: Page No:">
             <template #header>
                 <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
