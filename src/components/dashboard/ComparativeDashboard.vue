@@ -15,7 +15,7 @@ import DashboardSelectionDropdown from '@/components/utils/DashboardSelectionDro
 import MetricData from '@/components/metric/MetricData.vue'
 
 import { computed, ref, watch } from 'vue';
-import { getComparativeAnalysisTableData } from '@/utils/chart-helpers';
+import { getComparativeAnalysisDashboardTableData } from '@/utils/chart-helpers';
 
 // Component states
 const metricIds = ref([])
