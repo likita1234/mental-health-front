@@ -43,7 +43,7 @@ const formDescription = computed(() => {
 const sectionItems = computed(() => {
     let items = []
     for (let i = 0; i < formDetails.value?.sections?.length; i++) {
-        items.push({ label: 'Section ' + (i + 1) })
+        items.push({ label: 'Section'})
     }
     return items
 })
