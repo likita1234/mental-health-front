@@ -1,4 +1,9 @@
-import { LanguageType, QuestionType } from '@/constants'
+import { AssessmentFormType, LanguageType, QuestionType } from '@/constants'
+
+export const getAssessmentFormType = () => [
+  { id: 1, name: 'Private', value: AssessmentFormType.PRIVATE },
+  { id: 2, name: 'Public', value: AssessmentFormType.PUBLIC }
+]
 
 export const getLanguages = () => [
   { name: 'English', value: LanguageType.ENGLISH },
