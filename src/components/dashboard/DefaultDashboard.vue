@@ -3,13 +3,15 @@
         <h4 class="text-center">{{ title }}</h4>
         <p class="text-center">{{ description }}</p>
         <template v-if="metrics && metrics.length > 0">
-            {{ metrics }}
+            <!-- {{ metrics }} -->
+            <metric-data v-for="metric in metrics" :metricId="metric.metricId" :key="metric.metricId" />
         </template>
     </div>
 </template>
 
 <!-- At the moment there is no way to identify default dashboard so we need to preset the exact dashboard id -->
 <script setup>
+import MetricData from '@/components/metric/MetricData.vue'
 import { computed, onMounted, ref } from 'vue';
 
 import { dashboardStore } from '@/stores'
