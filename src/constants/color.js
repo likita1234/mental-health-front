@@ -4,7 +4,11 @@ export const Color = Object.freeze({
   Green: '#008000',
   Yellow: '#FFFF00',
   Orange: '#FFA500',
-  Purple: '#800080'
+  Purple: '#800080',
+  Pink: '#FFC0CB',
+  Black: '#000000',
+  White: '#FFFFFF',
+  Gray: '#808080'
 })
 
 export const generateRandomColors = (n = null) => {
