@@ -27,9 +27,15 @@ export function useMenu() {
         },
         {
           label: 'Comparative Analysis',
-          icon: 'pi pi-fw pi-database',
+          icon: 'pi pi-fw pi-chart-bar',
           visible: true,
           to: { name: 'comparative-dashboards' }
+        },
+        {
+          label: 'Section Analysis',
+          icon: 'pi pi-fw pi-table',
+          visible: true,
+          to: { name: 'section-analysis' }
         }
       ]
     },

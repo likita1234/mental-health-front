@@ -27,6 +27,15 @@ const router = createRouter({
               meta: {
                 breadcrumb: [{ parent: 'Home', label: 'WHO-5 Index Dashboard' }]
               }
+            },
+            {
+              path: 'section-analysis',
+              name: 'section-analysis',
+              component: () =>
+                import('../components/form-section-analysis/FormSectionAnalysis.vue'),
+              meta: {
+                breadcrumb: [{ parent: 'Home', label: 'Assessment Form Section-Wise Analysis' }]
+              }
             }
           ]
         },
