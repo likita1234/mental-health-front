@@ -4,18 +4,10 @@ import { defineStore } from 'pinia'
 import { formatDisplayDate } from '@/utils/date-formatter'
 import AppResponse from '@/utils/app-response'
 import QuestionService from '@/services/question-service'
+import { QuestionType } from '@/constants'
 
 export const useQuestionStore = defineStore('question', () => {
   // states
-  const questionOption = ref({
-    id: 1,
-    title: {
-      english: null,
-      nepali: null
-    },
-    optionValue: null
-  })
-
   const question = ref({
     title: {
       english: null,
@@ -41,18 +33,22 @@ export const useQuestionStore = defineStore('question', () => {
   const questions = ref([])
   const totalQuestions = ref(null)
   // =========>Advanced filterings
-  const page = ref(null)
-  const limit = ref(null)
+  const page = ref(1)
+  const limit = ref(10)
   const sort = ref(null)
   const fields = ref(null)
   // =========>Advanced filterings Ends
   // getters
+  const hasOptions = (questionType) => {
+    return questionType === QuestionType.RADIO || question.value.type === QuestionType.CHECKBOX
+  }
+
   const allQuestions = computed(() => {
     return questions.value?.map((question) => {
       return {
         ...question,
         created_at: formatDisplayDate(question.createdDate),
-        optionsCount: question.options?.length ?? 0
+        optionsCount: hasOptions(question.type) ? question.options.length : null
       }
     })
   })
@@ -78,10 +74,9 @@ export const useQuestionStore = defineStore('question', () => {
     payloadBody.options = setupOptionsPayload(payloadBody.options)
     const response = await QuestionService.addQuestion(payloadBody)
     if (response.statusCode === 201) {
-      // Push the newly added question into the questions array
-      questions.value.push(response.data)
       // clean the question object
       initQuestionData()
+      await fetchAllQuestions()
       new AppResponse(response.statusCode, 'Question added successfully')
       return true
     }
@@ -127,11 +122,29 @@ export const useQuestionStore = defineStore('question', () => {
     return false
   }
 
+  const deleteQuestion = async (questionId) => {
+    const response = await QuestionService.deleteQuestion(questionId)
+    if (response.statusCode === 204) {
+      // Find the index of the question and remove it from the store state as well
+      new AppResponse(response.statusCode, 'Question deleted successfully')
+      return true
+    }
+    return false
+  }
+
   // helpers
   const addQuestionOption = () => {
     // Check options length and place it as a new id on each
-    const newId = question.value.options.length + 1
-    question.value.options.push({ ...questionOption.value, id: newId })
+    const newId = question.value.options?.length + 1
+    const newQuestionOption = {
+      id: newId,
+      title: {
+        english: null,
+        nepali: null
+      },
+      optionValue: null
+    }
+    question.value.options.push(newQuestionOption)
   }
 
   const removeQuestionOption = (keyIndex) => {
@@ -183,6 +196,7 @@ export const useQuestionStore = defineStore('question', () => {
     fields,
     // states
     question,
+    totalQuestions,
     // getters
     allQuestions,
     // actions
@@ -191,7 +205,9 @@ export const useQuestionStore = defineStore('question', () => {
     editQuestion,
     fetchQuestionDetails,
     updateQuestionDetails,
+    deleteQuestion,
     // helpers
+    initQuestionData,
     addQuestionOption,
     removeQuestionOption
   }
