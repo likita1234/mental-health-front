@@ -34,7 +34,7 @@ function getValuesAndFrequencyFromMetricData(metricObj) {
   // Check the chart type of metricObj, because on the basis of the type data formats may differ
   const { chartType, metricData } = metricObj
   //  Normally, only in ratings summation type the format is different, otherwise its same in all other cases
-  if (chartType === ChartType.RATINGS_SUMMATION) {
+  if (chartType === ChartType.QUESTION_OPTIONS_SUMMATION) {
     // First:- Extract the labels array which represents the values
     values = metricData?.data?.labels ?? []
     // Then:- Extract the data counts which represents the frequencies
@@ -45,7 +45,7 @@ function getValuesAndFrequencyFromMetricData(metricObj) {
     // Extract values and frequencies from data label and count respectively
     const dataArr = metricData?.data
     // The order of values is same as the index so we will take index as values
-    for (let i = 0; i < dataArr.length; i++) {
+    for (let i = 0; i < dataArr?.length; i++) {
       values?.push(i + 1)
       frequencies?.push(dataArr[i]?.count)
     }
