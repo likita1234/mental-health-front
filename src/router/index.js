@@ -102,7 +102,7 @@ router.beforeEach((to, from, next) => {
   if (isUserAuthenticated) {
     // If user tries to login, redirect to home page (except for when user is trying to register)
     if (to.name === 'login' && to.name !== 'register') {
-      next('/app')
+      next('/')
     } else {
       // Allow navigation to other pages for authenticated users
       next()
