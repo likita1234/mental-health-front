@@ -6,7 +6,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'app',
       component: () => import('../App.vue'),
       children: [
         {
@@ -50,7 +50,7 @@ const router = createRouter({
       ]
     },
     {
-      path: '/app',
+      path: '/home',
       component: () => import('../pages/Landing.vue'),
       children: [
         {
