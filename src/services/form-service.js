@@ -77,7 +77,6 @@ class FormService {
   // Submit Answer form
   static async submitAnswerForm(body) {
     try {
-      console.log(body)
       return await authApi.post(`${SURVEY_FORM_API}`, body)
     } catch (error) {
       return new AppError(error.statusCode, 'Failed to submit answer form')
