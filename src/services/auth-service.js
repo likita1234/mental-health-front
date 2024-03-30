@@ -12,7 +12,6 @@ class AuthService {
       }
     } catch (error) {
       new AppError(error.statusCode, 'Invalid credentials')
-      return false
     }
   }
 }
