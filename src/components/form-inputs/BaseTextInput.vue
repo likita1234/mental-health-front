@@ -49,7 +49,8 @@ watch(inputValue, () => {
         <span class="p-float-label " :class="{ 'p-input-icon-left': icon }">
             <i v-if="icon" :class="['pi', icon]" />
             <InputText :id="modelValue" v-model="inputValue" :type="type" :class="{ 'p-invalid': errorMessage }"
-                aria-describedby="text-error" :size="size" />
+                aria-describedby="text-error" :size="size" :aria-invalid="errorMessage ? 'true' : 'false'"
+                :aria-labelledby="modelValue + '-label'" />
             <label :for="modelValue">{{ label }}</label>
         </span>
         <small class="p-error" id="text-error">{{ errorMessage || '&nbsp;' }}</small>
@@ -57,7 +58,9 @@ watch(inputValue, () => {
     </div>
     <div v-else class="flex flex-column gap-2">
         <label :for="label">{{ label }}</label>
-        <InputText :id="label" v-model="inputValue"  :class="{ 'p-invalid': errorMessage }" aria-describedby="text-error" :size="size" :type="type" />
+        <InputText :id="label" v-model="inputValue" :class="{ 'p-invalid': errorMessage }" aria-describedby="text-error"
+            :size="size" :type="type" :aria-invalid="errorMessage ? 'true' : 'false'"
+            :aria-labelledby="modelValue + '-label'" />
         <small class="p-error" id="text-error">{{ errorMessage || '&nbsp;' }}</small>
     </div>
 </template>

@@ -36,6 +36,7 @@ import DataViewLayoutOptions from 'primevue/dataviewlayoutoptions'
 import Dialog from 'primevue/dialog'
 import Divider from 'primevue/divider'
 import Dropdown from 'primevue/dropdown'
+import Editor from 'primevue/editor';
 import Fieldset from 'primevue/fieldset'
 import FileUpload from 'primevue/fileupload'
 import Galleria from 'primevue/galleria'
@@ -101,7 +102,11 @@ import 'primeicons/primeicons.css'
 
 // My custom components
 import BaseTextInput from './components/form-inputs/BaseTextInput.vue'
+import BaseCalendarInput from './components/form-inputs/BaseCalendarInput.vue'
 import BaseDropdown from './components/form-inputs/BaseDropdown.vue'
+import BaseEditor from './components/form-inputs/BaseEditor.vue'
+import BaseNumberInput from './components/form-inputs/BaseNumberInput.vue'
+import BaseSelectionInput from './components/form-inputs/BaseSelectionInput.vue'
 
 const app = createApp(AppWrapper)
 
@@ -109,7 +114,7 @@ app.use(createPinia())
 
 app.use(PrimeVue, {
   ripple: true,
-  inputStyle: 'filled'
+  inputStyle: ''
 })
 
 // zIndex: {
@@ -152,6 +157,7 @@ app.component('DataViewLayoutOptions', DataViewLayoutOptions)
 app.component('Dialog', Dialog)
 app.component('Divider', Divider)
 app.component('Dropdown', Dropdown)
+app.component('Editor', Editor)
 app.component('Fieldset', Fieldset)
 app.component('FileUpload', FileUpload)
 app.component('Galleria', Galleria)
@@ -208,7 +214,11 @@ app.component('TriStateCheckbox', TriStateCheckbox)
 
 // My Custom Components goes here
 app.component('BaseTextInput', BaseTextInput)
+app.component('BaseCalendarInput', BaseCalendarInput)
 app.component('BaseDropdown', BaseDropdown)
+app.component('BaseEditor', BaseEditor)
+app.component('BaseNumberInput', BaseNumberInput)
+app.component('BaseSelectionInput', BaseSelectionInput)
 
 // Custom Event configuration
 app.config.globalProperties.$showToast = function ({ severity, summary, message }) {
