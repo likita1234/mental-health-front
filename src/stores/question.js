@@ -126,8 +126,9 @@ export const useQuestionStore = defineStore('question', () => {
   const deleteQuestion = async (questionId) => {
     const response = await QuestionService.deleteQuestion(questionId)
     if (response.statusCode === 204) {
-      await fetchAllQuestions()
-      // Find the index of the question and remove it from the store state as well
+      // Find the index of the question and filter it from the store state as well and decrease the count as well
+      questions.value = questions.value.filter((question) => question._id !== questionId)
+      totalQuestions.value--
       new AppResponse(response.statusCode, 'Question deleted successfully')
       return true
     }
