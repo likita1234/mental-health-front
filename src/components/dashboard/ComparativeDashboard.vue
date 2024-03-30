@@ -2,8 +2,8 @@
     <div>
         <dashboard-selection-dropdown :type="'comparative'" @dashboard-selected="loadSelectedDashboard" class="" />
         <!-- Charts  -->
-        <div v-if="metricIds && metricIds.length > 0" class="flex">
-            <metric-data v-for="metric in metricIds" :metricId="metric.metricId" :key="metric.metricId" class="col-12 md:col-6"/>
+        <div v-if="metricIds && metricIds.length > 0" class="flex flex-wrap">
+            <metric-data v-for="metric in metricIds" :metricId="metric.metricId" :key="metric.metricId" class="col-12"/>
         </div>
     </div>
 </template>
