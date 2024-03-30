@@ -4445,11 +4445,11 @@ body.main-body {
   background: linear-gradient(99deg, #F6F9FE 0%, #E8F1F8 100%);
 }
 body a {
-  color: #2c84d8;
+  color: #515C66;
   text-decoration: none;
 }
 body a:hover {
-  color: #4291dc;
+  color: #ffffff;
 }
 
 .layout-mask {
