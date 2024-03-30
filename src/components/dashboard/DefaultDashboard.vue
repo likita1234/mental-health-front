@@ -1,17 +1,32 @@
 <template>
-    <div>
-        {{ dashboard }}
+    <div class="card">
+        <h4 class="text-center">{{ title }}</h4>
+        <p class="text-center">{{ description }}</p>
+        <template v-if="metrics && metrics.length > 0">
+            {{ metrics }}
+        </template>
     </div>
 </template>
 
 <!-- At the moment there is no way to identify default dashboard so we need to preset the exact dashboard id -->
 <script setup>
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
 import { dashboardStore } from '@/stores'
 
 // Component states
 const dashboard = ref(null)
+
+// Computed properties
+const title = computed(() => {
+    return dashboard.value?.title
+})
+const description = computed(() => {
+    return dashboard.value?.description
+})
+const metrics = computed(() => {
+    return dashboard.value?.metrics
+})
 
 onMounted(() => {
     loadDashboardDetails()
