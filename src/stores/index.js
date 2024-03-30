@@ -3,6 +3,7 @@ import { useAnswerStore } from './answer'
 import { useDashboardStore } from './dashboard'
 import { useFormStore } from './form'
 import { useFormErrorStore } from './formError'
+import { useMetricStore } from './metric'
 import { useSectionStore } from './section'
 import { useQuestionStore } from './question'
 
@@ -11,6 +12,7 @@ const answerStore = useAnswerStore()
 const dashboardStore = useDashboardStore()
 const formStore = useFormStore()
 const formErrorStore = useFormErrorStore()
+const metricStore = useMetricStore()
 const sectionStore = useSectionStore()
 const questionStore = useQuestionStore()
 
@@ -20,6 +22,7 @@ export {
   dashboardStore,
   formStore,
   formErrorStore,
+  metricStore,
   sectionStore,
   questionStore
 }
