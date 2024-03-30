@@ -35,7 +35,7 @@ export const useQuestionStore = defineStore('question', () => {
   // =========>Advanced filterings
   const page = ref(1)
   const limit = ref(10)
-  const sort = ref(null)
+  const sort = ref('createdDate')
   const fields = ref(null)
   // =========>Advanced filterings Ends
   // getters
@@ -44,9 +44,10 @@ export const useQuestionStore = defineStore('question', () => {
   }
 
   const allQuestions = computed(() => {
-    return questions.value?.map((question) => {
+    return questions.value?.map((question, index) => {
       return {
         ...question,
+        id: index + 1,
         created_at: formatDisplayDate(question.createdDate),
         optionsCount: hasOptions(question.type) ? question.options.length : null
       }

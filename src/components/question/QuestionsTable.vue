@@ -60,6 +60,7 @@ const confirmDelete = (questionId) => {
 
 const onPage = async (event) => {
     page.value = event.page + 1
+    limit.value = event.rows
     await loadQuestions()
 }
 </script>
@@ -82,6 +83,7 @@ const onPage = async (event) => {
             <template #loading>
                 Loading questions. Please wait.
             </template>
+            <Column field="_id" header="ID" style="width: 10%"/>
             <Column field="title[appState.lang]" header="TITLE" style="width: 20%">
                 <template #body="slotProps">
                     <div>
@@ -89,7 +91,7 @@ const onPage = async (event) => {
                     </div>
                 </template>
             </Column>
-            <Column field="description[appState.lang]" header="DESCRIPTION" style="width: 35%">
+            <Column field="description[appState.lang]" header="DESCRIPTION" style="width: 25%">
                 <template #body="slotProps">
                     <div>
                         {{ slotProps.data.description[appState.lang] }}
