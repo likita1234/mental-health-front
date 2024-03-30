@@ -6,6 +6,7 @@ import PrimeVue from 'primevue/config'
 
 import AppWrapper from './AppWrapper.vue'
 import router from './router'
+import EventBus from './utils/event-bus'
 
 // PrimeVue Components starts
 
@@ -61,6 +62,7 @@ import PanelMenu from 'primevue/panelmenu'
 import Password from 'primevue/password'
 import PickList from 'primevue/picklist'
 import ProgressBar from 'primevue/progressbar'
+import ProgressSpinner from 'primevue/progressspinner'
 import Rating from 'primevue/rating'
 import RadioButton from 'primevue/radiobutton'
 import Ripple from 'primevue/ripple'
@@ -175,6 +177,7 @@ app.component('PanelMenu', PanelMenu)
 app.component('Password', Password)
 app.component('PickList', PickList)
 app.component('ProgressBar', ProgressBar)
+app.component('ProgressSpinner', ProgressSpinner)
 app.component('RadioButton', RadioButton)
 app.component('Rating', Rating)
 app.component('SelectButton', SelectButton)
@@ -205,5 +208,25 @@ app.component('TriStateCheckbox', TriStateCheckbox)
 
 // My Custom Components goes here
 app.component('FormInputText', FormInputText)
+
+// Custom Event configuration
+app.config.globalProperties.$showToast = function ({ severity, summary, message }) {
+  const toast = {
+    severity: severity,
+    summary: summary,
+    detail: message,
+    life: 5000
+  }
+  this.$toast.add(toast)
+}
+
+//=============> Custom Event Bus listener added
+EventBus.on('show-toast', (res) => {
+  app.config.globalProperties.$showToast({
+    severity: res.severity,
+    summary: res.summary,
+    message: res.message
+  })
+})
 
 app.mount('#app')
