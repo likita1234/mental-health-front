@@ -28,6 +28,24 @@ class QuestionService {
       throw new AppError(error.statusCode, 'Failed to fetch all questions')
     }
   }
+
+  // Fetch existing question details by question id
+  static async getQuestionDetails(questionId) {
+    try {
+      return await authApi.get(`${QUESTION_API}/${questionId}`)
+    } catch (error) {
+      throw new AppError(error.statusCode, 'Failed to fetch question details')
+    }
+  }
+
+  // Update existing question details :- questionId is in body
+  static async updateQuestion(body) {
+    try {
+      return await authApi.patch(`${QUESTION_API}/${body.id}`, body)
+    } catch (error) {
+      throw new AppError(error.statusCode, 'Failed to update question details')
+    }
+  }
 }
 
 export default QuestionService

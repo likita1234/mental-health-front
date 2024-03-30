@@ -1,9 +1,9 @@
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
 
-import QuestionService from '@/services/question-service'
 import { formatDisplayDate } from '@/utils/date-formatter'
 import AppResponse from '@/utils/app-response'
+import QuestionService from '@/services/question-service'
 
 export const useQuestionStore = defineStore('question', () => {
   // states
@@ -73,16 +73,9 @@ export const useQuestionStore = defineStore('question', () => {
   }
 
   const addNewQuestion = async () => {
-    //console.log(question.value)
     const payloadBody = { ...question.value }
-    if (payloadBody.options?.length > 0) {
-      payloadBody.options = payloadBody.options?.map((option) => {
-        return {
-          title: option.title,
-          optionValue: option.optionValue
-        }
-      })
-    }
+    // Setup options
+    payloadBody.options = setupOptionsPayload(payloadBody.options)
     const response = await QuestionService.addQuestion(payloadBody)
     if (response.statusCode === 201) {
       // Push the newly added question into the questions array
@@ -90,6 +83,45 @@ export const useQuestionStore = defineStore('question', () => {
       // clean the question object
       initQuestionData()
       new AppResponse(response.statusCode, 'Question added successfully')
+      return true
+    }
+    return false
+  }
+
+  const fetchQuestionDetails = async (questionId) => {
+    const response = await QuestionService.getQuestionDetails(questionId)
+    if (response.statusCode === 200) {
+      return response.data
+    }
+    return null
+  }
+  // Edit question is for setting up question details for update on the UI
+  const editQuestion = async (questionDetails) => {
+    const { _id, title, description, type, options } = questionDetails
+    // Setup basic question details first
+    question.value.id = _id
+    question.value.title = title
+    question.value.description = description
+    question.value.type = type
+    // Setup question options
+    question.value.options = options?.map((option) => {
+      return {
+        id: option._id,
+        title: option.title,
+        optionValue: option.optionValue
+      }
+    })
+  }
+
+  const updateQuestionDetails = async () => {
+    const payloadBody = { ...question.value }
+    // Setup options
+    payloadBody.options = setupOptionsPayload(payloadBody.options)
+    const response = await QuestionService.updateQuestion(payloadBody)
+    if (response.statusCode === 200) {
+      initQuestionData()
+      await fetchAllQuestions()
+      new AppResponse(response.statusCode, 'Question updated successfully')
       return true
     }
     return false
@@ -104,6 +136,19 @@ export const useQuestionStore = defineStore('question', () => {
 
   const removeQuestionOption = (keyIndex) => {
     question.value.options.splice(keyIndex, 1)
+  }
+
+  const setupOptionsPayload = (options) => {
+    if (options && options.length > 0) {
+      return options?.map((option) => {
+        return {
+          _id: `${option.id}`,
+          title: option.title,
+          optionValue: option.optionValue
+        }
+      })
+    }
+    return []
   }
 
   const initQuestionData = () => {
@@ -143,7 +188,9 @@ export const useQuestionStore = defineStore('question', () => {
     // actions
     fetchAllQuestions,
     addNewQuestion,
-
+    editQuestion,
+    fetchQuestionDetails,
+    updateQuestionDetails,
     // helpers
     addQuestionOption,
     removeQuestionOption

@@ -1,7 +1,7 @@
 <script setup>
 import QuestionOptions from './QuestionOptions.vue';
 
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed } from 'vue';
 import { storeToRefs } from 'pinia';
 import { questionStore, formErrorStore } from '@/stores';
 import { QuestionType } from '@/constants';
@@ -9,6 +9,12 @@ import { getQuestionType } from '@/utils/array-helpers';
 import { QuestionSchema, handleValidation } from '@/validations/schemas';
 
 const emit = defineEmits(['hide-dialog'])
+const props = defineProps({
+    editMode: {
+        type: Boolean,
+        default: false
+    }
+})
 
 // store states
 const { question } = storeToRefs(questionStore)
@@ -18,12 +24,12 @@ const questionTypeOption = getQuestionType();
 const loading = ref(false)
 
 // computed properties 
-const hasOptions = computed(() => {
-    return question.value.type === QuestionType.RADIO || question.value.type === QuestionType.CHECKBOX
+const formHeader = computed(() => {
+    return props.editMode ? 'Update Question' : 'Add new Question'
 })
 
-onMounted(() => {
-    // 
+const hasOptions = computed(() => {
+    return question.value.type === QuestionType.RADIO || question.value.type === QuestionType.CHECKBOX
 })
 
 // Actions
@@ -34,9 +40,10 @@ const submit = async () => {
     // console.log(formErrors.value)
     // 2) If validated is true, then submit, if there are issues in login, show invalid credentials toast
     if (validated) {
-        const questionAdded = await questionStore.addNewQuestion()
+        // If its edit mode then update the question details otherwise submit the question
+        const submitted = props.editMode ? await questionStore.updateQuestionDetails() : await questionStore.addNewQuestion()
         // 3) If successful, then close dialog
-        if (questionAdded) {
+        if (submitted) {
             emit('hide-dialog')
         }
 
@@ -47,8 +54,7 @@ const submit = async () => {
 
 <template>
     <div>
-        <FormDialog header="Question Form" width="60vw" @hide-dialog="emit('hide-dialog')"
-            @submit.preventDefault();="submit">
+        <FormDialog :header="formHeader" width="60vw" @hide-dialog="emit('hide-dialog')" @submit.preventDefault()="submit">
             <div class="p-fluid">
                 <!-- Question Title Section -->
                 <div class="formgrid grid">
