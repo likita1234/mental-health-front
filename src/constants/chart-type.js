@@ -3,6 +3,6 @@ export const ChartType = Object.freeze({
   BAR: 'bar',
   LINE: 'line',
   PIE: 'pie',
-  DOUGHNUT: 'doughnut',
+  RATINGS: 'ratings',
   RATINGS_SUMMATION: 'question-ratings-summation'
 })
