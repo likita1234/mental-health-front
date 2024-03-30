@@ -97,7 +97,7 @@ import TriStateCheckbox from 'primevue/tristatecheckbox'
 
 // PrimeVue components ends
 
-import 'primevue/resources/themes/nano/theme.css'
+import 'primevue/resources/primevue.min.css'
 import 'primeicons/primeicons.css'
 
 // My custom components
