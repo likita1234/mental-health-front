@@ -12,12 +12,19 @@ export const useQuestionStore = defineStore('question', () => {
   })
 
   const question = ref({
-    title: null,
-    description: null,
+    title: {
+      english: null,
+      nepali: null
+    },
+    description: {
+      english: null,
+      nepali: null
+    },
     label: null,
     type: null,
     options: []
   })
+
   const questions = ref([])
   const totalQuestions = ref(null)
   // =========>Advanced filterings
@@ -59,6 +66,7 @@ export const useQuestionStore = defineStore('question', () => {
     sort,
     fields,
     // states
+    question,
     // getters
     allQuestions,
     // actions
