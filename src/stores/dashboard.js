@@ -26,11 +26,12 @@ export const useDashboardStore = defineStore('dashboard', () => {
   // Returns
   return {
     // States
-    dashboards
+    dashboards,
 
     // Getters
 
     // Actions
+    getDashboardDetails
 
     // Helpers
   }
