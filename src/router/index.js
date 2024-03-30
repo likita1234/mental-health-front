@@ -29,4 +29,25 @@ const router = createRouter({
   ]
 })
 
+// ============> Check if user is already logged in or has a valid token
+const checkAuthentication = () => {
+  return true
+}
+
+// ===========> Route guards
+const routeBeforeEnter = (to, from, next) => {
+  // 1) Check if the user has a valid token or not
+  const isUserAuthenticated = checkAuthentication()
+
+  // If user is logged in and has a valid token then proceed user to go where he/she wants
+  // If user wants to register then its okay to let them go there
+  if (isUserAuthenticated || to.name === 'register') {
+    next()
+  }
+  // If user doesnt have a valid token then redirect user to log in page
+  else {
+    next('/login')
+  }
+}
+
 export default router
