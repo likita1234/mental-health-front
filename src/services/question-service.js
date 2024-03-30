@@ -46,6 +46,15 @@ class QuestionService {
       throw new AppError(error.statusCode, 'Failed to update question details')
     }
   }
+
+  // Delete an existing question based on question id
+  static async deleteQuestion(questionId) {
+    try {
+      return await authApi.delete(`${QUESTION_API}/${questionId}`)
+    } catch (error) {
+      throw new AppError(error.statusCode, 'Failed to delete question')
+    }
+  }
 }
 
 export default QuestionService
