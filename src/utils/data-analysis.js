@@ -7,7 +7,7 @@ export const calculateWeightedMeanAndSD = (values, frequencies) => {
       sum += values[i] * frequencies[i]
       totalFrequency += frequencies[i]
     }
-    return (sum / totalFrequency)?.toFixed(2)
+    return sum / totalFrequency
   }
 
   // Function to calculate variance
@@ -23,7 +23,7 @@ export const calculateWeightedMeanAndSD = (values, frequencies) => {
 
   // Function to calculate standard deviation
   function calculateStandardDeviation(variance) {
-    return Math.sqrt(variance)?.toFixed(2)
+    return Math.sqrt(variance)
   }
   // Calculate Mean
   const weightedMean = calculateWeightedMean(values, frequencies)
