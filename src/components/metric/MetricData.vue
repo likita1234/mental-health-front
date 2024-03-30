@@ -4,7 +4,7 @@
             <h4 class="text-center">{{ title }}</h4>
         </div>
         <div v-if="chartData" class="card-body">
-            <base-chart :type="type" :chartData="jsonData" />
+            <base-chart :type="type" :jsonData="jsonData" />
         </div>
     </div>
 </template>
