@@ -29,9 +29,11 @@ const removeQuestion = (keyIndex) => {
             </div>
         </div>
         <Divider />
-        <div class="flex flex-column gap-3">
-            <SectionQuestion v-for="question, keyIndex in questions" :key="keyIndex" :question="question"
-                :keyIndex="keyIndex" @remove-question="removeQuestion" />
+        <div class="flex justify-content-center">
+            <div class="flex flex-column gap-3">
+                <SectionQuestion v-for="question, keyIndex in questions" :key="keyIndex" :question="question"
+                    :keyIndex="keyIndex" @remove-question="removeQuestion" />
+            </div>
         </div>
     </div>
 </template>

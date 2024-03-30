@@ -24,7 +24,7 @@ const hideDialog = () => {
 
 <template>
     <Dialog v-model:visible="visible" modal :header="header" :style="{ width }"
-        :breakpoints="{ '1199px': '60vw', '575px': '80vw' }" @hide="hideDialog">
+        :breakpoints="{ '1199px': '75vw', '575px': '90vw' }" @hide="hideDialog">
         <!-- Our content goes here -->
         <template #header>
             <slot name="header" />

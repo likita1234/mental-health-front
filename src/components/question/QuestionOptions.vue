@@ -30,9 +30,11 @@ const removeOption = (keyIndex) => {
         </div>
         <Divider />
         <template v-if="options.length">
-            <div class="flex flex-column gap-3">
-                <QuestionOption v-for="option, keyIndex in options" :key="option.id" :option="option" :keyIndex="keyIndex"
-                    @remove-option="removeOption" />
+            <div class="flex justify-content-center">
+                <div class="flex flex-column gap-3">
+                    <QuestionOption v-for="option, keyIndex in options" :key="option.id" :option="option"
+                        :keyIndex="keyIndex" @remove-option="removeOption" />
+                </div>
             </div>
         </template>
         <template v-else>

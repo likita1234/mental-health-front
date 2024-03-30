@@ -59,7 +59,7 @@ const hideDialog = () => {
 
 <template>
     <div>
-        <FormDialog :header="formHeader" width="60vw" @hide-dialog="hideDialog" @submit.preventDefault()="submit">
+        <FormDialog :header="formHeader" width="40vw" @hide-dialog="hideDialog" @submit.preventDefault()="submit">
             <div class="p-fluid">
                 <!-- Question Title Section -->
                 <div class="formgrid grid">
@@ -88,7 +88,7 @@ const hideDialog = () => {
                     <div class="field col">
                         <BaseDropdown v-model="question.type" :options="questionTypeOption" label="Type"
                             :optionValue="'value'" placeholder="Select a question type" :showClear="false"
-                            :errorMessage="formErrors.type" />
+                            :errorMessage="formErrors.type" :disabled="editMode"/>
                     </div>
                 </div>
                 <!-- Question Options -->
