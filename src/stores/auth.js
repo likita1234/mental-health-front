@@ -4,7 +4,7 @@ import { useLocalStorage } from '@vueuse/core'
 
 import AuthService from '@/services/AuthService'
 import AppError from '@/utils/app-error'
-import { UserRole } from '@/contants/user-role'
+import { UserRole } from '@/constants/user-role'
 
 export const useAuthStore = defineStore('auth', () => {
   // states

@@ -1,4 +1,4 @@
-import { UserRole } from '@/contants/user-role'
+import { UserRole } from '@/constants/user-role'
 import { authStore } from '@/stores'
 import { computed } from 'vue'
 
@@ -10,8 +10,6 @@ export function useMenu() {
 
   //   checks if current logged user have the allowed role of not
   const isAccessible = (allowedRoles) => {
-    console.log('Allowed roles', allowedRoles)
-    console.log('Logged user role', loggedUserRole.value)
     return allowedRoles?.includes(loggedUserRole.value)
   }
 
