@@ -37,8 +37,7 @@ const onTopbarSubItemClick = (event) => {
             <div class="layout-topbar-left">
                 <router-link to="/">
                     <div class="layout-topbar-logo" id="logolink" style="cursor: pointer; outline: none;">
-                        <img :src="'public/images/logo/logo-transparent.png'" class="w-full h-3rem" id="app-logo"
-                            alt="logo">
+                        <img :src="'/images/logo/logo-transparent.png'" class="w-full h-4rem" id="app-logo" alt="logo">
 
                     </div>
                 </router-link>

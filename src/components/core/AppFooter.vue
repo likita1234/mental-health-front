@@ -7,9 +7,8 @@
         <div>
             <router-link to="/">
                 <div class="layout-topbar-logo" id="footerlogolink" style="cursor: points;outline:none;">
-                    <img  :src="'public/images/logo/logo-transparent.png'" class="w-full h-4rem" id="app-logo" alt="logo">
+                    <img  :src="'/images/logo/logo-transparent.png'" class="w-full h-4rem" id="app-logo" alt="logo">
                 </div>
-
             </router-link>
         </div>
         <div class="social-icons">

@@ -38,8 +38,7 @@ const watchRouter = () => {
                         <router-link to="item.routerLink" class="p-link" v-if="item.routerLink">{{ item }}</router-link>
                         <template v-if="!item.routerLink">{{ item }}</template>
                     </li>
-                    <li v-if="index !== 'label'"><i
-                            :class="['pi', { 'pi-angle-right': !$appState.isRTL, 'pi-angle-left': $appState.isRTL }]"></i>
+                    <li v-if="index !== 'label'"><i class="pi pi-angle-right"></i>
                     </li>
                 </template>
             </div>
