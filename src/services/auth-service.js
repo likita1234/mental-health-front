@@ -11,7 +11,7 @@ class AuthService {
         return response.data
       }
     } catch (error) {
-      throw new AppError(error.statusCode, 'Invalid credentials')
+      return new AppError(error.statusCode, 'Invalid credentials')
     }
   }
 }

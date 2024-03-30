@@ -81,7 +81,7 @@ export const handleValidation = async (formData, schema) => {
       formErrorStore.addErrors(errors)
       showToast('info', 'Invalid Data', 'Please input valid data')
     } else {
-      throw new AppError(error.status, error?.data?.message)
+      return new AppError(error.status, error?.data?.message)
     }
   }
 }

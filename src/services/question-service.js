@@ -9,7 +9,7 @@ class QuestionService {
     try {
       return await authApi.post(QUESTION_API, body)
     } catch (error) {
-      throw new AppError(error.statusCode, 'Failed to add new question')
+      return new AppError(error.statusCode, 'Failed to add new question')
     }
   }
   // Fetch all existing questions
@@ -25,7 +25,7 @@ class QuestionService {
         }
       })
     } catch (error) {
-      throw new AppError(error.statusCode, 'Failed to fetch all questions')
+      return new AppError(error.statusCode, 'Failed to fetch all questions')
     }
   }
 
@@ -34,7 +34,7 @@ class QuestionService {
     try {
       return await authApi.get(`${QUESTION_API}/${questionId}`)
     } catch (error) {
-      throw new AppError(error.statusCode, 'Failed to fetch question details')
+      return new AppError(error.statusCode, 'Failed to fetch question details')
     }
   }
 
@@ -43,7 +43,7 @@ class QuestionService {
     try {
       return await authApi.patch(`${QUESTION_API}/${body.id}`, body)
     } catch (error) {
-      throw new AppError(error.statusCode, 'Failed to update question details')
+      return new AppError(error.statusCode, 'Failed to update question details')
     }
   }
 
@@ -52,7 +52,7 @@ class QuestionService {
     try {
       return await authApi.delete(`${QUESTION_API}/${questionId}`)
     } catch (error) {
-      throw new AppError(error.statusCode, 'Failed to delete question')
+      return new AppError(error.statusCode, 'Failed to delete question')
     }
   }
 }

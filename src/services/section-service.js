@@ -9,7 +9,7 @@ class SectionService {
     try {
       return await authApi.post(SECTION_API, body)
     } catch (error) {
-      throw new AppError(error.statusCode, 'Failed to add new section')
+      return new AppError(error.statusCode, 'Failed to add new section')
     }
   }
   // Fetch all existing sections
@@ -25,7 +25,7 @@ class SectionService {
         }
       })
     } catch (error) {
-      throw new AppError(error.statusCode, 'Failed to fetch all sections')
+      return new AppError(error.statusCode, 'Failed to fetch all sections')
     }
   }
 
@@ -34,7 +34,7 @@ class SectionService {
     try {
       return await authApi.get(`${SECTION_API}/${sectionId}`)
     } catch (error) {
-      throw new AppError(error.statusCode, 'Failed to fetch section details')
+      return new AppError(error.statusCode, 'Failed to fetch section details')
     }
   }
 
@@ -43,7 +43,7 @@ class SectionService {
     try {
       return await authApi.patch(`${SECTION_API}/${body.id}`, body)
     } catch (error) {
-      throw new AppError(error.statusCode, 'Failed to update section details')
+      return new AppError(error.statusCode, 'Failed to update section details')
     }
   }
 
@@ -52,7 +52,7 @@ class SectionService {
     try {
       return await authApi.delete(`${SECTION_API}/${sectionId}`)
     } catch (error) {
-      throw new AppError(error.statusCode, 'Failed to delete section')
+      return new AppError(error.statusCode, 'Failed to delete section')
     }
   }
 }

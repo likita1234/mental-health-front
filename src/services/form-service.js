@@ -9,7 +9,7 @@ class FormService {
     try {
       return await authApi.post(FORM_API, body)
     } catch (error) {
-      throw new AppError(error.statusCode, 'Failed to add new form')
+      return new AppError(error.statusCode, 'Failed to add new form')
     }
   }
   // Fetch all existing form
@@ -25,7 +25,7 @@ class FormService {
         }
       })
     } catch (error) {
-      throw new AppError(error.statusCode, 'Failed to fetch all forms')
+      return new AppError(error.statusCode, 'Failed to fetch all forms')
     }
   }
 
@@ -34,7 +34,7 @@ class FormService {
     try {
       return await authApi.get(`${FORM_API}/${id}`)
     } catch (error) {
-      throw new AppError(error.statusCode, 'Failed to fetch form details')
+      return new AppError(error.statusCode, 'Failed to fetch form details')
     }
   }
 
@@ -43,7 +43,7 @@ class FormService {
     try {
       return await authApi.patch(`${FORM_API}/${body.id}`, body)
     } catch (error) {
-      throw new AppError(error.statusCode, 'Failed to update form details')
+      return new AppError(error.statusCode, 'Failed to update form details')
     }
   }
 
@@ -52,7 +52,7 @@ class FormService {
     try {
       return await authApi.delete(`${FORM_API}/${id}`)
     } catch (error) {
-      throw new AppError(error.statusCode, 'Failed to delete form')
+      return new AppError(error.statusCode, 'Failed to delete form')
     }
   }
 }

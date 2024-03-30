@@ -34,12 +34,10 @@ export const useAuthStore = defineStore('auth', () => {
 
   // actions
   const login = async (body) => {
-    const currentUser = await AuthService.login(body)
-    if (currentUser) {
+    await AuthService.login(body).then((currentUser) => {
       setupUserData(currentUser)
       return true
-    }
-    return false
+    })
   }
 
   // logout user
@@ -47,7 +45,7 @@ export const useAuthStore = defineStore('auth', () => {
     try {
       initUserData()
     } catch (error) {
-      throw new AppError(error.status, 'Error while logging out')
+      return new AppError(error.status, 'Error while logging out')
     }
   }
 
