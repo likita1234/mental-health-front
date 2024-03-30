@@ -10,6 +10,14 @@ const router = createRouter({
       component: () => import('../App.vue'),
       children: [
         {
+          path: '',
+          name: 'default-dashboard',
+          component: () => import('../components/dashboard/DefaultDashboard.vue'),
+          meta: {
+            breadcrumb: [{ parent: 'Home', label: 'Default Dashboard' }]
+          }
+        },
+        {
           path: 'question',
           name: 'manage-questions',
           component: () => import('../components/question/ManageQuestion.vue'),
