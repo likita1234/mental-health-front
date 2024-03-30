@@ -2,12 +2,17 @@ import './assets/main.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import PrimeVue from 'primevue/config'
 
-import App from './App.vue'
+import AppWrapper from './AppWrapper.vue'
 import router from './router'
 
-const app = createApp(App)
+import 'primevue/resources/primevue.min.css'
+import 'primeicons/primeicons.css'
 
+const app = createApp(AppWrapper)
+
+app.use(PrimeVue, { ripple: true })
 app.use(createPinia())
 app.use(router)
 
