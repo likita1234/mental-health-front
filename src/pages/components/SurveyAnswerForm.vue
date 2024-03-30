@@ -1,7 +1,7 @@
 <script setup>
 import { onMounted, ref, computed, inject } from 'vue';
 
-import { formStore } from '@/stores';
+import { answerStore, formStore } from '@/stores';
 import { storeToRefs } from 'pinia';
 import { showToast } from '@/utils/show-toast';
 
@@ -48,23 +48,9 @@ const hasPreviousStep = computed(() => {
     return activeStep.value !== 0
 })
 
-const hasNextStep = computed(() => {
-    return (activeStep.value + 1) < formDetails.value?.sections?.length
+const isFinalStep = computed(() => {
+    return (activeStep.value + 1) == formDetails.value?.sections?.length
 })
-
-
-// Navigate the steps
-const toggleStep = (stepFlag) => {
-    // First check if you have fulfilled all required questions
-    if (checkRequiredAnswers()) {
-        stepFlag ? activeStep.value++ : activeStep.value--
-        // Scroll window
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    }
-}
 
 onMounted(() => {
     setupAssessmentDetails()
@@ -76,9 +62,32 @@ const setupAssessmentDetails = async () => {
     // First load assessment details
     await loadAssessmentDetails()
 }
+
 const loadAssessmentDetails = async () => {
     const formId = props.id
     await formStore.fetchFormDetails(formId)
+}
+
+const submitForm = async () => {
+    await answerStore.submitAnswerForm(formDetails.value)
+}
+
+// Navigate the steps
+const toggleStep = (stepFlag) => {
+    // First check if you have fulfilled all required questions
+    if (checkRequiredAnswers()) {
+        // Check if its final step and stepFlag is true then submit
+        if (stepFlag && isFinalStep.value) {
+            submitForm()
+        } else {
+            stepFlag ? activeStep.value++ : activeStep.value--
+            // Scroll window
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    }
 }
 
 const checkRequiredAnswers = () => {
@@ -93,7 +102,6 @@ const checkRequiredAnswers = () => {
     }
 
 }
-
 </script>
 <template>
     <div class="flex justify-content-center">
@@ -130,7 +138,7 @@ const checkRequiredAnswers = () => {
                 <Divider />
                 <div class="flex mb-2 gap-2 justify-content-between">
                     <Button @click="toggleStep(false)" label="Previous" :disabled="!hasPreviousStep" />
-                    <Button @click="toggleStep(true)" label="Next" :disabled="!hasNextStep" />
+                    <Button @click="toggleStep(true)" :label="isFinalStep ? 'Submit' : 'Next'" />
                 </div>
             </div>
         </div>
