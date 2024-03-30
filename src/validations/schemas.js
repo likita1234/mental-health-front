@@ -43,7 +43,6 @@ export const handleValidation = async (formData, schema) => {
     formErrorStore.clearErrors()
     return true
   } catch (error) {
-    console.log(error)
     if (error.inner && typeof error.inner === 'object') {
       const errors = errorHandler(error)
       formErrorStore.addErrors(errors)
