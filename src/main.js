@@ -93,6 +93,7 @@ import CustomQuestion from './components/question/components/CustomQuestion.vue'
 import BaseChart from './components/charts/BaseChart.vue'
 import PieChart from './components/charts/PieChart.vue'
 import BarChart from './components/charts/BarChart.vue'
+import LineChart from './components/charts/LineChart.vue'
 
 // Font awesome plugins
 import { config, library } from '@fortawesome/fontawesome-svg-core'
@@ -208,6 +209,7 @@ app.component('CustomQuestion', CustomQuestion)
 app.component('BaseChart', BaseChart)
 app.component('PieChart', PieChart)
 app.component('BarChart', BarChart)
+app.component('LineChart', LineChart)
 
 // FONT awesome
 app.component('FontAwesomeIcon', FontAwesomeIcon)
