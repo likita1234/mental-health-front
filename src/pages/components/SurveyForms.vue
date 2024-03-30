@@ -10,7 +10,7 @@ const router = useRouter()
 const appState = inject('appState')
 
 // Store states
-const { activeForms } = storeToRefs(formStore)
+const { allForms } = storeToRefs(formStore)
 
 onMounted(() => {
     loadForms()
@@ -18,7 +18,7 @@ onMounted(() => {
 
 // Load all available survey forms
 const loadForms = async () => {
-    await formStore.fetchAllForms()
+    await formStore.fetchSurveyForms()
 }
 
 // Depending upon the selected survey form, redirect into the assessment form
@@ -35,9 +35,9 @@ const enterSurvey = (surveyId) => {
             <div class="mb-6 font-bold text-3xl">
                 <span class="text-blue-600">Ongoing Surveys </span>
             </div>
-            <div class="grid mt-4 justify-content-center">
-                <div class="card shadow-3 col-12 md:col-4 mb-4 form-container" v-for="form in activeForms"
-                    :key="form.id" @click="enterSurvey(form._id)">
+            <div class="flex mt-4 justify-content-center gap-3">
+                <div class="card shadow-3 col-12 md:col-4 mb-4 p-3 form-container h-18rem overflow-hidden"
+                    v-for="form in allForms" :key="form.id" @click="enterSurvey(form._id)">
                     <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
                         <font-awesome-icon :icon="['fas', 'brain']" size="3x" />
                     </span>
@@ -52,7 +52,6 @@ const enterSurvey = (surveyId) => {
 
 <style lang="scss" scoped>
 .form-container {
-    height: 100%;
     color: #334155;
     background: #ffffff;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
