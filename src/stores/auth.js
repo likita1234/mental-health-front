@@ -4,6 +4,7 @@ import { useLocalStorage } from '@vueuse/core'
 
 import AuthService from '@/services/AuthService'
 import AppError from '@/utils/app-error'
+import { UserRole } from '@/contants/user-role'
 
 export const useAuthStore = defineStore('auth', () => {
   // states
@@ -13,6 +14,11 @@ export const useAuthStore = defineStore('auth', () => {
   // getters
   const isLoggedIn = computed(() => {
     return token.value !== null
+  })
+
+  // Return user role while logged in or by default he/she is a guest
+  const userRole = computed(() => {
+    return loggedUser.value?.role ?? UserRole.GUEST
   })
 
   // helpers
@@ -52,6 +58,7 @@ export const useAuthStore = defineStore('auth', () => {
 
     // getters
     isLoggedIn,
+    userRole,
     // actions
     login,
     logout
