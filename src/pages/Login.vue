@@ -52,8 +52,8 @@ const submit = async () => {
             </template>
 
             <template #form-inputs>
-                <FormInputText v-model="form.email" label="Email" size="large" :errorMessage="formErrors.email" />
-                <FormInputText v-model="form.password" type="password" label="Password" size="large"
+                <BaseTextInput v-model="form.email" label="Email" size="large" :errorMessage="formErrors.email" />
+                <BaseTextInput v-model="form.password" type="password" label="Password" size="large"
                     :errorMessage="formErrors.password" />
             </template>
 

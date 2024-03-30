@@ -19,11 +19,11 @@ const form = ref({
             </template>
 
             <template #form-inputs>
-                <FormInputText v-model="form.firstname" label="First Name" size="large" />
-                <FormInputText v-model="form.lastname" label="Last Name" size="large" />
-                <FormInputText v-model="form.email" label="Email" size="large" />
-                <FormInputText v-model="form.password" type="password" label="Password" size="large" />
-                <FormInputText v-model="form.confirmpassword" type="password" label=" Confirm Password" size="large" />
+                <BaseTextInput v-model="form.firstname" label="First Name" size="large" />
+                <BaseTextInput v-model="form.lastname" label="Last Name" size="large" />
+                <BaseTextInput v-model="form.email" label="Email" size="large" />
+                <BaseTextInput v-model="form.password" type="password" label="Password" size="large" />
+                <BaseTextInput v-model="form.confirmpassword" type="password" label=" Confirm Password" size="large" />
             </template>
 
             <template #action-button>
