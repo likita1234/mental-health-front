@@ -1,5 +1,6 @@
 import { useAuthStore } from './auth'
 import { useAnswerStore } from './answer'
+import { useDashboardStore } from './dashboard'
 import { useFormStore } from './form'
 import { useFormErrorStore } from './formError'
 import { useSectionStore } from './section'
@@ -12,4 +13,12 @@ const formErrorStore = useFormErrorStore()
 const sectionStore = useSectionStore()
 const questionStore = useQuestionStore()
 
-export { authStore, answerStore, formStore, formErrorStore, sectionStore, questionStore }
+export {
+  authStore,
+  answerStore,
+  useDashboardStore,
+  formStore,
+  formErrorStore,
+  sectionStore,
+  questionStore
+}
