@@ -98,6 +98,9 @@ import TriStateCheckbox from 'primevue/tristatecheckbox'
 import 'primevue/resources/themes/nano/theme.css'
 import 'primeicons/primeicons.css'
 
+// My custom components
+import FormInputText from './components/form-inputs/FormInputText.vue'
+
 const app = createApp(AppWrapper)
 
 app.use(createPinia())
@@ -199,5 +202,8 @@ app.component('Tree', Tree)
 app.component('TreeSelect', TreeSelect)
 app.component('TreeTable', TreeTable)
 app.component('TriStateCheckbox', TriStateCheckbox)
+
+// My Custom Components goes here
+app.component('FormInputText', FormInputText)
 
 app.mount('#app')
