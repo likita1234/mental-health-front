@@ -20,13 +20,18 @@ const description = computed(() => {
 })
 
 const questions = computed(() => {
-    return props.section.questions?.map(questionObj => questionObj.questionId)
+    return props.section?.questions?.map(questionObj => {
+        return {
+            order: questionObj.order,
+            ...questionObj.questionId
+        }
+    })
 })
 
 </script>
 
 <template>
-    <div class="max-h-30rem overflow-y-auto">
+    <div>
         <div class="flex flex-column justify-content-center align-items-center gap-3">
             <!-- Section Title Here -->
             <h4>{{ title }}</h4>
