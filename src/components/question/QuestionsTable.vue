@@ -16,8 +16,7 @@ const { allQuestions, totalQuestions, limit, page } = storeToRefs(questionStore)
 // Component states
 const loading = ref(false)
 const formDialog = ref(false)
-const detailsDialog = ref(false)
-const questionDetails = ref(null)
+const activeQuestionId = ref(false)
 
 const appState = inject('appState')
 
@@ -34,8 +33,7 @@ const loadQuestions = async () => {
 }
 
 const viewDetails = async (id) => {
-    questionDetails.value = await questionStore.fetchQuestionDetails(id)
-    detailsDialog.value = true
+    activeQuestionId.value = id
 }
 
 const editQuestion = async (id) => {
@@ -125,6 +123,6 @@ const onPage = async (event) => {
         <QuestionForm v-if="formDialog" editMode @hide-dialog="formDialog = false" />
 
         <!-- Question Details Dialog -->
-        <QuestionDetails v-if="detailsDialog" :question="questionDetails" @hide-dialog="detailsDialog = false" />
+        <QuestionDetails v-if="activeQuestionId" :id="activeQuestionId" @hide-dialog="activeQuestionId = null" />
     </div>
 </template>

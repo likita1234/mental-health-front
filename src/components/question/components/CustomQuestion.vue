@@ -23,7 +23,7 @@ const description = computed(() => {
 })
 
 const type = computed(() => {
-    return props.question.type
+    return props.question?.type
 })
 
 const options = computed(() => {
