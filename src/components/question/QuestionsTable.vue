@@ -68,6 +68,7 @@ const onPage = async (event) => {
                     </template>
                 </Column>
                 <Column field="description[appState.lang]" header="DESCRIPTION" style="width: 25%">
+
                     <template #body="slotProps">
                         <div>
                             {{ slotProps.data.description[appState.lang] }}
@@ -75,17 +76,20 @@ const onPage = async (event) => {
                     </template>
                 </Column>
                 <Column field="type" header="TYPE" style="width: 10%">
+
                     <template #body="{ data }">
-                        <Tag :value="data.type" class="capitalize question" :class="` type-${data.type}`" />
+                        <DataTypeTag :entity="'question'" :type="data.type" />
                     </template>
                 </Column>
                 <Column field="optionsCount" header="OPTIONS" style="width: 10%;">
+
                     <template #body="slotProps">
                         <template v-if="slotProps.data.optionsCount">
                             <div :class="stockClass(slotProps.data.optionsCount)">
                                 {{ slotProps.data.optionsCount }}
                             </div>
                         </template>
+
                         <template v-else>
                             <div>
                                 None
@@ -94,12 +98,14 @@ const onPage = async (event) => {
                     </template>
                 </Column>
             </template>
+
             <template #actions>
                 <Column header="ACTIONS" :exportable="false" style="width:15%">
                     <template #body="slotProps">
                         <!-- <Button icon="pi pi-eye" rounded severity="info" class="mr-2" /> -->
                         <Button icon="pi pi-pencil" rounded class="mr-2" @click="editQuestion(slotProps.data._id)" />
-                        <Button icon="pi pi-trash" rounded severity="danger" @click="confirmDelete(slotProps.data._id)" />
+                        <Button icon="pi pi-trash" rounded severity="danger"
+                            @click="confirmDelete(slotProps.data._id)" />
                     </template>
                 </Column>
             </template>

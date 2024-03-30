@@ -1,5 +1,6 @@
 <script setup>
 import AssessmentForm from './AssessmentForm.vue';
+
 import { ref, onMounted, inject } from 'vue'
 import { formStore } from '@/stores'
 import { storeToRefs } from 'pinia';
@@ -83,7 +84,7 @@ const onPage = async (event) => {
                 <Column field="type" header="TYPE" style="width: 10%">
 
                     <template #body="{ data }">
-                        <Tag :value="data.type" class="capitalize assessment-form" :class="data.type" />
+                        <DataTypeTag :entity="'form'" :type="data.type" />
                     </template>
                 </Column>
                 <Column field="sectionsCount" header="SECTIONS" style="width: 10%;">
@@ -119,4 +120,4 @@ const onPage = async (event) => {
         <!-- Question Form -->
         <AssessmentForm v-if="formDialog" editMode @hide-dialog="formDialog = false" />
     </div>
-</template>
+</template>../global/AssessmentFormTypeTag.vue
