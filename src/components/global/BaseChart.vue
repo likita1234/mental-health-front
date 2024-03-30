@@ -70,10 +70,10 @@ const loadChartData = async () => {
 const setChartData = async () => {
     const documentStyle = getComputedStyle(document.documentElement);
     let datasets = [];
-    if (props.chartType === ChartTypes.PIE || props.chartType == ChartTypes.DOUGHNUT) {
+    if (props.chartType === ChartType.PIE || props.chartType == ChartType.DOUGHNUT) {
         datasets = getPieChartDatasets(props.data, documentStyle);
     } else {
-        datasets = getBarChartDatasets(props.data, documentStyle, props.chartType === ChartTypes.LINE, props.customizeInnerColor);
+        datasets = getBarChartDatasets(props.data, documentStyle, props.chartType === ChartType.LINE, props.customizeInnerColor);
     }
 
     return {
@@ -94,7 +94,7 @@ const setChartOptions = () => {
             legend: props.showLegend
                 ? {
                     labels: {
-                        usePointStyle: props.chartType === ChartTypes.PIE,
+                        usePointStyle: props.chartType === ChartType.PIE,
                         fontColor: textColor,
                     },
                 }
@@ -105,7 +105,7 @@ const setChartOptions = () => {
     };
 
     //Scales added only for Bar and Line charts
-    if (props.chartType == ChartTypes.BAR || props.chartType == ChartTypes.LINE) {
+    if (props.chartType == ChartType.BAR || props.chartType == ChartType.LINE) {
         options.scales = {
             x: {
                 stacked: props.stacked,
