@@ -18,7 +18,7 @@ export const useSectionStore = defineStore('section', () => {
     },
     questions: [
       {
-        order: null,
+        order: 1,
         questionId: null
       }
     ]
@@ -90,12 +90,7 @@ export const useSectionStore = defineStore('section', () => {
     section.value.title = title
     section.value.description = description
     // Setup section options
-    section.value.questions = questions?.map((obj) => {
-      return {
-        ...obj,
-        id: obj._id
-      }
-    })
+    section.value.questions = questions
   }
 
   const updateSectionDetails = async () => {
@@ -142,7 +137,6 @@ export const useSectionStore = defineStore('section', () => {
     if (questions && questions.length > 0) {
       return questions?.map((question) => {
         return {
-          _id: `${question.id}`,
           order: question.order,
           questionId: question.questionId
         }
