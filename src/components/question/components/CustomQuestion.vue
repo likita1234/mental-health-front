@@ -76,7 +76,7 @@ onMounted(() => {
         </template>
 
         <template v-else-if="type === QuestionType.RATINGS">
-            <BaseRating v-model="answer" :label="label" :description="description" :cancel="true" />
+            <BaseRating v-model="answer" :label="label" :description="description" :cancel="false" />
         </template>
     </div>
 
