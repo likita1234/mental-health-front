@@ -24,25 +24,60 @@ export const useAnswerStore = defineStore('answer', () => {
   // =========>Advanced filterings Ends
 
   // getters
-  const allAnwers = computed(() => {
+  const allAnswers = computed(() => {
     return answers.value
   })
 
   // actions
 
   // Submit form assessment answers
-  const submitAnswerForm = async (formDetails) => {
-    const payloadBody = loadSubmissionFormAnswers(formDetails)
-    // Setup options
+  const submitAnswerForm = async (formDetails, formatted = false) => {
+    // Check if formDetails is already formatted, otherwise format it as required
+    // By default formatted is false
+    const payloadBody = formatted ? formDetails : loadSubmissionFormAnswers(formDetails)
     const response = await FormService.submitAnswerForm(payloadBody)
-    debugger
-    if (response.statusCode === 201) {
-      // clean the section object
-      initAnswerForm()
-      new AppResponse(response.statusCode, 'Survey Form submitted successfully')
-      return true
+    return response.statusCode === 201
+  }
+
+  // Submit large csv data at once
+  const submitCsvData = async (jsonData, formDetails) => {
+    // Fetch the required details
+    const submissionData = {
+      formId: formDetails._id,
+      type: formDetails.type
     }
-    return false
+    // Make sure to filter the null keys and null values in the jsonData objects
+    const filteredAnswersArr = jsonData?.map((obj) =>
+      Object.fromEntries(
+        Object.entries(obj).filter(([key, value]) => key.trim() !== '' && value !== null)
+      )
+    )
+
+    // Create a counter for each
+    let submittedFormCount = 0
+    // Now loop through the filteredAnswersArr and submit it
+    for (let i = 0; i < filteredAnswersArr.length; i++) {
+      // Make questionId and answer object
+      const answers = Object.entries(filteredAnswersArr[i])
+        .filter(([key, value]) => key !== '' && value !== null)
+        .map(([key, value]) => ({ questionId: key, answer: value }))
+      // Check if there is answers otherwise skip
+      if (answers.length > 0) {
+        // Create the body for submission
+        const submissionForm = {
+          ...submissionData,
+          answers
+        }
+        // Then submit the form answer
+        const formattedData = true // We set this true because we have already formatted the data
+        const formSubmitted = await submitAnswerForm(submissionForm, formattedData)
+        if (formSubmitted) {
+          submittedFormCount++
+        }
+      }
+    }
+
+    return submittedFormCount
   }
 
   //   Helpers
@@ -68,7 +103,7 @@ export const useAnswerStore = defineStore('answer', () => {
           answer: questionObj.answer?.toString()
         }
       })
-      // debugger
+      
       // Now concat allQuestions to allAnswers, if you push them it will create array of array
       allAnswers = allAnswers.concat(allQuestions)
     }
@@ -95,10 +130,11 @@ export const useAnswerStore = defineStore('answer', () => {
     fields,
     answer,
     // getters
-    allAnwers,
+    allAnswers,
     // actions
     // fetchAllAnswers,
     submitAnswerForm,
+    submitCsvData,
     // helpers
     initAnswerForm
   }
