@@ -8,7 +8,7 @@ const summaryMappings = {
   success: {
     200: 'Success',
     201: 'Created',
-    204: 'No Content'
+    204: 'Done' // Instead of saying No Content, Done added
   }
 }
 
