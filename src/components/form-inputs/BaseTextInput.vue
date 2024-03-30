@@ -64,5 +64,3 @@ watch(inputValue, () => {
         <small class="p-error" id="text-error">{{ errorMessage || '&nbsp;' }}</small>
     </div>
 </template>
-
-<style></style>
