@@ -3,8 +3,8 @@
         <!-- Pie Chart -->
         <pie-chart v-if="type === ChartType.PIE" :chartOptions="chartOptions" :jsonData="jsonData" />
         <!-- Bar Chart -->
-        <bar-chart v-else-if="type === ChartType.BAR" :chartOptions="chartOptions" :groupBy="groupBy"
-            :jsonData="jsonData" />
+        <bar-chart v-else-if="type === ChartType.BAR || type === ChartType.RATINGS_SUMMATION"
+            :chartOptions="chartOptions" :groupBy="groupBy" :jsonData="jsonData" />
         <line-chart v-else-if="type === ChartType.LINE" :chartOptions="chartOptions" :groupBy="groupBy"
             :jsonData="jsonData" />
         <chart-table v-else-if="type === ChartType.TABLE" :jsonData="jsonData" />
