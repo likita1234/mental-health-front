@@ -67,7 +67,7 @@ export const useFormStore = defineStore('form', () => {
     if (response.statusCode === 201) {
       // clean the section object
       initFormData()
-      await fetchAllSections()
+      await fetchAllForms()
       new AppResponse(response.statusCode, 'Form added successfully')
       return true
     }
@@ -91,7 +91,12 @@ export const useFormStore = defineStore('form', () => {
     form.value.description = description
     form.value.type = type
     // Setup section options
-    form.value.sections = sections
+    form.value.sections = sections?.map((sectionObj) => {
+      return {
+        order: sectionObj.order,
+        sectionId: sectionObj.sectionId._id
+      }
+    })
   }
 
   const updateFormDetails = async () => {

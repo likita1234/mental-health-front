@@ -46,10 +46,10 @@ export const useSectionStore = defineStore('section', () => {
   })
 
   // actions
-  const fetchAllSections = async () => {
+  const fetchAllSections = async (allData = false) => {
     const response = await SectionService.getAllSections({
       page: page.value,
-      limit: limit.value,
+      limit: allData ? 100 : limit.value,
       sort: sort.value,
       fields: fields.value
     })
@@ -90,7 +90,12 @@ export const useSectionStore = defineStore('section', () => {
     section.value.title = title
     section.value.description = description
     // Setup section options
-    section.value.questions = questions
+    section.value.questions = questions?.map((questionObj) => {
+      return {
+        order: questionObj.order,
+        questionId: questionObj.questionId._id
+      }
+    })
   }
 
   const updateSectionDetails = async () => {
