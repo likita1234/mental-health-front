@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 
 import AppResponse from '@/utils/app-response'
 import FormService from '@/services/form-service'
+import { AssessmentFormType } from '@/constants'
 import { formatDisplayDate } from '@/utils/date-formatter'
 
 export const useFormStore = defineStore('form', () => {
@@ -44,6 +45,12 @@ export const useFormStore = defineStore('form', () => {
         sectionsCount: form.sections.length
       }
     })
+  })
+  // Returns all the public assessment forms with active polls
+  const activeForms = computed(() => {
+    return allForms.value?.filter(
+      (form) => form.pollActive === true && form.type === AssessmentFormType.PUBLIC
+    )
   })
 
   // actions
@@ -143,7 +150,6 @@ export const useFormStore = defineStore('form', () => {
     if (sections && sections.length > 0) {
       return sections?.map((section) => {
         return {
-          _id: `${section.id}`,
           order: section.order,
           sectionId: section.sectionId
         }
@@ -181,6 +187,7 @@ export const useFormStore = defineStore('form', () => {
     form,
     // getters
     allForms,
+    activeForms,
     // actions
     fetchAllForms,
     addForm,
