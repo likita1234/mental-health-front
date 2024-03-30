@@ -31,14 +31,28 @@ const questions = computed(() => {
 </script>
 
 <template>
-    <div>
-        <div class="flex flex-column justify-content-center align-items-center gap-3">
+    <div class="section-container">
+        <div class="flex flex-column justify-content-center align-items-center">
             <!-- Section Title Here -->
             <h4>{{ title }}</h4>
             <!-- Section Description Here -->
             <p v-if="description">{{ description }}</p>
+            <Divider/>
         </div>
-        <!-- Section Questions Here -->
-        <CustomQuestion v-for="question in questions" :question="question" :key="question._id" />
+        <div class="questions-container">
+            <!-- Section Questions Here -->
+            <CustomQuestion v-for="question in questions" :question="question" :key="question._id" />
+        </div>
     </div>
 </template>
+
+<style lang="scss">
+.section-container {
+    height: 50vh;
+
+    .questions-container {
+        height: 40vh;
+        overflow-y: auto;
+    }
+}
+</style>
