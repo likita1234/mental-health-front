@@ -7,7 +7,7 @@
             :jsonData="jsonData" />
         <line-chart v-else-if="type === ChartType.LINE" :chartOptions="chartOptions" :groupBy="groupBy"
             :jsonData="jsonData" />
-
+        <chart-table v-else-if="type === ChartType.TABLE" :jsonData="jsonData" />
     </div>
 </template>
 
