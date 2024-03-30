@@ -1,5 +1,5 @@
 <template>
-    <Line id="my-line-chart-id" :data="chartData" :options="chartOptions" :style="{ 'min-height': '20rem' }" />
+    <Line id="my-line-chart-id" :data="chartData" :options="lineChartOptions" :style="{ 'min-height': '20rem' }" />
 </template>
 
 <script setup>
@@ -32,6 +32,19 @@ const chartData = computed(() => {
             backgroundColor: bgColors,
             data: metricData?.map(dataObj => dataObj.count),
         }]
+    }
+})
+
+const lineChartOptions = computed(() => {
+    return {
+        ...props.chartOptions,
+        plugins: {
+            datalabels: {
+                color: 'black',
+                anchor: 'end',
+                align: 'right',
+            }
+        },
     }
 })
 </script>
