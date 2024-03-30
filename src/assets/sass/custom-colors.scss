@@ -26,3 +26,15 @@ $deep-blue: #4F46E5;
         background-color: $deep-blue;
     }
 }
+
+.assessment-form {
+    color: white;
+
+    .type-private {
+        background-color: $blue;
+    }
+
+    .type-public {
+        background-color: $red;
+    }
+}
