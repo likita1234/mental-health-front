@@ -4,7 +4,8 @@ export const stockClass = (count) => {
     {
       'bg-red-100 text-red-900': count > 0 && count <= 3,
       'bg-blue-100 text-blue-900': count > 3 && count <= 6,
-      'bg-teal-100 text-teal-900': count <= 10
+      'bg-teal-100 text-teal-900': count <= 10,
+      'bg-yellow-100 text-yellow-900': count > 10
     }
   ]
 }
