@@ -12,7 +12,7 @@
                 <p class="mt-0 mb-4 text-700 line-height-3">Join us and take the first step toward a healthier, happier
                     you!.</p>
                 <p class="my-2 text-700 text-primary font-bold font-italic line-height-3">P.S: We take your privacy
-                    seriously, so everything is anonymous, even your email information.</p>
+                    seriously, so everything is anonymous, even your email encrypted.</p>
                 <div class="flex mt-5">
                     <router-link :to="{ name: 'register' }">
                         <Button label="Register" type="button" class="mr-3 p-button-raised" />
