@@ -14,11 +14,18 @@
 import { onMounted, ref, computed } from 'vue';
 import { metricStore } from '@/stores';
 
+const emit = defineEmits(['metric-data-loaded'])
+
 // Props
 const props = defineProps({
     metricId: {
         type: String,
         required: true
+    },
+    // In case this is true, data is emitted
+    dataRequested: {
+        type: Boolean,
+        default: false
     }
 })
 
@@ -50,7 +57,10 @@ onMounted(() => {
 // Actions
 const loadMetricData = async () => {
     metricDetails.value = await metricStore.getMetricData(props.metricId)
-    console.log(metricDetails.value.metricData)
+    // Check if data is requested, if yes then emit the data
+    if (props.dataRequested) {
+        emit('metric-data-loaded', metricDetails.value)
+    }
 }
 
 </script>
