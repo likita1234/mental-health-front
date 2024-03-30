@@ -50,14 +50,26 @@ const router = createRouter({
       ]
     },
     {
-      path: '/login',
-      name: 'login',
-      component: () => import('../pages/Login.vue')
-    },
-    {
-      path: '/register',
-      name: 'register',
-      component: () => import('../pages/Register.vue')
+      path: '/app',
+      component: () => import('../pages/Landing.vue'),
+      children: [
+        {
+          path: '',
+          name: 'landing',
+          exact: true,
+          component: () => import('../pages/modules/Home.vue')
+        },
+        {
+          path: '/login',
+          name: 'login',
+          component: () => import('../pages/modules/Login.vue')
+        },
+        {
+          path: '/register',
+          name: 'register',
+          component: () => import('../pages/modules/Register.vue')
+        }
+      ]
     },
     {
       // path: '/about',
@@ -75,7 +87,10 @@ const router = createRouter({
 
 // ===========> Route guards
 router.beforeEach((to, from, next) => {
+  // debugger
   const authStore = useAuthStore()
+  // Routes that doesnt need authentication
+  const accessibleRoutes = ['login', 'register', 'landing']
   // 1) Check if the user has a valid token or not
   const isUserAuthenticated = authStore.isLoggedIn
 
@@ -83,7 +98,7 @@ router.beforeEach((to, from, next) => {
   if (isUserAuthenticated) {
     // If user tries to login, redirect to home page (except for when user is trying to register)
     if (to.name === 'login' && to.name !== 'register') {
-      next('/')
+      next('/app')
     } else {
       // Allow navigation to other pages for authenticated users
       next()
@@ -91,7 +106,7 @@ router.beforeEach((to, from, next) => {
   } else {
     // If user is not authenticated
     // If user tries to register, allow navigation to register page
-    if (to.name === 'register' || to.name === 'login') {
+    if (accessibleRoutes.includes(to.name)) {
       next()
     } else {
       // Redirect unauthenticated users to login page
