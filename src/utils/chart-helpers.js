@@ -9,10 +9,18 @@ export const getComparativeAnalysisDashboardTableData = (allMetricData) => {
     const { values, frequencies } = getValuesAndFrequencyFromMetricData(metricObj)
     // After getting values and frequencies, calculate the weighted mean, variance, and standard deviation
     const { weightedMean, standardDeviation } = calculateWeightedMeanAndSD(values, frequencies)
+
+    let respondentsCount = 0
+    // Sum up all the values in the frequencies array
+    for (let i = 0; i < frequencies.length; i++) {
+      respondentsCount += frequencies[i]
+    }
+
     return {
       id,
       title,
       description,
+      respondentsCount,
       weightedMean,
       standardDeviation
     }
@@ -42,7 +50,6 @@ function getValuesAndFrequencyFromMetricData(metricObj) {
       frequencies?.push(dataArr[i]?.count)
     }
   }
-
   return {
     values,
     frequencies
