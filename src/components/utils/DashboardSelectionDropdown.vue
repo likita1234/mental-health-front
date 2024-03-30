@@ -21,8 +21,12 @@ const { dashboards, params } = storeToRefs(dashboardStore)
 const selectedDashboard = ref(null)
 
 // Watchers for analysis of dashboard selection 
-watch(selectedDashboard, () => {
-    emit('dashboard-selected', selectedDashboard.value)
+watch(() => selectedDashboard.value, () => {
+    if (selectedDashboard.value) {
+        // Get some dashboard details
+        const dashboardDetails = dashboards.value.find(dashboard => dashboard._id === selectedDashboard.value)
+        emit('dashboard-selected', dashboardDetails)
+    }
 })
 
 onMounted(() => {
