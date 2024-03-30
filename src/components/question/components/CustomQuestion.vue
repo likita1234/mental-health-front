@@ -1,10 +1,12 @@
 <script setup>
-import { ref, computed, inject } from 'vue';
+import { ref, computed, inject, watch, onMounted, } from 'vue';
 import { QuestionType } from '@/constants'
 
+// Emits
+const emit = defineEmits(['update:modelValue'])
 // Props
 const props = defineProps({
-    modelValue: String,
+    modelValue: [String, Number, Array, Object],
     question: Object
 });
 
@@ -14,6 +16,10 @@ const appState = inject('appState')
 const answer = ref(null)
 
 // Computed properties
+const existingQuestionAnswer = computed(() => {
+    return props.question?.answer
+})
+
 const label = computed(() => {
     return props.question?.title[appState.lang] + ' ' + (description.value ? ('(' + description.value + ')') : null)
 })
@@ -28,6 +34,25 @@ const type = computed(() => {
 
 const options = computed(() => {
     return props.question?.options
+})
+
+
+// Watcher for answer data changes
+watch(() => existingQuestionAnswer.value, () => {
+    console.log('Existing changes')
+    answer.value = existingQuestionAnswer.value
+})
+
+watch(() => answer.value, () => {
+    console.log('Answer value update')
+    emit('update:modelValue', answer.value)
+})
+
+// Loads the modelValue into the answer
+onMounted(() => {
+    if (props.modelValue) {
+        answer.value = props.modelValue
+    }
 })
 
 </script>
