@@ -100,7 +100,7 @@ import 'primevue/resources/primevue.min.css'
 import 'primeicons/primeicons.css'
 
 // My custom components
-import FormInputText from './components/form-inputs/FormInputText.vue'
+import BaseTextInput from './components/form-inputs/BaseTextInput.vue'
 import BaseDropdown from './components/form-inputs/BaseDropdown.vue'
 
 const app = createApp(AppWrapper)
@@ -207,7 +207,7 @@ app.component('TreeTable', TreeTable)
 app.component('TriStateCheckbox', TriStateCheckbox)
 
 // My Custom Components goes here
-app.component('FormInputText', FormInputText)
+app.component('BaseTextInput', BaseTextInput)
 app.component('BaseDropdown', BaseDropdown)
 
 // Custom Event configuration
