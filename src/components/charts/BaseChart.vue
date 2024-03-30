@@ -1,18 +1,25 @@
 <template>
     <div>
-        <pie-chart :chartOptions="chartOptions" :chartData="chartData" />
+        <!-- Pie Chart -->
+        <pie-chart v-if="type === ChartType.PIE" :chartOptions="chartOptions" :jsonData="jsonData" />
+        <!-- Bar Chart -->
+        <bar-chart v-else-if="type === ChartType.BAR" :chartOptions="chartOptions" :groupBy="groupBy"
+            :jsonData="jsonData" />
+
     </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
-import { generateRandomColors } from '@/constants/color'
-
+import { ref } from 'vue';
+import { ChartType } from '@/constants';
 // Props
 const props = defineProps({
     type: {
         type: String,
         default: 'table'
+    },
+    groupBy: {
+        type: Array,
     },
     jsonData: {
         type: Object,
@@ -25,17 +32,4 @@ const chartOptions = ref({
     maintainAspectRatio: false,
 });
 
-// Computed properties
-const chartData = computed(() => {
-    const metricData = props.jsonData
-    // background colors
-    let bgColors = generateRandomColors(metricData?.length)
-    return {
-        labels: metricData?.map(dataObj => dataObj.label),
-        datasets: [{
-            backgroundColor: bgColors,
-            data: metricData?.map(dataObj => dataObj.count),
-        }]
-    }
-})
 </script>
