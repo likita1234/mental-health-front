@@ -52,7 +52,7 @@ watch(() => propsModelValue.value, () => {
                 </template>
             </Rating>
         </div>
-        <div>
+        <div class="text-center">
             {{ description }}
         </div>
     </div>
