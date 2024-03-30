@@ -102,7 +102,6 @@ const router = createRouter({
 
 // ===========> Route guards
 router.beforeEach((to, from, next) => {
-  // debugger
   const authStore = useAuthStore()
   // Routes that doesnt need authentication
   const accessibleRoutes = ['login', 'register', 'landing', 'survey', 'survey-form']
@@ -111,7 +110,7 @@ router.beforeEach((to, from, next) => {
 
   // If user is authenticated
   if (isUserAuthenticated) {
-    // If user tries to login, redirect to home page (except for when user is trying to register)
+    // If user tries to login, redirect to app page (except for when user is trying to register)
     if (to.name === 'login' && to.name !== 'register') {
       next('/')
     } else {
@@ -125,7 +124,7 @@ router.beforeEach((to, from, next) => {
       next()
     } else {
       // Redirect unauthenticated users to login page
-      next('/app')
+      next('/home')
     }
   }
 })
