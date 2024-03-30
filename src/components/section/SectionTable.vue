@@ -60,7 +60,6 @@ const onPage = async (event) => {
         <CustomTable :allData="allSections" :totalRecords="totalSections" :entity="'Sections'" :loading="loading"
             @on-page="onPage">
             <template #columns>
-                <Column field="_id" header="ID" style="width: 10%" />
                 <Column field="title[appState.lang]" header="TITLE" style="width: 20%">
                     <template #body="slotProps">
                         <div>

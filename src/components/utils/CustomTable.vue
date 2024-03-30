@@ -45,6 +45,7 @@ const onPage = async (event) => {
             <template #loading>
                 Loading {{ entity }}. Please wait...
             </template>
+            <Column field="_id" header="ID" style="width: 10%" />
             <slot name="columns" />
             <Column field="created_at" header="CREATED AT" style="width:10%" />
             <slot name="actions" />
