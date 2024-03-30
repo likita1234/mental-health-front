@@ -147,12 +147,12 @@ const loadSurveyJson = async (jsonData) => {
             <Divider />
             <div v-if="sectionItems.length">
                 <Steps v-model:activeStep="activeStep" :model="sectionItems" class="custom-steps">
-                    <template #item="{ item, active }">
+                    <!-- <template #item="{ item, active }">
                         <span class="border-primary border-1 p-1 cursor-pointer"
                             :class="{ 'bg-primary': active, 'surface-overlay text-primary': !active }">
                             {{ item.label }}
                         </span>
-                    </template>
+                    </template> -->
                 </Steps>
             </div>
             <Divider />
