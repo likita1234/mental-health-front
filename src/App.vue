@@ -197,8 +197,6 @@ export default {
       <div v-if="staticMenuMobileActive" class="layout-mask modal-in"></div>
     </div>
   </header>
-
-  <router-view />
 </template>
 
 <style scoped>
