@@ -1,6 +1,10 @@
 <template>
     <div>
-        <dashboard-selection-dropdown :type="'comparative'" @dashboard-selected="loadSelectedDashboard" class="" />
+        <dashboard-selection-dropdown :type="'comparative'" @dashboard-selected="loadSelectedDashboard" />
+        <!-- Comparative Dashboard Table -->
+        <div v-if="comparativeTableData.length" class="p-card">
+            <comparative-dashboard-table :data="comparativeTableData" />
+        </div>
         <!-- Charts  -->
         <div v-if="metricIds && metricIds.length > 0" class="flex flex-wrap">
             <!-- dataRequested props allows metricdata component to know that we are expecting a data -->
@@ -13,6 +17,7 @@
 <script setup>
 import DashboardSelectionDropdown from '@/components/utils/DashboardSelectionDropdown.vue'
 import MetricData from '@/components/metric/MetricData.vue'
+import ComparativeDashboardTable from '@/components/charts/ComparativeDashboardTable.vue'
 
 import { computed, ref, watch } from 'vue';
 import { getComparativeAnalysisDashboardTableData } from '@/utils/chart-helpers';
@@ -20,7 +25,7 @@ import { getComparativeAnalysisDashboardTableData } from '@/utils/chart-helpers'
 // Component states
 const metricIds = ref([])
 const comparativeMetrics = ref([])
-const comparativeTableData = ref(null)
+const comparativeTableData = ref([])
 
 // Keeps track of metrics data loaded by comparing it with the length of the loaded metrics 
 const allMetricsLoaded = computed(() => {
@@ -36,7 +41,6 @@ watch(() => allMetricsLoaded.value, () => {
 
 // Actions
 const loadSelectedDashboard = async (dashboardDetails) => {
-    // console.log(dashboardDetails)
     const { _id, title, description, metrics } = dashboardDetails
     metricIds.value = metrics
 }
