@@ -18,7 +18,9 @@ export function useMenu() {
     {
       icon: 'pi pi-fw pi-home',
       //   in visiblity: check user role
-      items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-database', visible: true }]
+      items: [
+        { label: 'Dashboard', icon: 'pi pi-fw pi-database', visible: true, to: { name: 'default-dashboard' } }
+      ]
     },
     {
       items: [
