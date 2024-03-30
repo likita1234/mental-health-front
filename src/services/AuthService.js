@@ -1,4 +1,5 @@
 import authApi from '@/utils/axios'
+import AppError from '@/utils/app-error'
 
 const AUTH_API = 'auth'
 
@@ -10,8 +11,7 @@ class AuthService {
         return response.data
       }
     } catch (error) {
-      console.log('Authservice error', error)
-      throw error
+      throw new AppError(error.statusCode, 'Invalid credentials')
     }
   }
 }

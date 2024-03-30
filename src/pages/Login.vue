@@ -1,11 +1,14 @@
 <script setup>
 import AuthTemplate from './templates/AuthTemplate.vue';
-import { ref } from 'vue';
 
-import { authStore, formErrorStore } from '@/stores';
-import { showToast } from '@/utils/show-toast';
-import { LoginSchema, handleValidation } from '@/validations/schemas'
+import { ref } from 'vue';
 import { storeToRefs } from 'pinia';
+import router from '@/router';
+
+import AppResponse from '@/utils/app-response'
+import { authStore, formErrorStore } from '@/stores';
+import { LoginSchema, handleValidation } from '@/validations/schemas'
+import { showToast } from '@/utils/show-toast';
 
 // ================>Store states
 const { formErrors } = storeToRefs(formErrorStore)
@@ -22,26 +25,21 @@ const form = ref({
 
 // ================Actions========>
 const submit = async () => {
-    try {
-        loading.value = true
-        // 1) Validate input form
-        const validated = await handleValidation(form.value, LoginSchema)
-
-        // 2) If validated is true, then submit, if there are issues in login, show invalid credentials toast
-        if (validated) {
-            const loggedIn = await authStore.login(form.value)
-
-            // 3) If successful, then redirect to the home page
-            if (loggedIn) {
-                showToast('success', 'Successful', 'Login Success');
-            }
+    loading.value = true
+    // 1) Validate input form
+    const validated = await handleValidation(form.value, LoginSchema)
+    
+    // 2) If validated is true, then submit, if there are issues in login, show invalid credentials toast
+    if (validated) {
+        const loggedIn = await authStore.login(form.value)
+        // 3) If successful, then redirect to the home page
+        if (loggedIn) {
+            router.push({ name: 'home' })
+            return new AppResponse(200, 'Logged in successfully')
         }
-
-    } catch (error) {
-        console.log('Login.vue error')
-    } finally {
-        loading.value = false
     }
+    loading.value = false
+
 }
 
 </script>
