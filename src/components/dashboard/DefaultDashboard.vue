@@ -9,7 +9,8 @@
         <Divider />
         <div v-if="metrics && metrics.length > 0" class="grid">
             <metric-data v-for="metric in metrics" :metricId="metric.metricId" :key="metric.metricId"
-                class="col-12 md:col-6 xl:col-4" />
+                class="col-12 md:col-6" />
+                <!-- xl:col-4 -->
         </div>
     </div>
 </template>
