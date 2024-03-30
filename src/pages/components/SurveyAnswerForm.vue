@@ -1,10 +1,14 @@
 <script setup>
+import CsvParser from '@/components/global/CsvParser.vue'
+
 import { onMounted, ref, computed, inject } from 'vue';
 import { useRouter } from 'vue-router';
 
-import { answerStore, formStore } from '@/stores';
+import { authStore, answerStore, formStore } from '@/stores';
+import { UserRole } from '../../constants/user-role'
 import { storeToRefs } from 'pinia';
 import { showToast } from '@/utils/show-toast';
+import AppResponse from '@/utils/app-response';
 
 // props
 const props = defineProps({
@@ -19,10 +23,12 @@ const router = useRouter()
 const appState = inject('appState')
 
 // Store states
+const { userRole } = storeToRefs(authStore)
 const { formDetails } = storeToRefs(formStore)
 
 // Component states
 const activeStep = ref(0) //starts with index 0
+const uploadingCsv = ref(false)
 
 // Computed properties
 const formTitle = computed(() => {
@@ -72,7 +78,11 @@ const loadAssessmentDetails = async () => {
 }
 
 const submitForm = async () => {
-    if (await answerStore.submitAnswerForm(formDetails.value)) {
+    const response = await answerStore.submitAnswerForm(formDetails.value)
+    if (response) {
+        // clean the section object
+        answerStore.initAnswerForm()
+        new AppResponse(201, 'Survey Form submitted successfully')
         setTimeout(() => router.push({ name: 'survey' }), 2000)
     }
 }
@@ -107,6 +117,20 @@ const checkRequiredAnswers = () => {
     }
 
 }
+
+const loadSurveyJson = async (jsonData) => {
+    try {
+        uploadingCsv.value = true
+        // Form id and other details will already be in formDetails in store state
+        const uploadedDataCount = await answerStore.submitCsvData(jsonData, formDetails.value)
+        return new AppResponse(200, `Successfully loaded ${uploadedDataCount} data`)
+    } catch (error) {
+        return new AppResponse(400, 'Failed to upload csv')
+    } finally {
+
+        uploadingCsv.value = false
+    }
+}
 </script>
 <template>
     <div class="flex justify-content-center">
@@ -114,6 +138,9 @@ const checkRequiredAnswers = () => {
             <h2 class="text-center">{{ formTitle }}</h2>
             <!-- Form Description -->
             <p class="text-center"> {{ formDescription }}</p>
+            <div v-if="userRole === UserRole.SUPERADMIN" class="flex justify-content-center">
+                <csv-parser @json-created="loadSurveyJson" />
+            </div>
             <Divider />
             <div v-if="sectionItems.length">
                 <Steps v-model:activeStep="activeStep" :model="sectionItems" class="custom-steps">
