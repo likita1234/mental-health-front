@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue';
+import { ref, onMounted, computed, watch, inject, } from 'vue';
 import { useRouter } from 'vue-router';
 import { authStore } from '@/stores';
 
@@ -12,9 +12,29 @@ const props = defineProps({
 
 const router = useRouter()
 
+// Global State
+const appState = inject('appState')
+// Component States
+const selectedLanguage = ref(null)
+const languageOptions = ref([{ title: 'International (EN)', name: 'english' }, { title: 'Nepali (NEP)', name: 'nepalese' }])
+
+// Computed Properties
 const loggedUser = computed(() => {
     return authStore.loggedUser
 })
+
+// Watchers
+watch(selectedLanguage, () => {
+    appState.lang = selectedLanguage.value
+})
+
+onMounted(() => {
+    if (appState.lang) {
+        selectedLanguage.value = appState.lang
+    }
+})
+
+// Actions
 const logout = () => {
     authStore.logout()
     router.push({ name: 'login' })
@@ -49,6 +69,11 @@ const onTopbarSubItemClick = (event) => {
                 </a>
 
                 <ul class="layout-topbar-actions">
+                    <li class="topbar-item settings" :class="{ 'active-topmenuitem': activeTopbarItem === 'settings' }">
+                        <BaseDropdown v-model="selectedLanguage" :options="languageOptions" optionLabel="title"
+                            optionValue="name" placeholder="Select a language" :showClear="false" />
+                    </li>
+
                     <li class="topbar-item user-profile"
                         :class="{ 'active-topmenuitem': props.activeTopbarItem === 'profile' }">
                         <a href="#" @click="onTopbarItemClick($event, 'profile')">
