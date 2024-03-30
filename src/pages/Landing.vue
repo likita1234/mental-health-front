@@ -10,9 +10,7 @@ import LandingNavbar from './components/LandingNavbar.vue'
         <!-- NavigationBar -->
         <div class="flex flex-column justify-content-center gap-7 h-full">
             <LandingNavbar />
-            <div>
-                <router-view></router-view>
-            </div>
+            <router-view></router-view>
         </div>
     </div>
 </template>
