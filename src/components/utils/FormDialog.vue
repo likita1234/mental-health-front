@@ -5,7 +5,11 @@ const emit = defineEmits(['hide-dialog', 'submit'])
 
 const props = defineProps({
     header: String,
-    width: String
+    width: String,
+    hideSubmission: {
+        type: Boolean,
+        default: false
+    }
 })
 
 // component states
@@ -31,10 +35,11 @@ const hideDialog = () => {
 
         <template #footer>
             <div class="mt-2">
-                <Button label="Cancel" @click="hideDialog" class="mr-2" severity="danger" raised />
-                <Button label="Submit" raised @click="emit('submit', true)" />
+                <Button @click="hideDialog" class="mr-2" severity="danger" raised>
+                    <slot name="cancel-label">Cancel</slot>
+                </Button>
+                <Button v-if="!hideSubmission" label="Submit" raised @click="emit('submit', true)" />
             </div>
         </template>
     </Dialog>
 </template>
-
