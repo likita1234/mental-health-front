@@ -85,6 +85,7 @@ import CustomTable from './components/utils/CustomTable.vue'
 import FormDialog from './components/utils/FormDialog.vue'
 import DataTypeTag from './components/global/DataTypeTag.vue'
 import LanguageSelection from './components/utils/LanguageSelection.vue'
+import OnlyTableModeSelection from './components/utils/OnlyTableModeSelection.vue'
 
 // Question Components
 import CustomQuestion from './components/question/components/CustomQuestion.vue'
@@ -202,6 +203,7 @@ app.component('CustomTable', CustomTable)
 app.component('FormDialog', FormDialog)
 app.component('DataTypeTag', DataTypeTag)
 app.component('LanguageSelection', LanguageSelection)
+app.component('OnlyTableModeSelection', OnlyTableModeSelection)
 
 // Custom Questions
 app.component('CustomQuestion', CustomQuestion)
@@ -240,7 +242,7 @@ EventBus.on('show-toast', (res) => {
 
 // custom global states
 
-app.config.globalProperties.appState = reactive({ lang: 'english' })
+app.config.globalProperties.appState = reactive({ lang: 'english', tableMode: false })
 app.provide('appState', app.config.globalProperties.appState)
 
 app.mount('#app')
