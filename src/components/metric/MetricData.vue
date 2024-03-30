@@ -1,9 +1,9 @@
 <template>
     <div class="card">
         <div id="card-header" class="order-tabs">
-            <h4 class="text-center">{{ title }}</h4>
+            <h5 class="text-center">{{ title }}</h5>
         </div>
-        <div v-if="chartData" class="card-body">
+        <div class="card-body">
             <base-chart :type="type" :jsonData="jsonData" />
         </div>
     </div>
@@ -37,7 +37,7 @@ const type = computed(() => {
 
 // Returns the json data inside the metricDetails
 const jsonData = computed(() => {
-    return metricDetails.value?.metricData?.data;
+    return metricDetails.value?.metricData?.data ?? null;
 })
 
 onMounted(() => {
