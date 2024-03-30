@@ -15,7 +15,7 @@ const answer = ref(null)
 
 // Computed properties
 const label = computed(() => {
-    return props.question?.title[appState.lang]
+    return props.question?.title[appState.lang] + ' ' + (description.value ? ('(' + description.value + ')') : null)
 })
 
 const description = computed(() => {
@@ -30,8 +30,6 @@ const options = computed(() => {
     return props.question?.options
 })
 
-
-
 </script>
 
 <template>
@@ -41,15 +39,22 @@ const options = computed(() => {
             <BaseTextInput v-model="answer" :label="label" />
         </template>
 
-        <template v-if="type === QuestionType.RADIO || type === QuestionType.CHECKBOX">
+        <template v-if="type === QuestionType.LONGTEXT">
+            <BaseTextarea v-model="answer" :label="label" />
+        </template>
+
+        <template v-else-if="type === QuestionType.NUMBER">
+            <BaseNumberInput v-model="answer" :label="label" />
+        </template>
+
+        <template v-else-if="type === QuestionType.RADIO || type === QuestionType.CHECKBOX">
             <BaseSelectionInput v-model="answer" :label="label" :options="options"
                 :radio="type === QuestionType.RADIO" />
         </template>
 
-        <template v-if="type === QuestionType.RATINGS">
+        <template v-else-if="type === QuestionType.RATINGS">
             <BaseRating v-model="answer" :label="label" :description="description" :cancel="true" />
         </template>
-
     </div>
 
 </template>
