@@ -1,133 +1,37 @@
 <template>
     <div class="layout-dashboard">
-        <div class="grid">
-            <div class="col-12 md:col-12 xl:col-3">
-                <div class="card overview-box blue">
-                    <div class="card-header">
-                        <h6>Revenue Status</h6>
-                        <div class="header-buttons">
-                            <a href="#"><i class="pi pi-arrow-up"></i></a>
-                        </div>
+        <div class="flex justify-content-around flex-wrap">
+            <div v-for="answerObj in aggregatedAnswers" class="col-12 md:col-6 xl:col-4">
+                <div class="card overview-box">
+                    <div class="text-center">
+                        <h6>{{ answerObj.question }}</h6>
                     </div>
-                    <div class="overview-content">
-                        <h3>87363</h3>
-                        <div class="overview-graph">
-                            <span style="height: 12px;"><span class="graph-tooltip">12</span></span>
-                            <span style="height: 40px;"><span class="graph-tooltip">40</span></span>
-                            <span style="height: 26px;"><span class="graph-tooltip">26</span></span>
-                            <span style="height: 17px;"><span class="graph-tooltip">17</span></span>
-                            <span style="height: 36px;"><span class="graph-tooltip">36</span></span>
-                            <span style="height: 51px;"><span class="graph-tooltip">51</span></span>
+                    <Divider />
+                    <div class="flex justify-content-around">
+                        <div class="order-tab" data-label="Lowest Score" data-stroke="#00acac">
+                            <h6>Lowest Score</h6>
+                            <h3>{{ answerObj.lowest }}</h3>
                         </div>
-                    </div>
-                    <div class="overview-footer">
-                        <span><i class="pi pi-arrow-up"></i> <span>55%</span> increase in today sales</span>
+                        <div class="order-tab order-tab-active" data-label="Average Score" data-stroke="#2f8ee5">
+                            <h6>Average Score</h6>
+                            <h3>{{ answerObj.average }}</h3>
+                        </div>
+                        <div class="order-tab" data-label="Highest Score" data-stroke="#4f8eff">
+                            <h6>Highest Score</h6>
+                            <h3>{{ answerObj.highest }}</h3>
+                        </div>
                     </div>
                 </div>
             </div>
-
-            <div class="col-12 md:col-12 xl:col-3">
-                <div class="card overview-box teal">
-                    <div class="card-header">
-                        <h6>Page View</h6>
-                        <div class="header-buttons">
-                            <a href="#"><i class="pi pi-arrow-up"></i></a>
-                        </div>
-                    </div>
-                    <div class="overview-content">
-                        <h3>5592</h3>
-                        <div class="overview-graph">
-                            <span style="height: 30px;"><span class="graph-tooltip">30</span></span>
-                            <span style="height: 43px;"><span class="graph-tooltip">43</span></span>
-                            <span style="height: 48px;"><span class="graph-tooltip">48</span></span>
-                            <span style="height: 40px;"><span class="graph-tooltip">40</span></span>
-                            <span style="height: 52px;"><span class="graph-tooltip">52</span></span>
-                            <span style="height: 18px;"><span class="graph-tooltip">18</span></span>
-                        </div>
-                    </div>
-                    <div class="overview-footer down">
-                        <span><i class="pi pi-arrow-down"></i> <span>12%</span> decrease in today sales</span>
-                    </div>
+        </div>
+        <!-- Main WHO-5 Dashboard -->
+        <div class="col-12 h-full">
+            <div class="card sale-graph">
+                <div class="card-header">
+                    <h4>{{ metricData?.title }}</h4>
                 </div>
-            </div>
-
-            <div class="col-12 md:col-12 xl:col-3">
-                <div class="card overview-box orange">
-                    <div class="card-header">
-                        <h6>Bounce Rate</h6>
-                        <div class="header-buttons">
-                            <a href="#"><i class="pi pi-arrow-up"></i></a>
-                        </div>
-                    </div>
-                    <div class="overview-content">
-                        <h3>55.95%</h3>
-                        <div class="overview-graph">
-                            <span style="height: 20px;"><span class="graph-tooltip">20</span></span>
-                            <span style="height: 23px;"><span class="graph-tooltip">23</span></span>
-                            <span style="height: 52px;"><span class="graph-tooltip">52</span></span>
-                            <span style="height: 18px;"><span class="graph-tooltip">18</span></span>
-                            <span style="height: 28px;"><span class="graph-tooltip">28</span></span>
-                            <span style="height: 42px;"><span class="graph-tooltip">42</span></span>
-                        </div>
-                    </div>
-                    <div class="overview-footer">
-                        <span><i class="pi pi-arrow-up"></i> <span>6%</span> increase in today sales</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 md:col-12 xl:col-3">
-                <div class="card overview-box pink">
-                    <div class="card-header">
-                        <h6>Products Sale Rate</h6>
-                        <div class="header-buttons">
-                            <a href="#"><i class="pi pi-arrow-up"></i></a>
-                        </div>
-                    </div>
-                    <div class="overview-content">
-                        <h3>15.37%</h3>
-                        <div class="overview-graph">
-                            <span style="height: 17px;"><span class="graph-tooltip">20</span></span>
-                            <span style="height: 39px;"><span class="graph-tooltip">23</span></span>
-                            <span style="height: 22px;"><span class="graph-tooltip">52</span></span>
-                            <span style="height: 34px;"><span class="graph-tooltip">18</span></span>
-                            <span style="height: 28px;"><span class="graph-tooltip">28</span></span>
-                            <span style="height: 52px;"><span class="graph-tooltip">42</span></span>
-                        </div>
-                    </div>
-                    <div class="overview-footer down">
-                        <span><i class="pi pi-arrow-down"></i> <span>1.1%</span> decrease in today sales</span>
-                    </div>
-                </div>
-            </div>
-            <!-- Main WHO-5 Dashboard -->
-            <div class="col-12 md:col-12 xl:col-9">
-                <div class="grid">
-                    <div class="col-12">
-                        <div class="card sale-graph">
-                            <div class="card-header">
-                                <h4>{{ metricData?.title }}</h4>
-                            </div>
-                            <div id="order-tabs-container" class="order-tabs">
-                                <div class="order-tab" data-label="Lowest Score" data-stroke="#00acac">
-                                    <h6>Lowest Score</h6>
-                                    <h3>$455.55</h3>
-                                </div>
-                                <div class="order-tab order-tab-active" data-label="Average Score"
-                                    data-stroke="#2f8ee5">
-                                    <h6>Average Score</h6>
-                                    <h3>$244.40</h3>
-                                </div>
-                                <div class="order-tab" data-label="Highest Score" data-stroke="#4f8eff">
-                                    <h6>Highest Score</h6>
-                                    <h3>$244.40</h3>
-                                </div>
-                            </div>
-                            <div class="overview-chart">
-                                <base-chart :type="chartType" :groupBy="defaultGroupings" :jsonData="jsonData" />
-                            </div>
-                        </div>
-                    </div>
+                <div class="overview-chart">
+                    <base-chart :type="chartType" :groupBy="defaultGroupings" :jsonData="jsonData" />
                 </div>
             </div>
         </div>
@@ -138,11 +42,13 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue';
-import { metricStore } from '@/stores'
+import { metricStore, questionStore } from '@/stores'
 
 // Here we will hardcode the metricId for WHO-5
 const metricId = ref("65feedbbd213a25a0c31e2ba")
 const metricData = ref(null)
+const overallAnswersByQuestionId = ref([])
+const aggregatedAnswers = ref([])
 
 // Computed properties
 const chartType = computed(() => {
@@ -168,6 +74,65 @@ onMounted(() => {
 // Actions
 const loadMetricData = async () => {
     metricData.value = await metricStore.getMetricData(metricId.value)
-    console.log(metricData.value)
+    // console.log(metricData.value)
+    await evaluateEachAnswers()
+    // console.log(metricData.value)
 }
+
+const evaluateEachAnswers = async () => {
+    if (overallAnswers.value && overallAnswers.value.length) {
+        // Each answers are included with 5 answers each
+        // Extract the first answers[0]
+        const questionIds = overallAnswers.value[0]?.map(answerObj => answerObj.questionId)
+        // This will have 5 answers
+        // Setup each question details first
+        // Isolate all the answer details by question Id
+        await setupOverallQuestionDetails(questionIds)
+        // Now aggregate them setting up highest, lowest and average value among each of them
+        await aggregateOverallAnswers()
+    }
+}
+
+const setupOverallQuestionDetails = async (questionIds) => {
+    // Loop through each questionId and fetch question details for each
+    for (let i = 0; i < questionIds.length; i++) {
+        const questionId = questionIds[i]
+        const questionDetails = await questionStore.fetchQuestionDetails(questionIds[i])
+        // console.log(questionDetails)
+        // Only extract needed details, title for now
+        const filteredQuestionDetails = questionDetails?.title?.english
+        // Now aggregate each answers based on questionId
+        const allAnswersByQuestionId = overallAnswers.value?.map(answersArr => {
+            const exactAnswer = answersArr?.find(answerObj => answerObj.questionId === questionId)
+            return exactAnswer?.answer
+        })
+        overallAnswersByQuestionId.value?.push({
+            question: filteredQuestionDetails,
+            value: allAnswersByQuestionId
+        })
+    }
+}
+
+const aggregateOverallAnswers = () => {
+    // Now get min, max and avg among each of them
+    aggregatedAnswers.value = overallAnswersByQuestionId.value?.map(obj => {
+        const answers = obj.value
+        // Highest value
+        const highest = Math.max(...answers) * 4;
+        // Lowest value
+        const lowest = Math.min(...answers) * 4;
+        // Average value
+        const sum = answers.reduce((acc, curr) => acc + curr, 0);
+        const average = ((sum / answers.length) * 4).toFixed(2);
+        // Now return them
+        return {
+            ...obj,
+            highest,
+            lowest,
+            average
+        }
+    })
+    // console.log(aggregatedAnswers.value)
+}
+
 </script>
