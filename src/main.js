@@ -107,11 +107,15 @@ import BaseCalendarInput from './components/form-inputs/BaseCalendarInput.vue'
 import BaseDropdown from './components/form-inputs/BaseDropdown.vue'
 import BaseEditor from './components/form-inputs/BaseEditor.vue'
 import BaseNumberInput from './components/form-inputs/BaseNumberInput.vue'
+import BaseRating from './components/form-inputs/BaseRating.vue'
 import BaseSelectionInput from './components/form-inputs/BaseSelectionInput.vue'
 
 import CustomTable from './components/utils/CustomTable.vue'
 import FormDialog from './components/utils/FormDialog.vue'
 import DataTypeTag from './components/global/DataTypeTag.vue'
+
+// Question Components
+import CustomQuestion from './components/question/components/CustomQuestion.vue'
 
 const app = createApp(AppWrapper)
 
@@ -224,11 +228,15 @@ app.component('BaseCalendarInput', BaseCalendarInput)
 app.component('BaseDropdown', BaseDropdown)
 app.component('BaseEditor', BaseEditor)
 app.component('BaseNumberInput', BaseNumberInput)
+app.component('BaseRating', BaseRating)
 app.component('BaseSelectionInput', BaseSelectionInput)
 
 app.component('CustomTable', CustomTable)
 app.component('FormDialog', FormDialog)
 app.component('DataTypeTag', DataTypeTag)
+
+// Custom Questions
+app.component('CustomQuestion', CustomQuestion)
 
 // Custom Event configuration
 app.config.globalProperties.$showToast = function ({ severity, summary, message }) {
