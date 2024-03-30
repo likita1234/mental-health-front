@@ -1,9 +1,11 @@
 <script setup>
 import { onMounted, inject } from 'vue'
 import { storeToRefs } from 'pinia'
+import { useRouter } from 'vue-router'
 
 import { formStore } from '@/stores'
 
+const router = useRouter()
 // Global states
 const appState = inject('appState')
 
@@ -19,6 +21,11 @@ const loadForms = async () => {
     await formStore.fetchAllForms()
 }
 
+// Depending upon the selected survey form, redirect into the assessment form
+const enterSurvey = (surveyId) => {
+    router.push({ name: 'survey-form', params: { id: surveyId } })
+}
+
 </script>
 
 
@@ -30,7 +37,7 @@ const loadForms = async () => {
             </div>
             <div class="grid mt-4 justify-content-center">
                 <div class="card shadow-3 col-12 md:col-4 mb-4 form-container" v-for="form in activeForms"
-                    :key="form.id">
+                    :key="form.id" @click="enterSurvey(form._id)">
                     <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
                         <font-awesome-icon :icon="['fas', 'brain']" size="3x" />
                     </span>
