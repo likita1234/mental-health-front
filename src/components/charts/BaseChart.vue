@@ -5,6 +5,8 @@
         <!-- Bar Chart -->
         <bar-chart v-else-if="type === ChartType.BAR" :chartOptions="chartOptions" :groupBy="groupBy"
             :jsonData="jsonData" />
+        <line-chart v-else-if="type === ChartType.LINE" :chartOptions="chartOptions" :groupBy="groupBy"
+            :jsonData="jsonData" />
 
     </div>
 </template>
