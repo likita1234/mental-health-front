@@ -1,13 +1,5 @@
 <script setup>
-import { computed } from 'vue';
-import { useRoute } from 'vue-router';
 import LandingNavbar from './components/LandingNavbar.vue'
-
-const route = useRoute()
-
-const isSurveyRoute = computed(() => {
-    return route.name === 'survey-form'
-})
 </script>
 
 <template>
@@ -19,9 +11,6 @@ const isSurveyRoute = computed(() => {
         <div class="flex flex-column justify-content-center gap-5 h-fit">
             <LandingNavbar />
             <div class="landing-container">
-                <div v-if="isSurveyRoute" class="flex justify-content-center">
-                    <language-selection />
-                </div>
                 <router-view></router-view>
             </div>
         </div>

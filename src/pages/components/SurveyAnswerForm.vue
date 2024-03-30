@@ -135,6 +135,9 @@ const loadSurveyJson = async (jsonData) => {
 <template>
     <div class="flex justify-content-center">
         <div class="card p-5 h-full w-full md:w-8">
+            <div class="flex justify-content-center">
+                <language-selection />
+            </div>
             <h2 class="text-center">{{ formTitle }}</h2>
             <!-- Form Description -->
             <p class="text-center"> {{ formDescription }}</p>
