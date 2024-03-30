@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 import { useLocalStorage } from '@vueuse/core'
 
-import AuthService from '@/services/AuthService'
+import AuthService from '@/services/auth-service'
 import AppError from '@/utils/app-error'
 import { UserRole } from '@/constants/user-role'
 
