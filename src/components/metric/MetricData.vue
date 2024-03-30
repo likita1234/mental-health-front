@@ -4,7 +4,7 @@
             <h5 class="text-center">{{ title }}</h5>
         </div>
         <div class="card-body">
-            <base-chart :type="type" :jsonData="jsonData" />
+            <base-chart :type="type" :groupBy="defaultGroupings" :jsonData="jsonData" />
         </div>
     </div>
 </template>
@@ -35,7 +35,11 @@ const type = computed(() => {
 
 // Returns the json data inside the metricDetails
 const jsonData = computed(() => {
-    return metricDetails.value?.metricData?.data ?? null;
+    return metricDetails.value?.metricData?.data ?? [];
+})
+
+const defaultGroupings = computed(() => {
+    return metricDetails.value?.metricData?.labels ?? []
 })
 
 onMounted(() => {
@@ -45,6 +49,7 @@ onMounted(() => {
 // Actions
 const loadMetricData = async () => {
     metricDetails.value = await metricStore.getMetricData(props.metricId)
+    console.log(metricDetails.value)
 }
 
 </script>
