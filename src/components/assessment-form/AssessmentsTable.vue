@@ -4,10 +4,12 @@ import AssessmentForm from './AssessmentForm.vue';
 import { ref, onMounted, inject } from 'vue'
 import { formStore } from '@/stores'
 import { storeToRefs } from 'pinia';
+import { useRouter } from 'vue-router'
 
 import { useConfirmComposable } from '@/composables/ConfirmComposable';
 import { stockClass } from '@/utils/table-styles'
 
+const router = useRouter()
 const { confirmRequest } = useConfirmComposable()
 // Store states
 const { allForms, totalForms, limit, page } = storeToRefs(formStore)
@@ -30,7 +32,6 @@ const loadAssessmentForms = async () => {
     }, Math.random() * 1000 + 250);
 }
 
-
 const editAssessmentForm = async (formId) => {
     // Fetch details first
     const formDetails = await formStore.fetchFormDetails(formId)
@@ -43,11 +44,14 @@ const editAssessmentForm = async (formId) => {
     }
 }
 
+const viewDetails = async (formId) => {
+    return router.push({ name: 'form-details', params: { id: formId } })
+}
+
 const confirmDelete = (formId) => {
     const message = 'Are you sure you want to delete this form?'
     confirmRequest(formId, formStore.deleteForm, message)
 }
-
 
 const onPage = async (event) => {
     page.value = event.page
@@ -107,7 +111,8 @@ const onPage = async (event) => {
             <template #actions>
                 <Column header="ACTIONS" :exportable="false" style="width:15%">
                     <template #body="slotProps">
-                        <Button icon="pi pi-pencil" rounded class="mr-2"
+                        <Button icon="pi pi-eye" rounded class="mr-2" @click="viewDetails(slotProps.data._id)" />
+                        <Button icon="pi pi-pencil" rounded severity="secondary" class="mr-2"
                             @click="editAssessmentForm(slotProps.data._id)" />
                         <Button icon="pi pi-trash" rounded severity="danger"
                             @click="confirmDelete(slotProps.data._id)" />
