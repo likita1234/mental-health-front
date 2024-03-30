@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, inject } from 'vue'
 import { questionStore } from '@/stores'
 import { storeToRefs } from 'pinia';
 import { FilterMatchMode, FilterOperator } from 'primevue/api'
@@ -16,6 +16,8 @@ const filters = ref({
 })
 const loading = ref(false)
 const selectedQuestions = ref([])
+
+const appState = inject('appState')
 
 onMounted(() => {
     initFilters()
@@ -60,8 +62,8 @@ const loadQuestions = async () => {
 <template>
     <div>
         <DataTable ref="dt" :value="allQuestions" v-model:selection="selectedQuestions" v-model:filters="filters"
-            :filters="filters" :loading="loading" :globalFilterFields="['title', 'label', 'description']" resizableColumns stripedRows
-            paginator rowHover :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" tableStyle="min-width: 50rem"
+            :filters="filters" :loading="loading" :globalFilterFields="['title', 'label', 'description']" resizableColumns
+            stripedRows paginator rowHover :rows="5" :rowsPerPageOptions="[5, 10, 20, 50]" tableStyle="min-width: 50rem"
             paginatorTemplate="RowsPerPageDropdown FirstPageLink PrevPageLink CurrentPageReport NextPageLink LastPageLink"
             currentPageReportTemplate="{first} to {last} of {totalRecords}">
             <template #header>
@@ -83,10 +85,20 @@ const loadQuestions = async () => {
             <template #loading>
                 Loading questions. Please wait.
             </template>
-            <Column selectionMode="multiple" style="width: 3rem" :exportable="false" />
-            <Column field="title" header="TITLE" style="width: 15%" />
-            <Column field="label" header="LABEL" style="width: 15%" />
-            <Column field="description" header="DESCRIPTION" style="width: auto" />
+            <Column field="title[appState.lang]" header="TITLE" style="width: 20%">
+                <template #body="slotProps">
+                    <div>
+                        {{ slotProps.data.title[appState.lang] }}
+                    </div>
+                </template>
+            </Column>
+            <Column field="description[appState.lang]" header="DESCRIPTION" style="width: 35%">
+                <template #body="slotProps">
+                    <div>
+                        {{ slotProps.data.description[appState.lang] }}
+                    </div>
+                </template>
+            </Column>
             <Column field="type" header="TYPE" style="width: 10%">
                 <template #body="{ data }">
                     <Tag :value="data.type" class="capitalize question" :class="` type-${data.type}`" />
@@ -99,11 +111,12 @@ const loadQuestions = async () => {
                     </div>
                 </template>
             </Column>
-            <Column field="created_at" header="CREATED AT"/>
-            <Column header="ACTIONS" :exportable="false" style="width:10%">
+            <Column field="created_at" header="CREATED AT" style="width:10%" />
+            <Column header="ACTIONS" :exportable="false" style="width:15%">
                 <template #body="slotProps">
-                    <Button icon="pi pi-pencil"  rounded class="mr-2" @click="editQuestion(slotProps.data)" />
-                    <Button icon="pi pi-trash"  rounded severity="danger" @click="confirmDelete(slotProps.data)" />
+                    <Button icon="pi pi-eye" rounded severity="info" class="mr-2" @click="editQuestion(slotProps.data)" />
+                    <Button icon="pi pi-pencil" rounded class="mr-2" @click="editQuestion(slotProps.data)" />
+                    <Button icon="pi pi-trash" rounded severity="danger" @click="confirmDelete(slotProps.data)" />
                 </template>
             </Column>
             <!-- Extra features that could be useful in the future -->
