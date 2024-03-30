@@ -34,7 +34,7 @@ onMounted(() => {
 
 // Actions
 const loadSections = async () => {
-    await sectionStore.fetchAllSections()
+    await sectionStore.fetchAllSections(true)
 }
 
 const submit = async () => {

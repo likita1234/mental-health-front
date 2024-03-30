@@ -16,7 +16,7 @@ const addSection = () => {
 }
 
 const removeSection = (keyIndex) => {
-    sectionStore.removeFormSection(keyIndex)
+    formStore.removeFormSection(keyIndex)
 }
 
 </script>
