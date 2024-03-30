@@ -3,20 +3,19 @@
         <DataTable :value="tableData">
             <template #header>
                 <div class="flex flex-wrap align-items-center justify-content-center gap-2">
-                    <span class="text-xl text-900 font-bold">Comparative Analysis</span>
+                    <span class="text-lg text-900 font-bold">{{ headerContent }}</span>
                 </div>
             </template>
             <Column field="title" header="METRIC TITLE" />
             <Column field="weightedMean" header="WEIGHTED MEAN" />
             <Column field="standardDeviation" header="STANDARD DEVIATION" />
-            <template #footer> In total there are {{ data ? data.length : 0 }} metrics compared. </template>
+            <template #footer> <span class="font-italic">{{ footerContent }}</span> </template>
         </DataTable>
     </div>
 </template>
 
 <script setup>
 import { computed } from 'vue';
-
 // Props
 const props = defineProps({
     data: {
@@ -25,9 +24,8 @@ const props = defineProps({
 })
 
 // Computed properties 
-
 const tableData = computed(() => {
-    return props.data?.map(dataObj=>{
+    return props.data?.map(dataObj => {
         return {
             ...dataObj,
             weightedMean: dataObj.weightedMean?.toFixed(2),
@@ -36,4 +34,48 @@ const tableData = computed(() => {
     })
 })
 
+// Returns the number of respondents 
+const headerContent = computed(() => {
+    return tableData.value?.length ? 'Comparative Analysis between ' + generateStringFromTitles(tableData.value) : null
+})
+const footerContent = computed(() => {
+    return tableData.value?.length ?
+        'In total there are ' + generateRespondentsStringFromData(tableData.value)
+        : null
+})
+
+function generateStringFromTitles(data) {
+    let result = '';
+    for (let i = 0; i < data.length; i++) {
+        const title = data[i].title;
+        result += `"${title}"`;
+        // Add comma for all elements except the last one
+        if (i < data.length - 1) {
+            result += ', ';
+        }
+        // If it's the second last element, add "and" before the last one
+        if (i === data.length - 2) {
+            result += ' and ';
+        }
+    }
+    return result;
+}
+
+// Normally both metrics will have same number of respondents so we will fetch only from one of them
+function generateRespondentsStringFromData(data) {
+    let result = '';
+    for (let i = 0; i < data.length; i++) {
+        const item = data[i];
+        result += `${item.respondentsCount} respondents in "${item.title}"`;
+        // Add comma for all elements except the last one
+        if (i < data.length - 1) {
+            result += ', ';
+        }
+        // If it's the second last element, add "and" before the last one
+        if (i === data.length - 2) {
+            result += ' and ';
+        }
+    }
+    return result;
+}
 </script>
