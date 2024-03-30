@@ -24,6 +24,14 @@ const router = createRouter({
           meta: {
             breadcrumb: [{ parent: 'Assessments', label: 'Section' }]
           }
+        },
+        {
+          path: 'form',
+          name: 'manage-forms',
+          component: () => import('../components/assessment-form/ManageAssessmentForm.vue'),
+          meta: {
+            breadcrumb: [{ parent: 'Assessments', label: 'Form' }]
+          }
         }
       ]
     },

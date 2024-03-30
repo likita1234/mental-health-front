@@ -41,7 +41,7 @@ export function useMenu() {
             {
               label: 'Manage Forms',
               icon: 'pi pi-fw pi-file-edit',
-              to: { name: 'home' },
+              to: { name: 'manage-forms' },
               visible: true //check user role
             }
           ],
