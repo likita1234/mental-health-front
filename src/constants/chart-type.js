@@ -4,5 +4,6 @@ export const ChartType = Object.freeze({
   LINE: 'line',
   PIE: 'pie',
   RATINGS: 'ratings',
+  QUESTIONS_TABLE: 'questions-table',
   RATINGS_SUMMATION: 'question-ratings-summation'
 })
