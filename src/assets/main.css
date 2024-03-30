@@ -1,4 +1,5 @@
 @import './base.css';
 @import './css/layout-light.css';
 @import './css/primeflex.min.css';
-@import './util.css'
+@import './util.css';
+@import './custom.css';
