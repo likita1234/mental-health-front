@@ -39,17 +39,17 @@ watch(() => propsModelValue.value, () => {
         <div class="flex justify-content-center">
             <Rating :id="label" v-model="value" :stars="stars" :cancel="cancel" :readOnly="readOnly"
                 @change="emit('update:modelValue', value)">
-                <template #cancelicon>
+                <!-- <template #cancelicon>
                     <img src="/images/icons/cancel.png" height="24" width="24" />
                 </template>
 
                 <template #onicon>
-                    <img src="/images/icons/custom-onicon.png" height="24" width="24" />
+                    <img src="/images/icons/custom-officon.png" height="24" width="24" />
                 </template>
 
                 <template #officon>
-                    <img src="/images/icons/custom-officon.png" height="24" width="24" />
-                </template>
+                    <img src="/images/icons/custom-onicon.png" height="24" width="24" />
+                </template> -->
             </Rating>
         </div>
         <div class="text-center">
