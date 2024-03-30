@@ -118,12 +118,10 @@ const goBack = () => {
                     <CustomSection :section="activeSection" />
                 </div>
                 <Divider />
-                <slot name="navigation-btns">
-                    <div class="flex mb-2 gap-2 justify-content-between">
-                        <Button @click="toggleStep(false)" label="Previous" :disabled="!hasPreviousStep" />
-                        <Button @click="toggleStep(true)" label="Next" :disabled="!hasNextStep" />
-                    </div>
-                </slot>
+                <div class="flex mb-2 gap-2 justify-content-between">
+                    <Button @click="toggleStep(false)" label="Previous" :disabled="!hasPreviousStep" />
+                    <Button @click="toggleStep(true)" label="Next" :disabled="!hasNextStep" />
+                </div>
             </div>
             <div v-else>
                 <h4 class="text-center">The form you are looking for is not available</h4>
