@@ -1,8 +1,9 @@
 import { AssessmentFormType } from './assessment-form-type'
-import { ChartType } from '@/constants/chart-type'
-import { ErrorStates } from '@/constants/error-states'
+import { ChartType } from './chart-type'
+import { Color } from './color'
+import { ErrorStates } from './error-states'
 import { LanguageType } from './language-type'
-import { QuestionType } from '@/constants/question-type'
-import { UserRole } from '@/constants/user-role'
+import { QuestionType } from './question-type'
+import { UserRole } from './user-role'
 
-export { AssessmentFormType, ChartType, ErrorStates, LanguageType, QuestionType, UserRole }
+export { AssessmentFormType, Color, ChartType, ErrorStates, LanguageType, QuestionType, UserRole }
