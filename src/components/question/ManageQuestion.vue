@@ -22,6 +22,6 @@ const toggleFormDialog = (flag) => {
             <QuestionsTable />
         </div>
         <!-- Question Form Dialog -->
-        <Question*Form v-if="formDialog" @hide-dialog="toggleFormDialog(false)" />
+        <QuestionForm v-if="formDialog" @hide-dialog="toggleFormDialog(false)" />
     </div>
 </template>
