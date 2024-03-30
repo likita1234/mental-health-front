@@ -8,7 +8,6 @@ import router from '@/router';
 import AppResponse from '@/utils/app-response'
 import { authStore, formErrorStore } from '@/stores';
 import { LoginSchema, handleValidation } from '@/validations/schemas'
-import { showToast } from '@/utils/show-toast';
 
 // ================>Store states
 const { formErrors } = storeToRefs(formErrorStore)
