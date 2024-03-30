@@ -16,6 +16,14 @@ const router = createRouter({
           meta: {
             breadcrumb: [{ parent: 'Assessments', label: 'Question' }]
           }
+        },
+        {
+          path: 'section',
+          name: 'manage-sections',
+          component: () => import('../components/section/ManageSection.vue'),
+          meta: {
+            breadcrumb: [{ parent: 'Assessments', label: 'Section' }]
+          }
         }
       ]
     },

@@ -35,7 +35,7 @@ export function useMenu() {
             {
               label: 'Manage Sections',
               icon: 'pi pi-fw pi-ellipsis-h',
-              to: { name: 'home' },
+              to: { name: 'manage-sections' },
               visible: true //check user role
             },
             {
