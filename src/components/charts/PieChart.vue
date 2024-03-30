@@ -1,5 +1,5 @@
 <template>
-    <Pie id="my-bar-chart-id" :data="chartData" :options="chartOptions" />
+    <Pie id="my-bar-chart-id" :data="chartData" :options="pieChartOptions" />
 </template>
 
 <script setup>
@@ -29,6 +29,20 @@ const chartData = computed(() => {
             backgroundColor: bgColors,
             data: metricData?.map(dataObj => dataObj.percent),
         }]
+    }
+})
+const pieChartOptions = computed(() => {
+    return {
+        ...props.chartOptions,
+        plugins: {
+            datalabels: {
+                color: 'white',
+                align: 'end',
+                formatter: function (value, context) {
+                    return value + "%";
+                }
+            }
+        },
     }
 })
 </script>
