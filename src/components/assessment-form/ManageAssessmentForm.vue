@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue';
-import AssessmentFormTable from './AssessmentFormTable.vue'
+import AssessmentsTable from './AssessmentsTable.vue'
 import AssessmentForm from './AssessmentForm.vue'
 
 const formDialog = ref(false)
@@ -19,7 +19,7 @@ const toggleFormDialog = (flag) => {
             </template>
         </Toolbar>
         <div class="card">
-            <AssessmentFormTable />
+            <AssessmentsTable />
         </div>
         <!-- Question Form Dialog -->
         <AssessmentForm v-if="formDialog" @hide-dialog="toggleFormDialog(false)" />
