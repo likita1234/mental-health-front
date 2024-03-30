@@ -90,6 +90,22 @@ import DataTypeTag from './components/global/DataTypeTag.vue'
 // Question Components
 import CustomQuestion from './components/question/components/CustomQuestion.vue'
 
+// Font awesome plugins
+import { config, library } from '@fortawesome/fontawesome-svg-core'
+import {
+  FontAwesomeIcon,
+  FontAwesomeLayers,
+  FontAwesomeLayersText
+} from '@fortawesome/vue-fontawesome'
+
+import { fab } from '@fortawesome/free-brands-svg-icons'
+import { far } from '@fortawesome/free-regular-svg-icons'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+
+// config.autoAddCss = false
+
+library.add(fab, far, fas)
+
 const app = createApp(AppWrapper)
 
 app.use(createPinia())
@@ -182,6 +198,11 @@ app.component('DataTypeTag', DataTypeTag)
 
 // Custom Questions
 app.component('CustomQuestion', CustomQuestion)
+
+// FONT awesome
+app.component('FontAwesomeIcon', FontAwesomeIcon)
+app.component('FontAwesomeLayers', FontAwesomeLayers)
+app.component('FontAwesomeLayersText', FontAwesomeLayersText)
 
 // Custom Event configuration
 app.config.globalProperties.$showToast = function ({ severity, summary, message }) {
