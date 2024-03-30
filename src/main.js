@@ -19,7 +19,6 @@ import BadgeDirective from 'primevue/badgedirective'
 import Button from 'primevue/button'
 import Breadcrumb from 'primevue/breadcrumb'
 import Card from 'primevue/card'
-import Chart from 'primevue/chart';
 import Checkbox from 'primevue/checkbox'
 import Chip from 'primevue/chip'
 import Chips from 'primevue/chips'
@@ -140,7 +139,6 @@ app.component('Breadcrumb', Breadcrumb)
 app.component('Button', Button)
 app.component('Card', Card)
 app.component('Checkbox', Checkbox)
-app.component('Chart', Chart)
 app.component('Chip', Chip)
 app.component('Chips', Chips)
 app.component('Column', Column)
