@@ -39,12 +39,10 @@ const options = computed(() => {
 
 // Watcher for answer data changes
 watch(() => existingQuestionAnswer.value, () => {
-    console.log('Existing changes')
     answer.value = existingQuestionAnswer.value
 })
 
 watch(() => answer.value, () => {
-    console.log('Answer value update')
     emit('update:modelValue', answer.value)
 })
 
