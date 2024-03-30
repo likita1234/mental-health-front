@@ -4,30 +4,8 @@
 
 <script setup>
 import { computed } from 'vue';
-
-import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-} from 'chart.js'
 import { Line } from 'vue-chartjs'
-
 import { generateRandomColors } from '@/constants/color';
-
-ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend
-)
 
 const props = defineProps({
     chartOptions: {

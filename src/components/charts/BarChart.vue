@@ -5,17 +5,7 @@
 <script setup>
 import { computed } from 'vue';
 import { Bar } from 'vue-chartjs'
-import {
-    Chart as ChartJS,
-    Title,
-    Tooltip,
-    BarElement,
-    CategoryScale,
-    LinearScale
-} from 'chart.js'
 import { generateRandomColor } from '@/constants/color';
-
-ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip)
 
 const props = defineProps({
     chartOptions: {

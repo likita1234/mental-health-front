@@ -5,11 +5,7 @@
 <script setup>
 import { computed } from 'vue';
 import { Pie } from 'vue-chartjs'
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
-
 import { generateRandomColors } from '@/constants/color'
-
-ChartJS.register(ArcElement, Tooltip, Legend)
 
 const props = defineProps({
     chartOptions: {

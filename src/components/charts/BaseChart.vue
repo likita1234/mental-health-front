@@ -15,6 +15,30 @@
 
 <script setup>
 import { ref, inject, computed } from 'vue';
+import {
+    Chart as ChartJS,
+    ArcElement,
+    BarElement,
+    CategoryScale,
+    LinearScale,
+    LineElement,
+    PointElement,
+    Title,
+    Legend,
+    Tooltip,
+} from 'chart.js'
+
+ChartJS.register(
+    ArcElement,
+    BarElement,
+    CategoryScale,
+    LinearScale,
+    LineElement,
+    PointElement,
+    Title,
+    Legend,
+    Tooltip)
+
 import { ChartType } from '@/constants';
 // Props
 const props = defineProps({
