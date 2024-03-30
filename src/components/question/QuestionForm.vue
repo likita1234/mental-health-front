@@ -59,7 +59,7 @@ const hideDialog = () => {
 
 <template>
     <div>
-        <FormDialog :header="formHeader" width="40vw" @hide-dialog="hideDialog" @submit.preventDefault()="submit">
+        <FormDialog :header="formHeader" width="50vw" @hide-dialog="hideDialog" @submit.preventDefault()="submit">
             <div class="p-fluid">
                 <!-- Question Title Section -->
                 <div class="formgrid grid">
