@@ -210,6 +210,7 @@ export const useFormStore = defineStore('form', () => {
     fields,
     form,
     formDetails,
+    totalForms,
     // getters
     allForms,
     // activeForms,
