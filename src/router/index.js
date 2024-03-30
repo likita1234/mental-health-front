@@ -27,11 +27,25 @@ const router = createRouter({
         },
         {
           path: 'form',
-          name: 'manage-forms',
-          component: () => import('../components/assessment-form/ManageAssessmentForm.vue'),
-          meta: {
-            breadcrumb: [{ parent: 'Assessments', label: 'Form' }]
-          }
+          children: [
+            {
+              path: '',
+              name: 'manage-forms',
+              component: () => import('../components/assessment-form/ManageAssessmentForm.vue'),
+              meta: {
+                breadcrumb: [{ parent: 'Assessments', label: 'Forms' }]
+              }
+            },
+            {
+              path: '/:id',
+              name: 'form-details',
+              props: true,
+              component: () => import('../components/assessment-form/CustomAssessment.vue'),
+              meta: {
+                breadcrumb: [{ parent: 'Assessments', label: 'Forms Details' }]
+              }
+            }
+          ]
         }
       ]
     },
