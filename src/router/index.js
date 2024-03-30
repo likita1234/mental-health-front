@@ -61,7 +61,14 @@ const router = createRouter({
         {
           path: '/survey',
           name: 'survey',
-          component: () => import('../pages/modules/Survey.vue')
+          component: () => import('../pages/modules/Survey.vue'),
+          children: [
+            {
+              path: '/survey',
+              name: 'survey',
+              component: () => import('../pages/components/SurveyForms.vue')
+            }
+          ]
         },
         {
           path: '/login',
