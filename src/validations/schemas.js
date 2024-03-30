@@ -38,6 +38,21 @@ export const QuestionSchema = yup.object().shape({
   })
 })
 
+// ============> Section Form Validation Schema
+export const SectionSchema = yup.object().shape({
+  title: yup.object({
+    english: yup.string().required('Section Title is required'),
+    nepali: yup.string().required('Nepali Section Title is required')
+  }),
+  // Description is not mandatory
+  questions: yup.array().of(
+    yup.object({
+      order: yup.string().required('Question order is mandatory'),
+      questionId: yup.string().required('Question selection is mandatory')
+    })
+  )
+})
+
 // ================> Error validation handler
 
 export const handleValidation = async (formData, schema) => {
