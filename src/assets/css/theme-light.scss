@@ -7,4 +7,5 @@ $primaryTextColor: #f8fafc;
 $highlightBg: $primaryColor;
 $highlightTextColor: $primaryTextColor;
 
-@import '../../../src/assets/sass/theme/_theme_light';
+// @import '../../../src/assets/sass/theme/_theme_light';
+@import '../sass/theme/theme_light';
