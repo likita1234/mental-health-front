@@ -114,7 +114,7 @@ router.beforeEach((to, from, next) => {
       next()
     } else {
       // Redirect unauthenticated users to login page
-      next('/login')
+      next('/app')
     }
   }
 })
