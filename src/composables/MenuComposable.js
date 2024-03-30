@@ -26,10 +26,10 @@ export function useMenu() {
           to: { name: 'default-dashboard' }
         },
         {
-          label: 'WHO-5 Index Dashboard',
+          label: 'Comparative Analysis',
           icon: 'pi pi-fw pi-database',
           visible: true,
-          to: { name: 'who-5-dashboard' }
+          to: { name: 'comparative-dashboards' }
         }
       ]
     },

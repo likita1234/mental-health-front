@@ -21,9 +21,9 @@ const router = createRouter({
               }
             },
             {
-              path: 'who-5',
-              name: 'who-5-dashboard',
-              component: () => import('../components/dashboard/WHO-5-Dashboard.vue'),
+              path: 'comparative-dashboards',
+              name: 'comparative-dashboards',
+              component: () => import('../components/dashboard/ComparativeDashboard.vue'),
               meta: {
                 breadcrumb: [{ parent: 'Home', label: 'WHO-5 Index Dashboard' }]
               }
