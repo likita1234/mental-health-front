@@ -39,11 +39,10 @@ const submit = async () => {
     loading.value = true
     // 1) Validate question form
     const validated = await handleValidation(section.value, SectionSchema)
-    console.log(formErrors.value)
     // 2) If validated is true, then submit, if there are issues in login, show invalid credentials toast
     if (validated) {
         // If its edit mode then update the question details otherwise submit the question
-        const submitted = await sectionStore.addNewSection()
+        const submitted = props.editMode ? await sectionStore.updateSectionDetails() : await sectionStore.addNewSection()
         // 3) If successful, then close dialog
         if (submitted) {
             emit('hide-dialog')
@@ -86,7 +85,9 @@ const hideDialog = () => {
                     </div>
                 </div>
                 <!-- Questions List -->
-                <SectionQuestions :questions="section.questions" />
+                <template v-if="section.questions && section.questions.length > 0">
+                    <SectionQuestions :questions="section.questions" />
+                </template>
             </div>
         </FormDialog>
     </div>

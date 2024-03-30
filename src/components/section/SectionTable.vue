@@ -29,6 +29,19 @@ const loadSections = async () => {
     }, Math.random() * 1000 + 250);
 }
 
+
+const editSection = async (sectionId) => {
+    // Fetch details first
+    const sectionDetails = await sectionStore.fetchSectionDetails(sectionId)
+    // Then setup edit 
+    if (sectionDetails) {
+        // Load details on store
+        sectionStore.editSection(sectionDetails)
+        // open dialog
+        formDialog.value = true
+    }
+}
+
 const confirmDelete = (sectionId) => {
     const message = 'Are you sure you want to delete this section?'
     confirmRequest(sectionId, sectionStore.deleteSection, message)
