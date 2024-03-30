@@ -43,7 +43,7 @@ const formDescription = computed(() => {
 const sectionItems = computed(() => {
     let items = []
     for (let i = 0; i < formDetails.value?.sections?.length; i++) {
-        items.push({ label: 'Section'})
+        items.push({ label: 'Section' })
     }
     return items
 })
@@ -89,20 +89,26 @@ const submitForm = async () => {
 
 // Navigate the steps
 const toggleStep = (stepFlag) => {
+    // In case previous
+    if (!stepFlag) {
+        activeStep.value--
+    }
     // First check if you have fulfilled all required questions
-    if (checkRequiredAnswers()) {
-        // Check if its final step and stepFlag is true then submit
-        if (stepFlag && isFinalStep.value) {
-            submitForm()
-        } else {
-            stepFlag ? activeStep.value++ : activeStep.value--
-            // Scroll window
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+    else {
+        if (checkRequiredAnswers()) {
+            // Check if its final step and stepFlag is true then submit
+            if (stepFlag && isFinalStep.value) {
+                submitForm()
+            } else {
+                activeStep.value++
+            }
         }
     }
+    // Scroll window
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
 }
 
 const checkRequiredAnswers = () => {
