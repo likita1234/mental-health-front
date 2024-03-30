@@ -48,16 +48,26 @@ router.beforeEach((to, from, next) => {
   const authStore = useAuthStore()
   // 1) Check if the user has a valid token or not
   const isUserAuthenticated = authStore.isLoggedIn
-  // If user is logged in and has a valid token then proceed user to go where he/she wants
-  // If user wants to register then its okay to let them go there
-  if (isUserAuthenticated && to.name === 'login') {
-    next('/')
-  } else if (!isUserAuthenticated) {
-    if (to.name !== 'login') {
+
+  // If user is authenticated
+  if (isUserAuthenticated) {
+    // If user tries to login, redirect to home page (except for when user is trying to register)
+    if (to.name === 'login' && to.name !== 'register') {
+      next('/')
+    } else {
+      // Allow navigation to other pages for authenticated users
+      next()
+    }
+  } else {
+    // If user is not authenticated
+    // If user tries to register, allow navigation to register page
+    if (to.name === 'register' || to.name === 'login') {
+      next()
+    } else {
+      // Redirect unauthenticated users to login page
       next('/login')
     }
   }
-  next()
 })
 
 export default router
