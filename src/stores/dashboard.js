@@ -14,11 +14,7 @@ export const useDashboardStore = defineStore('dashboard', () => {
   // Get Dashboard Details
   const getDashboardDetails = async (dashboardId) => {
     const response = await DashboardService.getDashboardDetails(dashboardId)
-
-    if (response.statusCode === 200) {
-      return response.data
-    }
-    return null
+    return response.data
   }
 
   // Helpers
