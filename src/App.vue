@@ -1,4 +1,13 @@
 <script setup>
+import { useRouter } from 'vue-router';
+import { authStore } from './stores';
+
+const router = useRouter()
+
+const logout = () => {
+  authStore.logout()
+  router.push({ name: 'login' })
+}
 </script>
 
 <template>
@@ -6,9 +15,10 @@
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
+      Logged IN
 
+      <Button label="Logout" @click="logout" />
       <nav>
-        Nothing Here
       </nav>
     </div>
   </header>
