@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, watch } from 'vue'
 
 const emit = defineEmits(['update:modelValue'])
 
@@ -23,7 +23,11 @@ const props = defineProps({
 
 const value = ref(null)
 
-onMounted(() => {
+const propsModelValue = computed(() => {
+    return props.modelValue
+})
+
+watch(() => propsModelValue.value, () => {
     value.value = props.modelValue
 })
 

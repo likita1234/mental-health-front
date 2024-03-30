@@ -7,7 +7,7 @@
     </div>
 </template>
 <script setup>
-import { ref, watch, onMounted } from 'vue';
+import { ref, watch, computed } from 'vue';
 const emit = defineEmits(['update:modelValue']);
 const props = defineProps({
     modelValue: Number,
@@ -29,14 +29,15 @@ const props = defineProps({
 // state
 const inputVal = ref(null);
 
-
-onMounted(() => {
-    if (props.modelValue) {
-        inputVal.value = props.modelValue
-    }
+const propsModelValue = computed(() => {
+    return props.modelValue
 })
 
 watch(inputVal, () => {
     emit('update:modelValue', inputVal.value);
+})
+
+watch(() => propsModelValue.value, () => {
+    inputVal.value = props.modelValue
 })
 </script>
