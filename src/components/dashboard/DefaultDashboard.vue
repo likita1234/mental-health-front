@@ -1,6 +1,9 @@
 <template>
     <!-- Overall Dashboard -->
     <div class="card">
+        <div class="card-header justify-content-center">
+            <only-table-mode-selection />
+        </div>
         <h4 class="text-center">{{ title }}</h4>
         <!-- <p class="text-center">{{ description }}</p> -->
         <Divider />
