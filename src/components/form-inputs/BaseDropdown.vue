@@ -5,7 +5,7 @@ import { ref, onMounted, computed, watch } from 'vue';
 const emit = defineEmits(['update:modelValue']);
 
 const props = defineProps({
-    modelValue: [Number, String],
+    modelValue: [Number, String, Boolean],
     label: String,
     placeholder: String,
     options: Array,
