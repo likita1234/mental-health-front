@@ -2,14 +2,16 @@
 import CustomSection from '../section/components/CustomSection.vue'
 
 import { ref, onMounted, computed, inject } from 'vue'
+import { useRouter } from 'vue-router'
 import { formStore } from '@/stores'
+
 // import { storeToRefs } from 'pinia';
 
 const props = defineProps({
     id: String
 })
 
-// 
+const router = useRouter()
 const appState = inject('appState')
 // Store states
 // const {}
@@ -62,7 +64,7 @@ const sectionItems = computed(() => {
 })
 
 const sectionLoaded = computed(() => {
-    return !loading.value && activeSection.value !== null
+    return !loading.value && activeSection.value !== null && sections.value?.length > 0
 })
 
 onMounted(() => {
@@ -87,12 +89,16 @@ const toggleStep = (stepFlag) => {
     });
 }
 
+const goBack = () => {
+    router.go(-1)
+}
+
 </script>
 
 <template>
     <div class="flex justify-content-center">
         <div class="card p-5 h-full w-9">
-            <div v-show="sectionLoaded">
+            <div v-if="sectionLoaded">
                 <!-- Form Title -->
                 <h2 class="text-center">{{ formTitle }}</h2>
                 <!-- Form Description -->
@@ -121,6 +127,12 @@ const toggleStep = (stepFlag) => {
                 <div class="flex mb-2 gap-2 justify-content-between">
                     <Button @click="toggleStep(false)" label="Previous" :disabled="!hasPreviousStep" />
                     <Button @click="toggleStep(true)" label="Next" :disabled="!hasNextStep" />
+                </div>
+            </div>
+            <div v-else>
+                <h4 class="text-center">The form you are looking for is not available</h4>
+                <div class="flex justify-content-center mt-3">
+                    <Button label="Go back" severity="info" @click="goBack" />
                 </div>
             </div>
         </div>
