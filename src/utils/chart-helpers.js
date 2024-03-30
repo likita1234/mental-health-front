@@ -2,18 +2,21 @@ import { ChartType } from '@/constants'
 import { calculateWeightedMeanAndSD } from './data-analysis'
 
 export const getComparativeAnalysisDashboardTableData = (allMetricData) => {
-    console.log(allMetricData)
   // Format data from each metrics
-  const formattedTableData = allMetricData?.map((metricObj) => {
+  return allMetricData?.map((metricObj) => {
+    const { id, title, description } = metricObj
     // Make sure to format the data before sending it for calculations
     const { values, frequencies } = getValuesAndFrequencyFromMetricData(metricObj)
     // After getting values and frequencies, calculate the weighted mean, variance, and standard deviation
     const { weightedMean, standardDeviation } = calculateWeightedMeanAndSD(values, frequencies)
     return {
-      //
+      id,
+      title,
+      description,
+      weightedMean,
+      standardDeviation
     }
   })
-  return formattedTableData
 }
 
 // helper functions
