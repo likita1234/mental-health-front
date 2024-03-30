@@ -2,7 +2,7 @@ import { showToast } from './show-toast'
 
 const severityMappings = {
   4: 'warn',
-  5: 'danger'
+  5: 'error'
 }
 
 const summaryMappings = {
@@ -12,7 +12,7 @@ const summaryMappings = {
     403: 'Forbidden',
     404: 'Not Found'
   },
-  danger: {
+  error: {
     500: 'Internal Server Error'
   }
 }
