@@ -50,11 +50,16 @@ const submit = async () => {
     }
     loading.value = false
 }
+
+const hideDialog = () => {
+    emit('hide-dialog')
+    questionStore.initQuestionData()
+}
 </script>
 
 <template>
     <div>
-        <FormDialog :header="formHeader" width="60vw" @hide-dialog="emit('hide-dialog')" @submit.preventDefault()="submit">
+        <FormDialog :header="formHeader" width="60vw" @hide-dialog="hideDialog" @submit.preventDefault()="submit">
             <div class="p-fluid">
                 <!-- Question Title Section -->
                 <div class="formgrid grid">
@@ -75,7 +80,7 @@ const submit = async () => {
                     </div>
                     <div class="field col">
                         <BaseTextarea v-model="question.description.nepali" label="Description (Nepali)"
-                            :errorMessage="formErrors['description.english']" />
+                            :errorMessage="formErrors['description.nepali']" />
                     </div>
                 </div>
                 <!-- Question Type -->
