@@ -29,7 +29,7 @@ export function useMenu() {
             {
               label: 'Manage Questions',
               icon: 'pi pi-fw pi-question',
-              to: { name: 'home' },
+              to: { name: 'manage-questions' },
               visible: true //check user role
             },
             {

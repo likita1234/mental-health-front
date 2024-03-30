@@ -7,7 +7,17 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('../App.vue')
+      component: () => import('../App.vue'),
+      children: [
+        {
+          path: 'question',
+          name: 'manage-questions',
+          component: () => import('../components/question/ManageQuestion.vue'),
+          meta: {
+            breadcrumb: [{ parent: 'Assessments', label: 'Question' }]
+          }
+        }
+      ]
     },
     {
       path: '/login',
@@ -27,7 +37,10 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       // component: () => import('../views/AboutView.vue')
     }
-  ]
+  ],
+  scrollBehavior() {
+    return { left: 0, top: 0 }
+  }
 })
 
 // ===========> Route guards
