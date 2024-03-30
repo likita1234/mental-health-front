@@ -1,10 +1,10 @@
 <template>
-    <div class="card">
-        <h4 class="text-center">{{ title }}</h4>
-        <p class="text-center">{{ description }}</p>
+    <div>
+        <!-- <h4 class="text-center">{{ title }}</h4>
+        <p class="text-center">{{ description }}</p> -->
         <div v-if="metrics && metrics.length > 0" class="grid">
             <metric-data v-for="metric in metrics" :metricId="metric.metricId" :key="metric.metricId"
-                class="col-12 md:col-12 xl:col-3 h-20rem" />
+                class="col-12 md:col-6 xl:col-4" />
         </div>
     </div>
 </template>
