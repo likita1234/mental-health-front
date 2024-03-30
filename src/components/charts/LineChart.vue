@@ -39,6 +39,9 @@ const lineChartOptions = computed(() => {
     return {
         ...props.chartOptions,
         plugins: {
+            legend: {
+                display: false
+            },
             datalabels: {
                 color: 'black',
                 anchor: 'end',
