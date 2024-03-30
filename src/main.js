@@ -86,6 +86,7 @@ import BaseSelectionInput from './components/form-inputs/BaseSelectionInput.vue'
 import CustomTable from './components/utils/CustomTable.vue'
 import FormDialog from './components/utils/FormDialog.vue'
 import DataTypeTag from './components/global/DataTypeTag.vue'
+import LanguageSelection from './components/utils/LanguageSelection.vue'
 
 // Question Components
 import CustomQuestion from './components/question/components/CustomQuestion.vue'
@@ -195,6 +196,7 @@ app.component('BaseSelectionInput', BaseSelectionInput)
 app.component('CustomTable', CustomTable)
 app.component('FormDialog', FormDialog)
 app.component('DataTypeTag', DataTypeTag)
+app.component('LanguageSelection', LanguageSelection)
 
 // Custom Questions
 app.component('CustomQuestion', CustomQuestion)

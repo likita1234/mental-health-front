@@ -1,8 +1,7 @@
 <script setup>
-import { ref, onMounted, computed, watch, inject, } from 'vue';
+import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { authStore } from '@/stores';
-import { getLanguages } from '@/utils/array-helpers';
 
 const emit = defineEmits(['menu-button-click', 'topbar-item-click', 'search-click'])
 const props = defineProps({
@@ -13,26 +12,9 @@ const props = defineProps({
 
 const router = useRouter()
 
-// Global State
-const appState = inject('appState')
-// Component States
-const selectedLanguage = ref(null)
-const languages = getLanguages()
-
 // Computed Properties
 const loggedUser = computed(() => {
     return authStore.loggedUser
-})
-
-// Watchers
-watch(selectedLanguage, () => {
-    appState.lang = selectedLanguage.value
-})
-
-onMounted(() => {
-    if (appState.lang) {
-        selectedLanguage.value = appState.lang
-    }
 })
 
 // Actions
@@ -71,8 +53,7 @@ const onTopbarSubItemClick = (event) => {
 
                 <ul class="layout-topbar-actions">
                     <li class="topbar-item settings" :class="{ 'active-topmenuitem': activeTopbarItem === 'settings' }">
-                        <BaseDropdown v-model="selectedLanguage" :options="languages" optionValue="value"
-                            placeholder="Select a language" :showClear="false" />
+                        <language-selection />
                     </li>
 
                     <li class="topbar-item user-profile"
