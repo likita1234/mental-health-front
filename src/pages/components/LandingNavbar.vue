@@ -19,7 +19,7 @@ const authActive = computed(() => {
 </script>
 
 <template>
-    <div class="flex justify-content-center align-items-end gap-7">
+    <div class="flex justify-content-center align-items-end gap-7 mt-5">
         <div class="icon" @mouseover="hover.home = true" @mouseleave="hover.home = false" v-tooltip="'Home'">
             <router-link :to="{ name: 'landing' }" v-slot="{ isExactActive }">
                 <font-awesome-icon class="cursor-pointer" :class="{ 'text-white': isExactActive || hover.home }"
