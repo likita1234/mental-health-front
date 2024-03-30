@@ -36,7 +36,7 @@ const type = computed(() => {
 
 // Returns the json data inside the metricDetails
 const jsonData = computed(() => {
-    return metricDetails.value?.metricData?.data ?? [];
+    return metricDetails.value?.metricData?.data?.filter(dataObj => dataObj.label !== 'Unknown') ?? [];
 })
 
 const defaultGroupings = computed(() => {
@@ -50,7 +50,9 @@ onMounted(() => {
 // Actions
 const loadMetricData = async () => {
     metricDetails.value = await metricStore.getMetricData(props.metricId)
-    console.log(metricDetails.value)
+    // if (metricDetails.value?.id === '65feedbbd213a25a0c31e2ba') {
+    //     console.log(metricDetails.value)
+    // }
 }
 
 </script>
