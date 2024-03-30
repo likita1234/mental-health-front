@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, ref, computed, inject } from 'vue';
+import { useRouter } from 'vue-router';
 
 import { answerStore, formStore } from '@/stores';
 import { storeToRefs } from 'pinia';
@@ -12,6 +13,8 @@ const props = defineProps({
         required: true
     }
 })
+
+const router = useRouter()
 // Global state
 const appState = inject('appState')
 
@@ -69,7 +72,9 @@ const loadAssessmentDetails = async () => {
 }
 
 const submitForm = async () => {
-    await answerStore.submitAnswerForm(formDetails.value)
+    if (await answerStore.submitAnswerForm(formDetails.value)) {
+        setTimeout(() => router.push({ name: 'survey' }), 2000)
+    }
 }
 
 // Navigate the steps
