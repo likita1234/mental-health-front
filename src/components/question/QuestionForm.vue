@@ -1,59 +1,95 @@
 <script setup>
-import { QuestionTypes } from '@/constants';
-import { ref } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+import { getLanguages, getQuestionType } from '@/utils/array-helpers';
+import { LanguageType } from '@/constants';
 
 const emit = defineEmits(['hide-dialog'])
 
+const languages = getLanguages()
 // component states
-const visible = ref(true)
+const selectedQuestionType = ref(null)
+const questionTypeOption = getQuestionType();
+const activeLanguage = ref(null)
 const form = ref({
     title: {
         english: null,
-        nepalese: null
+        nepali: null
     },
     description: {
         english: null,
-        nepalese: null
+        nepali: null
     }
 })
-const selectedQuestionType = ref(null)
+// computed properties 
+const englishMode = computed(() => {
+    return activeLanguage.value === LanguageType.ENGLISH
+})
+
+onMounted(() => {
+    // Set active language to English by default
+    activeLanguage.value = LanguageType.ENGLISH
+})
+
+
 </script>
 
 <template>
     <div>
-        <Dialog v-model:visible="visible" modal header="Header" :style="{ width: '50vw' }"
-            :breakpoints="{ '1199px': '60vw', '575px': '80vw' }" @hide="emit('hide-dialog')">
-            <div class="col-12">
-                <div class=" p-fluid">
+        <FormDialog header="Question Form" width="30vw" @hide-dialog="emit('hide - dialog')">
+            <div class="flex justify-content-center mb-3">
+                <SelectButton v-model="activeLanguage" :options="languages" optionLabel="name" optionValue="value"
+                    aria-labelledby="basic" binary />
+            </div>
+            <template v-if="englishMode">
+                <div class="p-fluid">
                     <!-- Question Title Section -->
                     <div class="formgrid grid">
                         <div class="field col">
                             <BaseTextInput v-model="form.title.english" label="Question Title" size="large"
                                 :errorMessage="null" />
                         </div>
+                    </div>
+                    <!-- Question Description Section -->
+                    <div class="formgrid grid">
                         <div class="field col">
-                            <BaseTextInput v-model="form.title.nepalese" label="प्रश्न शीर्षक" size="large"
+                            <BaseTextarea v-model="form.description.english" label="Question Description" />
+                        </div>
+                    </div>
+                    <!-- Question Type -->
+                    <div class="formgrid grid">
+                        <div class="field col">
+                            <BaseDropdown v-model="selectedQuestionType" :options="questionTypeOption" label="Type"
+                                optionLabel="name" optionValue="id" placeholder="Select a question type"
+                                :showClear="false" />
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <template v-else>
+                <div class="p-fluid">
+                    <!-- Question Title Section -->
+                    <div class="formgrid grid">
+                        <div class="field col">
+                            <BaseTextInput v-model="form.title.nepali" label="प्रश्न शीर्षक" size="large"
                                 :errorMessage="null" />
                         </div>
                     </div>
                     <!-- Question Description Section -->
                     <div class="formgrid grid">
                         <div class="field col">
-                            <BaseEditor v-model="form.description.english" label="Question Title" hideToolbar
-                                size="large" />
-                        </div>
-                        <div class="field col">
-                            <BaseEditor v-model="form.description.nepalese" label="प्रश्न विवरण" hideToolbar size="large" />
+                            <BaseTextarea v-model="form.description.nepali" label="प्रश्न विवरण" />
                         </div>
                     </div>
                     <!-- Question Type -->
                     <div class="formgrid grid">
                         <div class="field col">
-                            <BaseDropdown v-model="selectedQuestionType" :options="QuestionTypes" optionLable="Type" />
+                            <BaseDropdown v-model="selectedQuestionType" :options="questionTypeOption" label="Type"
+                                optionLabel="name" optionValue="id" placeholder="Select a question type"
+                                :showClear="false" />
                         </div>
                     </div>
                 </div>
-            </div>
-        </Dialog>
+            </template>
+        </FormDialog>
     </div>
 </template>
