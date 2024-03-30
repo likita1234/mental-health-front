@@ -34,7 +34,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   // actions
   const login = async (body) => {
-    await AuthService.login(body).then((currentUser) => {
+    return await AuthService.login(body).then((currentUser) => {
       setupUserData(currentUser)
       return true
     })
