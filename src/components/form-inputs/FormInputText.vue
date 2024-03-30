@@ -57,7 +57,7 @@ watch(inputValue, () => {
     </div>
     <div v-else class="flex flex-column gap-2">
         <label :for="label">{{ label }}</label>
-        <InputText :id="label" v-model="inputValue" aria-describedby="text-error" :size="size" />
+        <InputText :id="label" v-model="inputValue"  :class="{ 'p-invalid': errorMessage }" aria-describedby="text-error" :size="size" :type="type" />
         <small class="p-error" id="text-error">{{ errorMessage || '&nbsp;' }}</small>
     </div>
 </template>
