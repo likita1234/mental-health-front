@@ -82,27 +82,26 @@ export const useSectionStore = defineStore('section', () => {
     }
     return null
   }
-  // Edit question is for setting up question details for update on the UI
+  // Edit section is for setting up section details for update on the UI
   const editSection = async (sectionDetails) => {
     const { _id, title, description, questions } = sectionDetails
-    // Setup basic question details first
-    question.value.id = _id
-    question.value.title = title
-    question.value.description = description
-    question.value.type = type
-    // Setup question options
-    question.value.questions = questions?.map((obj) => {
+    // Setup basic section details first
+    section.value.id = _id
+    section.value.title = title
+    section.value.description = description
+    // Setup section options
+    section.value.questions = questions?.map((obj) => {
       return {
         ...obj,
-        id: obj.questionId
+        id: obj._id
       }
     })
   }
 
   const updateSectionDetails = async () => {
-    const payloadBody = { ...question.value }
+    const payloadBody = { ...section.value }
     // Setup options
-    // payloadBody.options = setupOptionsPayload(payloadBody.options)
+    payloadBody.questions = setupSectionQuestions(payloadBody.questions)
     const response = await SectionService.updateSection(payloadBody)
     if (response.statusCode === 200) {
       initSectionData()
@@ -116,7 +115,8 @@ export const useSectionStore = defineStore('section', () => {
   const deleteSection = async (sectionId) => {
     const response = await SectionService.deleteSection(sectionId)
     if (response.statusCode === 204) {
-      // Find the index of the section and remove it from the store state as well
+      // Find the index of the section and filter it from the store state as well
+      sections.value = sections.value.filter((section) => section._id !== sectionId)
       new AppResponse(response.statusCode, 'Section deleted successfully')
       return true
     }
@@ -136,6 +136,19 @@ export const useSectionStore = defineStore('section', () => {
 
   const removeSectionQuestion = (keyIndex) => {
     section.value.questions.splice(keyIndex, 1)
+  }
+
+  const setupSectionQuestions = (questions) => {
+    if (questions && questions.length > 0) {
+      return questions?.map((question) => {
+        return {
+          _id: `${question.id}`,
+          order: question.order,
+          questionId: question.questionId
+        }
+      })
+    }
+    return []
   }
 
   const initSectionData = () => {
