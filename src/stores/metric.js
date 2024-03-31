@@ -21,6 +21,16 @@ export const useMetricStore = defineStore('metric', () => {
     return null
   }
 
+  // Get Table data analysis by form id and section id
+  const getTableAnalysisByFormIdSectionId = async (formId, sectionId) => {
+    const response = await MetricService.getTableAnalysisByFormIdSectionId(formId, sectionId)
+    if (response.statusCode === 200) {
+      return response.data
+    }
+    return null
+  }
+
+  // getTableAnalysisByFormIdSectionId
   // Helpers
 
   // Returns
@@ -31,7 +41,8 @@ export const useMetricStore = defineStore('metric', () => {
     // Getters
 
     // Actions
-    getMetricData
+    getMetricData,
+    getTableAnalysisByFormIdSectionId
 
     // Helpers
   }
