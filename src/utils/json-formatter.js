@@ -2,7 +2,6 @@ export const formatFormSectionMetricToTableJson = (metricData) => {
   if (metricData && metricData.length > 0) {
     // First generate total value for each object
     const totalIncludedMetricData = getTotalForEachObject(metricData)
-    console.log(totalIncludedMetricData)
     // Now convert into the desirable format for TableJson
     return totalIncludedMetricData?.flatMap((item) => {
       const totalForQuestion = item.total
@@ -19,10 +18,17 @@ export const formatFormSectionMetricToTableJson = (metricData) => {
 
 const getTotalForEachObject = (metricData) => {
   return metricData.map((item) => {
-    const total = Object.values(item.answers[0]).reduce((acc, curr) => acc + curr, 0)
+    const answers = item.answers[0]
+    const total = Object.values(answers).reduce((acc, curr) => acc + curr, 0)
     return {
       ...item,
-      total
+      answers: [
+        {
+          ...answers,
+          Total: total
+        }
+      ],
+      total: total
     }
   })
 }
