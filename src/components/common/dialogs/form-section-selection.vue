@@ -16,12 +16,6 @@ const submit = () => {
         emit('form-section-selected', selectedInfo)
     }
 }
-
-const hideDialog = () => {
-    emit('hide-dialog')
-    formStore.initFormData()
-}
-
 const checkValid = () => {
     if (!selectedForm.value || !selectedSection.value) {
         showToast('info', null, 'Please select both form and section')
@@ -34,7 +28,7 @@ const checkValid = () => {
 
 <template>
     <div>
-        <FormDialog header="Assessment and Section Selection" width="30vw" @hide-dialog="hideDialog"
+        <FormDialog header="Assessment and Section Selection" width="30vw" @hide-dialog=" emit('hide-dialog')"
             @submit.preventDefault()="submit">
             <div class="flex gap-2 flex-wrap">
                 <assessment-form-selection @form-selected="selectedForm = $event" />
