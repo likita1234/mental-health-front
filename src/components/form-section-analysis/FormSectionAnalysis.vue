@@ -1,16 +1,17 @@
 <script setup>
 import FormSectionSelectionDialog from '@/components/common/dialogs/form-section-selection.vue'
+import FormSectionAnalysisTable from '@/components/common/tables/form-section-analysis.vue'
 import { ref, computed } from 'vue';
 
 // Component states
 const dialogVisible = ref(false)
-const analysisIds = ref(null)
+const analysisIds = ref({})
 
 // Computed Properties
 const hasAnalysisIds = computed(() => {
-    return analysisIds.value?.formId !== null && analysisIds.value?.sectionId !== null
-})
-
+    const { formId, sectionId } = analysisIds.value;
+    return formId !== null && formId !== undefined && sectionId !== null && sectionId !== undefined;
+});
 // Actions
 const analysisDataSelected = (event) => {
     const { formId, sectionId } = event
@@ -27,12 +28,12 @@ const toggleDialog = (flag) => {
 <template>
     <div>
         <div class="flex justify-content-around">
-            <Button label="Choose Assessment Form and Section" @click="toggleDialog(true)" />
+            <Button v-if="!hasAnalysisIds" label="Choose Assessment Form and Section" @click="toggleDialog(true)" />
+            <Button v-else label="Clear Selection" severity="warning" @click="analysisDataSelected({})" />
         </div>
+        <form-section-analysis-table v-show="hasAnalysisIds" :analysisIds="analysisIds" />
         <!-- Dialog for form and section selection -->
         <form-section-selection-dialog v-if="dialogVisible" @form-section-selected="analysisDataSelected"
             @hide-dialog="toggleDialog(false)" />
-
-
     </div>
 </template>
