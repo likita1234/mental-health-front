@@ -42,6 +42,7 @@ export const useFormStore = defineStore('form', () => {
       return {
         ...form,
         id: index + 1,
+        engTitle: form.title.english,
         created_at: formatDisplayDate(form.createdDate),
         sectionsCount: form.sections.length
       }
