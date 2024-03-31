@@ -66,8 +66,12 @@ const toggleDialog = (flag) => {
             <Button v-else label="Clear Selection" severity="warning" @click="clearSelectedData" />
         </div>
         <!-- Analysis Table -->
-        <form-section-analysis-table v-if="hasAnalysisIds && !dataLoading" :tableHeader="tableHeader"
-            :tableData="tableData" />
+        <div class="flex justify-content-center">
+            <div class="w-full lg:w-7">
+                <form-section-analysis-table v-if="hasAnalysisIds && !dataLoading" :tableHeader="tableHeader"
+                    :tableData="tableData" />
+            </div>
+        </div>
         <!-- Dialog for form and section selection -->
         <form-section-selection-dialog v-if="dialogVisible" @form-section-selected="analysisDataSelected"
             @hide-dialog="toggleDialog(false)" />
