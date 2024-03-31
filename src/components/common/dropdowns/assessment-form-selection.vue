@@ -6,14 +6,6 @@ import { formStore } from '@/stores'
 
 const emit = defineEmits(['form-selected'])
 
-// Props
-const props = defineProps({
-    type: {
-        type: String,
-        default: 'normal'
-    }
-})
-
 // Store states
 const { allForms } = storeToRefs(formStore)
 
@@ -44,7 +36,7 @@ const loadAssessmentForms = async () => {
 
 <template>
     <div>
-        <BaseDropdown v-model="selectedForm" :label="'Start by selecting an assessment form'" :options="allForms"
+        <BaseDropdown v-model="selectedForm" :label="'Select an assessment form'" :options="allForms"
             optionLabel="engTitle" optionValue="_id" placeholder="Select a form" :showClear="false" />
     </div>
 </template>
