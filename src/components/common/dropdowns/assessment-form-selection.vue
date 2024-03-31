@@ -24,8 +24,7 @@ const selectedForm = ref(null)
 watch(() => selectedForm.value, () => {
     if (selectedForm.value) {
         const formDetails = allForms.value.find(form => form._id === selectedForm.value)
-        console.log(formDetails)
-        emit('form-selected', formDetails)
+        emit('form-selected', formDetails?._id)
     }
 })
 
