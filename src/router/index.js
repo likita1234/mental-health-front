@@ -15,7 +15,7 @@ const router = createRouter({
             {
               path: '',
               name: 'default-dashboard',
-              component: () => import('../components/dashboard/DefaultDashboard.vue'),
+              component: () => import('../components/dashboards/DefaultDashboard.vue'),
               meta: {
                 breadcrumb: [{ parent: 'Home', label: 'Default Dashboard' }]
               }
@@ -23,7 +23,7 @@ const router = createRouter({
             {
               path: 'comparative-dashboards',
               name: 'comparative-dashboards',
-              component: () => import('../components/dashboard/ComparativeDashboard.vue'),
+              component: () => import('../components/dashboards/ComparativeDashboard.vue'),
               meta: {
                 breadcrumb: [{ parent: 'Home', label: 'WHO-5 Index Dashboard' }]
               }
