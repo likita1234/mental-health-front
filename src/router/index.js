@@ -35,6 +35,14 @@ const router = createRouter({
               meta: {
                 breadcrumb: [{ parent: 'Home', label: 'Assessment Form Section-Wise Analysis' }]
               }
+            },
+            {
+              path: 'thematic-analysis',
+              name: 'thematic-analysis',
+              component: () => import('../components/dashboards/thematic-analysis.vue'),
+              meta: {
+                breadcrumb: [{ parent: 'Home', label: 'Thematic Analyis of open-end questions' }]
+              }
             }
           ]
         },
