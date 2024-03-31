@@ -39,6 +39,7 @@ export const useSectionStore = defineStore('section', () => {
       return {
         ...section,
         id: index + 1,
+        engTitle: section.title?.english,
         created_at: formatDisplayDate(section.createdDate),
         questionsCount: section.questions.length
       }
