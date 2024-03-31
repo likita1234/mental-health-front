@@ -7,6 +7,7 @@ import { formatFormSectionMetricToTableJson } from '@/utils/json-formatter'
 
 // Component states
 const analysisIds = ref({})
+const tableHeader = ref(null)
 const tableData = ref([])
 
 const dialogVisible = ref(false)
@@ -31,7 +32,8 @@ const loadTableAnalysisData = async () => {
     // Fetch metric data first
     const { sectionDetails, metricData } = await metricStore.getTableAnalysisByFormIdSectionId(formId, sectionId)
     // format the data into tableData format json
-    if (metricData) {
+    if (sectionDetails && metricData) {
+        tableHeader.value = sectionDetails?.title?.english
         tableData.value = await formatFormSectionMetricToTableJson(metricData)
     }
     dataLoading.value = false
@@ -59,11 +61,13 @@ const toggleDialog = (flag) => {
 
 <template>
     <div>
-        <div class="flex justify-content-around">
+        <div class="flex">
             <Button v-if="!hasAnalysisIds" label="Choose Assessment Form and Section" @click="toggleDialog(true)" />
             <Button v-else label="Clear Selection" severity="warning" @click="clearSelectedData" />
         </div>
-        <form-section-analysis-table v-if="hasAnalysisIds && !dataLoading" :tableData="tableData" />
+        <!-- Analysis Table -->
+        <form-section-analysis-table v-if="hasAnalysisIds && !dataLoading" :tableHeader="tableHeader"
+            :tableData="tableData" />
         <!-- Dialog for form and section selection -->
         <form-section-selection-dialog v-if="dialogVisible" @form-section-selected="analysisDataSelected"
             @hide-dialog="toggleDialog(false)" />
