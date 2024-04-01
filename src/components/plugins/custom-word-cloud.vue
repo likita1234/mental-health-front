@@ -34,11 +34,11 @@ const rotationUnit = ref(([, weight]) => {
 })
 
 const rotation = ref(([, weight]) => {
-    if (weight > 25) return 1; // Three-quarters rotation (270 degrees)
-    if (weight > 20) return -1; // Quarter rotation (90 degrees)
-    if (weight > 15) return .25; // Half rotation (180 degrees)
-    if (weight > 10) return -0.25; // Quarter rotation (90 degrees)
-    return 0; // No rotation
+    if (weight > 25) return 1;
+    if (weight > 20) return 1 / 12;
+    if (weight > 15) return 1 / 4;
+    if (weight > 10) return 1 / 8;
+    return 0;
 });
 
 </script>
