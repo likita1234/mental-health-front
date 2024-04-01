@@ -32,8 +32,8 @@ const loadQuestions = async () => {
 
 <template>
     <div>
-        <BaseDropdown v-model="selectedQuestion" :options="allQuestions" :placeholder="'Select a question'"
-            :optionLabel="'title.' + [appState.lang]" :optionValue="'_id'" filter
+        <BaseDropdown v-model="selectedQuestion" :options="allQuestions" label="Select a question"
+            :placeholder="'Select a question'" :optionLabel="'title.' + [appState.lang]" :optionValue="'_id'" filter
             @change="emit('question-selected', $event)" />
     </div>
 </template>
