@@ -1,19 +1,26 @@
 <script setup>
 import FormQuestionSelectionDialog from '@/components/common/dialogs/form-question-selection.vue'
-import { ref, computed, watch } from 'vue';
-import { metricStore } from '@/stores';
+import { ref, computed, watch, inject } from 'vue';
+import { metricStore, questionStore } from '@/stores';
+
+const appState = inject('appState')
 
 // Component states
 const analysisIds = ref({})
 const words = ref([])
 const dialogVisible = ref(false)
 const dataLoading = ref(false)
+const questionDetails = ref(null)
 
 // Computed Properties
 const hasAnalysisIds = computed(() => {
     const { formId, questionId } = analysisIds.value;
     return formId !== null && formId !== undefined && questionId !== null && questionId !== undefined;
 });
+
+const questionTitle = computed(() => {
+    return questionDetails.value ? questionDetails.value?.title[appState.lang] : null
+})
 
 // Watchers
 watch(() => hasAnalysisIds.value, () => {
@@ -30,6 +37,9 @@ const loadQuestionKeywords = async () => {
     const { keywords } = await metricStore.getKeywordsAnalysisByFormIdQuestionId(formId, questionId)
     // Convert the data into proper weighted keywords format
     words.value = Object.entries(keywords)
+    // Load Question details
+    questionDetails.value = await questionStore.fetchQuestionDetails(questionId)
+    console.log(questionDetails.value)
     dataLoading.value = false
 }
 
@@ -62,7 +72,8 @@ const clearSelectedData = () => {
         </div>
         <!-- Word Cloud -->
         <template v-if="words && words.length > 0">
-            <custom-word-cloud :words="words" />
+            <h4 class="mx-auto">{{ questionTitle }}</h4>
+            <custom-word-cloud :words="words" class="p-2" />
         </template>
 
         <!-- Dialog for form and question selection -->
