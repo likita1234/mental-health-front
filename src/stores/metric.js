@@ -30,6 +30,15 @@ export const useMetricStore = defineStore('metric', () => {
     return null
   }
 
+  // Get Keywords analysis by form id and question id
+  const getKeywordsAnalysisByFormIdQuestionId = async (formId, questionId) => {
+    const response = await MetricService.getKeywordAnalysisByFormIdQuestionId(formId, questionId)
+    if (response.statusCode === 200) {
+      return response.data
+    }
+    return null
+  }
+
   // getTableAnalysisByFormIdSectionId
   // Helpers
 
@@ -42,7 +51,8 @@ export const useMetricStore = defineStore('metric', () => {
 
     // Actions
     getMetricData,
-    getTableAnalysisByFormIdSectionId
+    getTableAnalysisByFormIdSectionId,
+    getKeywordsAnalysisByFormIdQuestionId
 
     // Helpers
   }

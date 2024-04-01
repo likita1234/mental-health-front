@@ -37,6 +37,6 @@ const loadAssessmentForms = async () => {
 <template>
     <div>
         <BaseDropdown v-model="selectedForm" :label="'Select an assessment form'" :options="allForms"
-            optionLabel="engTitle" optionValue="_id" placeholder="Select a form" :showClear="false" />
+            :optionLabel="'title.' + [appState.lang]" optionValue="_id" placeholder="Select a form" :showClear="false" />
     </div>
 </template>

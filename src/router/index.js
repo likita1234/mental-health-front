@@ -15,7 +15,7 @@ const router = createRouter({
             {
               path: '',
               name: 'default-dashboard',
-              component: () => import('../components/dashboard/DefaultDashboard.vue'),
+              component: () => import('../components/dashboards/DefaultDashboard.vue'),
               meta: {
                 breadcrumb: [{ parent: 'Home', label: 'Default Dashboard' }]
               }
@@ -23,7 +23,7 @@ const router = createRouter({
             {
               path: 'comparative-dashboards',
               name: 'comparative-dashboards',
-              component: () => import('../components/dashboard/ComparativeDashboard.vue'),
+              component: () => import('../components/dashboards/ComparativeDashboard.vue'),
               meta: {
                 breadcrumb: [{ parent: 'Home', label: 'WHO-5 Index Dashboard' }]
               }
@@ -31,10 +31,17 @@ const router = createRouter({
             {
               path: 'section-analysis',
               name: 'section-analysis',
-              component: () =>
-                import('../components/form-section-analysis/FormSectionAnalysis.vue'),
+              component: () => import('../components/dashboards/FormSectionAnalysis.vue'),
               meta: {
                 breadcrumb: [{ parent: 'Home', label: 'Assessment Form Section-Wise Analysis' }]
+              }
+            },
+            {
+              path: 'thematic-analysis',
+              name: 'thematic-analysis',
+              component: () => import('../components/dashboards/thematic-analysis.vue'),
+              meta: {
+                breadcrumb: [{ parent: 'Home', label: 'Thematic Analyis of open-end questions' }]
               }
             }
           ]

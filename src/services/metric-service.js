@@ -20,6 +20,14 @@ class MetricService {
       return new AppError(error.statusCode, 'Failed to fetch table analysis data')
     }
   }
+  // Fetch keyword analysis data by form id and question id
+  static async getKeywordAnalysisByFormIdQuestionId(formId, questionId) {
+    try {
+      return await authApi.get(`${METRIC_API}/keywords-analysis/${formId}/${questionId}`)
+    } catch (error) {
+      return new AppError(error.statusCode, 'Failed to fetch keyword analysis')
+    }
+  }
 }
 
 export default MetricService

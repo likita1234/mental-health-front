@@ -37,6 +37,7 @@ const loadSections = async () => {
 <template>
     <div>
         <BaseDropdown v-model="selectedSection" :label="'Now Pick a section'" :options="allSections"
-            optionLabel="engTitle" optionValue="_id" placeholder="Select a section" :showClear="false" />
+            :optionLabel="'title.' + [appState.lang]" optionValue="_id" placeholder="Select a section"
+            :showClear="false" />
     </div>
 </template>

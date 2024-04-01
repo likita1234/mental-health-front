@@ -36,6 +36,12 @@ export function useMenu() {
           icon: 'pi pi-fw pi-table',
           visible: true,
           to: { name: 'section-analysis' }
+        },
+        {
+          label: 'Keywords Analysis',
+          icon: 'pi pi-fw pi-key',
+          visible: true,
+          to: { name: 'thematic-analysis' }
         }
       ]
     },
