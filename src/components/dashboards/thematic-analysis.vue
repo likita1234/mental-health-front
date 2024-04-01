@@ -5,7 +5,7 @@ import { metricStore } from '@/stores';
 
 // Component states
 const analysisIds = ref({})
-const keywords = ref([])
+const words = ref([])
 const dialogVisible = ref(false)
 const dataLoading = ref(false)
 
@@ -28,10 +28,8 @@ const loadQuestionKeywords = async () => {
     const { formId, questionId } = analysisIds.value
     // Fetch metric data first
     const { keywords } = await metricStore.getKeywordsAnalysisByFormIdQuestionId(formId, questionId)
-    // format the data into tableData format json
-    if (Object.entries(keywords)?.length > 0) {
-        console.log(keywords)
-    }
+    // Convert the data into proper weighted keywords format
+    words.value = Object.entries(keywords)
     dataLoading.value = false
 }
 
@@ -51,7 +49,7 @@ const toggleDialog = (flag) => {
 // Clean up selected information from the component
 const clearSelectedData = () => {
     analysisIds.value = {}
-    keywords.value = []
+    words.value = []
 }
 
 </script>
@@ -63,9 +61,9 @@ const clearSelectedData = () => {
             <Button v-else label="Clear Selection" severity="warning" @click="clearSelectedData" />
         </div>
         <!-- Word Cloud -->
-        <div>
-            <custom-word-cloud :words="keywords" />
-        </div>
+        <template v-if="words && words.length > 0">
+            <custom-word-cloud :words="words" />
+        </template>
 
         <!-- Dialog for form and question selection -->
         <form-question-selection-dialog v-if="dialogVisible" @form-question-selected="analysisDataSelected"
