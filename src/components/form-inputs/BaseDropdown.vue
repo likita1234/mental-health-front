@@ -2,7 +2,7 @@
 <script setup>
 import { ref, onMounted, computed, watch } from 'vue';
 
-const emit = defineEmits(['update:modelValue']);
+const emit = defineEmits(['update:modelValue', 'change']);
 
 const props = defineProps({
     modelValue: [Number, String, Boolean],
@@ -65,6 +65,11 @@ onMounted(() => {
 const updateSelectedOption = () => {
     selectedOption.value = fieldValue.value;
 };
+
+const optionSelected = (event) => {
+    emit('update:modelValue', selectedOption.value)
+    emit('change', event.value)
+}
 </script>
 
 <template>
@@ -72,8 +77,8 @@ const updateSelectedOption = () => {
         <label v-if="fieldLabel" class="mb-2" :class="{ 'font-bold': bold }" :for="fieldLabel">{{ fieldLabel }}</label>
         <Dropdown :id="fieldLabel" v-model="selectedOption" :options="fieldOptions" :optionLabel="optionLabel"
             :optionValue="optionValue" :placeholder="placeholder" class="w-full md:w-14rem mb-1"
-            :class="{ 'p-invalid': errorMessage }" :filter="filter" :showClear="showClear"
-            @change="emit('update:modelValue', selectedOption)" :disabled="disabled" />
+            :class="{ 'p-invalid': errorMessage }" :filter="filter" :showClear="showClear" @change="optionSelected"
+            :disabled="disabled" />
         <small class="p-invalid" v-if="errorMessage"> {{ errorMessage }}</small>
     </div>
 </template>
