@@ -9,7 +9,7 @@ const props = defineProps({
     }
 })
 // Component states
-const animationDuration = 10000;
+const animationDuration = 5000;
 const animationEasing = 'ease-in';
 const animationOverlap = .2;
 const enterAnimation = 'animated bounceIn';
@@ -42,11 +42,17 @@ const rotation = ref(([, weight]) => {
 
 </script>
 <template>
-    <div class="p-card">
+    <div class="p-card word-container">
         <!-- :rotation-unit="rotationUnit" -->
-        <vue-word-cloud style="height: 500px;" :words="props.words" :color="colors"
+        <vue-word-cloud style="height: 100%;" :words="props.words" :color="colors"
             :animationDuration="animationDuration" :animation-easing="animationEasing"
             :animation-overlap="animationOverlap" :enter-animation="enterAnimation" :leave-animation="leaveAnimation"
             :rotation-unit="rotationUnit" :rotation="rotation" :spacing=".5" />
     </div>
 </template>
+
+<style scoped>
+.word-container {
+    height: 70vh;
+}
+</style>
