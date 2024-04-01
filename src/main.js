@@ -71,6 +71,8 @@ import TriStateCheckbox from 'primevue/tristatecheckbox'
 import 'primevue/resources/primevue.min.css'
 import 'primeicons/primeicons.css'
 
+import VueWordCloud from 'vuewordcloud'
+
 // My custom components
 import BaseTextInput from './components/form-inputs/BaseTextInput.vue'
 import BaseTextarea from './components/form-inputs/BaseTextarea.vue'
@@ -86,6 +88,7 @@ import FormDialog from './components/utils/FormDialog.vue'
 import DataTypeTag from './components/global/DataTypeTag.vue'
 import LanguageSelection from './components/utils/LanguageSelection.vue'
 import OnlyTableModeSelection from './components/utils/OnlyTableModeSelection.vue'
+import CustomWordCloud from './components/plugins/custom-word-cloud.vue'
 
 // Question Components
 import CustomQuestion from './components/question/components/CustomQuestion.vue'
@@ -189,6 +192,8 @@ app.component('Toolbar', Toolbar)
 app.component('ToggleButton', ToggleButton)
 app.component('TriStateCheckbox', TriStateCheckbox)
 
+app.component('VueWordCloud', VueWordCloud)
+
 // My Custom Components goes here
 app.component('BaseTextInput', BaseTextInput)
 app.component('BaseTextarea', BaseTextarea)
@@ -204,6 +209,7 @@ app.component('FormDialog', FormDialog)
 app.component('DataTypeTag', DataTypeTag)
 app.component('LanguageSelection', LanguageSelection)
 app.component('OnlyTableModeSelection', OnlyTableModeSelection)
+app.component('CustomWordCloud', CustomWordCloud)
 
 // Custom Questions
 app.component('CustomQuestion', CustomQuestion)
