@@ -15,9 +15,10 @@ class QuestionService {
   // Fetch all existing questions
   static async getAllQuestions(queryParams) {
     try {
-      const { page, limit, sort, fields } = queryParams
+      const { page, limit, sort, fields, params } = queryParams
       return await authApi.get(QUESTION_API, {
         params: {
+          ...params,
           page,
           limit,
           sort,

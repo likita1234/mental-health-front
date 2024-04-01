@@ -33,6 +33,7 @@ export const useQuestionStore = defineStore('question', () => {
   const questions = ref([])
   const totalQuestions = ref(null)
   // =========>Advanced filterings
+  const params = ref(null)
   const page = ref(1)
   const limit = ref(10)
   const sort = ref('createdDate')
@@ -57,6 +58,7 @@ export const useQuestionStore = defineStore('question', () => {
   // actions
   const fetchAllQuestions = async (allData = false) => {
     const response = await QuestionService.getAllQuestions({
+      params: params.value,
       page: page.value,
       limit: allData ? 100 : limit.value,
       sort: sort.value,
@@ -193,6 +195,7 @@ export const useQuestionStore = defineStore('question', () => {
 
   return {
     // filter states
+    params,
     page,
     limit,
     sort,
