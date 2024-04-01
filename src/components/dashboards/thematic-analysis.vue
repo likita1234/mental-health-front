@@ -39,7 +39,6 @@ const loadQuestionKeywords = async () => {
     words.value = Object.entries(keywords)
     // Load Question details
     questionDetails.value = await questionStore.fetchQuestionDetails(questionId)
-    console.log(questionDetails.value)
     dataLoading.value = false
 }
 
