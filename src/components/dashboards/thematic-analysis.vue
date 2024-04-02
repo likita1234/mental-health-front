@@ -1,82 +1,77 @@
 <script setup>
-import FormQuestionSelectionDialog from '@/components/common/dialogs/form-question-selection.vue'
+import AssessmentFormSelection from '../common/dropdowns/assessment-form-selection.vue';
+import QuestionSelection from '../common/dropdowns/question-selection.vue';
+
 import { ref, computed, watch, inject } from 'vue';
 import { metricStore, questionStore } from '@/stores';
+import { QuestionType } from '@/constants'
 
 const appState = inject('appState')
 
 // Component states
-const analysisIds = ref({})
+const selectedForm = ref(null)
+const selectedQuestion = ref(null)
 const words = ref([])
-const dialogVisible = ref(false)
 const dataLoading = ref(false)
+const questionParams = ref({ type: QuestionType.LONGTEXT })
 const questionDetails = ref(null)
 
-// Computed Properties
-const hasAnalysisIds = computed(() => {
-    const { formId, questionId } = analysisIds.value;
-    return formId !== null && formId !== undefined && questionId !== null && questionId !== undefined;
-});
 
+// Computed Properties
 const questionTitle = computed(() => {
     return questionDetails.value ? questionDetails.value?.title[appState.lang] : null
 })
 
+
 // Watchers
-watch(() => hasAnalysisIds.value, () => {
-    if (hasAnalysisIds.value) {
-        loadQuestionKeywords()
+watch([() => selectedForm.value, () => selectedQuestion.value], () => {
+    loadData();
+});
+
+// Action
+const loadData = () => {
+    if (selectedForm.value !== null && selectedQuestion.value !== null) {
+        loadQuestionKeywords();
+    } else {
+        clearKeywords();
     }
-})
+}
+
 
 // When analysisIds are completely loaded, it will trigger this
 const loadQuestionKeywords = async () => {
     dataLoading.value = true
-    const { formId, questionId } = analysisIds.value
     // Fetch metric data first
-    const { keywords } = await metricStore.getKeywordsAnalysisByFormIdQuestionId(formId, questionId)
-    // Convert the data into proper weighted keywords format
-    words.value = Object.entries(keywords)
+    await metricStore.getKeywordsAnalysisByFormIdQuestionId(selectedForm.value, selectedQuestion.value).then(async (res) => {
+        const keywords = res.keywords
+        // Convert the data into proper weighted keywords format
+        words.value = Object.entries(keywords)
+    }).finally(() => {
+        dataLoading.value = false
+    })
     // Load Question details
-    questionDetails.value = await questionStore.fetchQuestionDetails(questionId)
-    dataLoading.value = false
-}
-
-// Loads data into analysis data
-const analysisDataSelected = (event) => {
-    const { formId, questionId } = event
-    analysisIds.value = { formId, questionId }
-    toggleDialog(false)
-}
-
-
-// Toggle the dialog visibility
-const toggleDialog = (flag) => {
-    dialogVisible.value = flag
+    questionDetails.value = await questionStore.fetchQuestionDetails(selectedQuestion.value)
 }
 
 // Clean up selected information from the component
-const clearSelectedData = () => {
-    analysisIds.value = {}
+const clearKeywords = () => {
     words.value = []
+    questionDetails.value = null
 }
 
 </script>
 <template>
     <div class="flex flex-column gap-3">
-        <!-- Button -->
-        <div class="flex">
-            <Button v-if="!hasAnalysisIds" label="Choose Assessment Form and Question" @click="toggleDialog(true)" />
-            <Button v-else label="Clear Selection" severity="warning" @click="clearSelectedData" />
+        <!-- Selection -->
+        <div class="flex justify-content-center gap-2 flex-wrap">
+            <assessment-form-selection @form-selected="selectedForm = $event" />
+            <question-selection :params="questionParams" @question-selected="selectedQuestion = $event" />
+
         </div>
         <!-- Word Cloud -->
         <template v-if="words && words.length > 0">
             <h4 class="mx-auto">{{ questionTitle }}</h4>
             <custom-word-cloud :words="words" class="p-2" />
         </template>
-
-        <!-- Dialog for form and question selection -->
-        <form-question-selection-dialog v-if="dialogVisible" @form-question-selected="analysisDataSelected"
-            @hide-dialog="toggleDialog(false)" />
     </div>
 </template>

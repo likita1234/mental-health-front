@@ -52,7 +52,7 @@ const clearDataTable = () => {
 <template>
     <div>
         <!-- Selection -->
-        <div class="flex justify-content-center align-items-bottom gap-2">
+        <div class="flex justify-content-center gap-2 flex-wrap">
             <assessment-form-selection @form-selected="selectedForm = $event" />
             <section-selection @section-selected="selectedSection = $event" />
         </div>
