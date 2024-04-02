@@ -31,7 +31,7 @@ const router = createRouter({
             {
               path: 'section-analysis',
               name: 'section-analysis',
-              component: () => import('../components/dashboards/FormSectionAnalysis.vue'),
+              component: () => import('../components/dashboards/form-section-analysis.vue'),
               meta: {
                 breadcrumb: [{ parent: 'Home', label: 'Assessment Form Section-Wise Analysis' }]
               }
