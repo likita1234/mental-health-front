@@ -6,10 +6,7 @@ const props = defineProps({
         type: String,
         default: 'Section Title'
     },
-    tableData: {
-        type: Array,
-        required: true
-    }
+    tableData: Array,
 })
 // Actions
 // Highlighter in case the field is total value
