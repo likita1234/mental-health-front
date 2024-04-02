@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, watch, } from 'vue'
+import { ref, onMounted, } from 'vue'
 import { storeToRefs } from 'pinia'
 
 import { formStore } from '@/stores'
@@ -11,14 +11,6 @@ const { allForms } = storeToRefs(formStore)
 
 // Component States
 const selectedForm = ref(null)
-
-// Watchers for analysis of form selection 
-watch(() => selectedForm.value, () => {
-    if (selectedForm.value) {
-        const formDetails = allForms.value.find(form => form._id === selectedForm.value)
-        emit('form-selected', formDetails?._id)
-    }
-})
 
 onMounted(() => {
     loadAssessmentForms()
@@ -35,8 +27,7 @@ const loadAssessmentForms = async () => {
 </script>
 
 <template>
-    <div>
-        <BaseDropdown v-model="selectedForm" :label="'Select an assessment form'" :options="allForms"
-            :optionLabel="'title.' + [appState.lang]" optionValue="_id" placeholder="Select a form" :showClear="false" />
-    </div>
+    <BaseDropdown v-model="selectedForm" label="Select an assessment form" :options="allForms"
+        :optionLabel="'title.' + [appState.lang]" optionValue="_id" placeholder="Choose an option"
+        @change="emit('form-selected', $event)" />
 </template>

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, watch, } from 'vue'
+import { ref, onMounted, } from 'vue'
 import { storeToRefs } from 'pinia'
 
 import { sectionStore } from '@/stores'
@@ -11,14 +11,6 @@ const { allSections } = storeToRefs(sectionStore)
 
 // Component States
 const selectedSection = ref(null)
-
-// Watchers for analysis of section selection 
-watch(() => selectedSection.value, () => {
-    if (selectedSection.value) {
-        const sectionDetails = allSections.value.find(section => section._id === selectedSection.value)
-        emit('section-selected', sectionDetails?._id)
-    }
-})
 
 onMounted(() => {
     loadSections()
@@ -35,9 +27,7 @@ const loadSections = async () => {
 </script>
 
 <template>
-    <div>
-        <BaseDropdown v-model="selectedSection" :label="'Now Pick a section'" :options="allSections"
-            :optionLabel="'title.' + [appState.lang]" optionValue="_id" placeholder="Select a section"
-            :showClear="false" />
-    </div>
+    <BaseDropdown v-model="selectedSection" label="Select a section" :options="allSections"
+        :optionLabel="'title.' + [appState.lang]" optionValue="_id" placeholder="Choose an option"
+        @change="emit('section-selected', $event)" />
 </template>
