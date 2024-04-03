@@ -1,10 +1,11 @@
 <!-- By Default we will search for a relationship dashboard and load the first one if it exists -->
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 import { storeToRefs } from 'pinia'
 
 import { dashboardStore } from '@/stores'
 import { convertRatingsDataToObject } from '@/utils/chart-helpers'
+import { correlationMatrix } from '@/utils/data-analysis'
 import { DashboardType } from '@/constants'
 
 // Store states
@@ -12,15 +13,23 @@ const { dashboards, params } = storeToRefs(dashboardStore)
 
 // Component states
 const dashboardData = ref(null)
+const datasets = ref([])
 
 // Computed properties
-const formattedDashboardsData = computed(() => {
+const convertedDashboardData = computed(() => {
     return dashboardData.value?.map(dashboard => {
         return {
             title: dashboard.title,
             data: convertRatingsDataToObject(dashboard.metricData?.data)
         }
     })
+})
+
+watch(() => convertedDashboardData.value, () => {
+    if (convertedDashboardData.value && convertedDashboardData.value.length > 0) {
+        // calculate correlations
+        generateCorrelation()
+    }
 })
 
 
@@ -47,10 +56,22 @@ const loadDashboardData = async (dashboardId) => {
     dashboardData.value = await dashboardStore.getDashboardData(dashboardId)
 }
 
+// generate correlation matrix
+const generateCorrelation = () => {
+    const titles = convertedDashboardData.value?.map(dataset => dataset.title)
+    const datasetsArray = convertedDashboardData.value?.map(dataset => dataset.data)
+    const correlationData = correlationMatrix(datasetsArray)
+    datasets.value = titles.map((title, index) => ({
+        title: title,
+        data: correlationData[index].map(value => parseFloat(value))
+    }));
+
+}
+
 </script>
 
 <template>
     <div>
-        {{ formattedDashboardsData }}
+        {{ datasets }}
     </div>
 </template>

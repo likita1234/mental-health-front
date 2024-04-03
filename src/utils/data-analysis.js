@@ -37,3 +37,44 @@ export const calculateWeightedMeanAndSD = (values, frequencies) => {
   // Return an object containing both mean and standard deviation
   return { weightedMean, standardDeviation }
 }
+
+export const correlationMatrix = (datasets) => {
+  const matrix = []
+  for (let i = 0; i < datasets.length; i++) {
+    const rowData = []
+    for (let j = 0; j < datasets.length; j++) {
+      const correlation = pearsonCorrelation(datasets[i], datasets[j])
+      rowData.push(correlation)
+    }
+    matrix.push(rowData)
+  }
+  return matrix
+}
+
+const mean = (data) => {
+  return data.reduce((acc, val) => acc + val, 0) / data.length
+}
+
+const covariance = (data1, data2) => {
+  const mean1 = mean(data1)
+  const mean2 = mean(data2)
+  let cov = 0
+  for (let i = 0; i < data1.length; i++) {
+    cov += (data1[i] - mean1) * (data2[i] - mean2)
+  }
+  return cov / (data1.length - 1)
+}
+
+const standardDeviation = (data) => {
+  const meanValue = mean(data)
+  const squaredDiffs = data.map((val) => Math.pow(val - meanValue, 2))
+  const variance = mean(squaredDiffs)
+  return Math.sqrt(variance)
+}
+
+const pearsonCorrelation = (data1, data2) => {
+  const cov = covariance(data1, data2)
+  const stdDev1 = standardDeviation(data1)
+  const stdDev2 = standardDeviation(data2)
+  return ((cov / (stdDev1 * stdDev2))?.toFixed(2))
+}
