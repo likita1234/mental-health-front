@@ -1,9 +1,10 @@
 <!-- By Default we will search for a relationship dashboard and load the first one if it exists -->
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { storeToRefs } from 'pinia'
 
 import { dashboardStore } from '@/stores'
+import { convertRatingsDataToObject } from '@/utils/chart-helpers'
 import { DashboardType } from '@/constants'
 
 // Store states
@@ -11,6 +12,17 @@ const { dashboards, params } = storeToRefs(dashboardStore)
 
 // Component states
 const dashboardData = ref(null)
+
+// Computed properties
+const formattedDashboardsData = computed(() => {
+    return dashboardData.value?.map(dashboard => {
+        return {
+            title: dashboard.title,
+            data: convertRatingsDataToObject(dashboard.metricData?.data)
+        }
+    })
+})
+
 
 onMounted(() => {
     loadRelationshipDashboardId()
@@ -39,6 +51,6 @@ const loadDashboardData = async (dashboardId) => {
 
 <template>
     <div>
-        {{ dashboardData }}
+        {{ formattedDashboardsData }}
     </div>
 </template>

@@ -1,5 +1,6 @@
 import { ChartType } from '@/constants'
 import { calculateWeightedMeanAndSD } from './data-analysis'
+import { convertArrayToMap } from './json-formatter'
 
 export const getComparativeAnalysisDashboardTableData = (allMetricData) => {
   // Format data from each metrics
@@ -25,6 +26,28 @@ export const getComparativeAnalysisDashboardTableData = (allMetricData) => {
       standardDeviation
     }
   })
+}
+
+// Converts Ratings data array to Object data (For ratings questionaires metrics)
+export const convertRatingsDataToObject = (ratingsArray) => {
+  if (ratingsArray && ratingsArray.length > 0) {
+    // First map the data array into object format
+    const mappedObject = convertArrayToMap(ratingsArray)
+    // Now convert it into individual series
+    return convertDiscreteSeriesToIndividualRatings(mappedObject)
+  }
+  return []
+}
+
+// Convert discrete series into individual ratings :- For e.g {1:2} to [1,1]
+const convertDiscreteSeriesToIndividualRatings = (data) => {
+  const ratings = []
+  for (const [rating, frequency] of Object.entries(data)) {
+    for (let i = 0; i < frequency; i++) {
+      ratings.push(Number(rating))
+    }
+  }
+  return ratings
 }
 
 // helper functions
