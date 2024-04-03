@@ -66,7 +66,8 @@ export const useDashboardStore = defineStore('dashboard', () => {
 
     // Actions
     fetchDashboards,
-    getDashboardDetails
+    getDashboardDetails,
+    getDashboardData
 
     // Helpers
   }
