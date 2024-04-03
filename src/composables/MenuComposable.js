@@ -26,6 +26,12 @@ export function useMenu() {
           to: { name: 'default-dashboard' }
         },
         {
+          label: 'Relationship Dashboard',
+          icon: 'pi pi-fw pi-sitemap',
+          visible: true,
+          to: { name: 'relationship-dashboard' }
+        },
+        {
           label: 'Comparative Analysis',
           icon: 'pi pi-fw pi-chart-bar',
           visible: true,
