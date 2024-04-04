@@ -7,7 +7,7 @@ import { storeToRefs } from 'pinia'
 
 import { dashboardStore } from '@/stores'
 import { convertRatingsDataToObject } from '@/utils/chart-helpers'
-import { correlationMatrix } from '@/utils/data-analysis'
+import { correlationMatrix, generateHypothesisAnalysis } from '@/utils/data-analysis'
 import { DashboardType } from '@/constants'
 
 // Store states
@@ -59,14 +59,22 @@ const loadDashboardData = async (dashboardId) => {
 }
 
 // generate correlation matrix
-const generateCorrelation = () => {
+const generateCorrelation = async () => {
     const titles = convertedDashboardData.value?.map(dataset => dataset.title)
     const datasetsArray = convertedDashboardData.value?.map(dataset => dataset.data)
-    const correlationData = correlationMatrix(datasetsArray)
-    datasets.value = titles.map((title, index) => ({
-        title: title,
-        data: correlationData[index].map(value => parseFloat(value))
-    }));
+    if (titles.length && datasetsArray.length) {
+        const correlationData = correlationMatrix(datasetsArray)
+        datasets.value = titles.map((title, index) => ({
+            title: title,
+            data: correlationData[index].map(value => parseFloat(value))
+        }));
+        // Once correlation have been calculated, make analysis of Hypothesis
+        // params :- titles and first index of datasets.value
+        const correlationDatasets = datasets.value[0]?.data
+        // const sampleSize = datasetsArray[0]?.length
+        const hypothesisData = await generateHypothesisAnalysis({ titles, correlationDatasets, sampleSize })
+        console.log(hypothesisData) // create table for this
+    }
 }
 
 </script>
