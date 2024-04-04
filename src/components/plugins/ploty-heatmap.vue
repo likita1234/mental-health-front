@@ -33,10 +33,23 @@ const layout = ref({
     annotations: [],
     xaxis: {
         ticks: '',
+        text: '',
+        tickfont: {
+            family: 'Arial, sans-serif',
+            size: 14,
+            color: '#000',
+            weight: 'bold' // This makes the tick labels bold
+        }
     },
     yaxis: {
         ticks: '',
         ticksuffix: ' ',
+        tickfont: {
+            family: 'Arial, sans-serif',
+            size: 14,
+            color: '#000',
+            weight: 'bold' // This makes the tick labels bold
+        },
         automargin: true,
         autosize: true,
     },
