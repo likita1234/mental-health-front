@@ -94,12 +94,12 @@ const standardDeviation = (data) => {
 }
 
 const pearsonCorrelation = (data1, data2) => {
-  // const corrData = jStat.corrcoeff(data1, data2)?.toFixed(2)
   // console.log(corrData)
-  const cov = covariance(data1, data2)
-  const stdDev1 = standardDeviation(data1)
-  const stdDev2 = standardDeviation(data2)
-  return (cov / (stdDev1 * stdDev2))?.toFixed(2)
+  // const cov = covariance(data1, data2)
+  // const stdDev1 = standardDeviation(data1)
+  // const stdDev2 = standardDeviation(data2)
+  // return (cov / (stdDev1 * stdDev2))?.toFixed(2)
+  return jStat.corrcoeff(data1, data2)?.toFixed(2)
 }
 
 const calculateTValuesAndPValues = ({ correlationCoeff, sampleSize }) => {
@@ -109,7 +109,7 @@ const calculateTValuesAndPValues = ({ correlationCoeff, sampleSize }) => {
   // Calculate tValue and pValue
   const tValue = (correlationCoeff * Math.sqrt(df)) / Math.sqrt(1 - Math.pow(correlationCoeff, 2))
   // For two-tailed test
-  const pValue = jStat.ttest(tValue, df)*2
+  const pValue = jStat.ttest(tValue, df) * 2
 
   return {
     tValue: tValue ? tValue?.toFixed(2) : null,
