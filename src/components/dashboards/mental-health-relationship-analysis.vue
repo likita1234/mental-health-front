@@ -72,8 +72,8 @@ const generateCorrelation = () => {
 </script>
 
 <template>
-    <div v-if="datasets && datasets.length < 0" class="p-card">
-        <PlotyHeatmap :datasets="datasets" />
+    <div v-if="datasets && datasets.length > 0" class="card p-5">
+        <ploty-heatmap :datasets="datasets" />
     </div>
     <div v-else class="h-20rem flex justify-content-center align-items-center">
         <h4 class="text-center"> Data not available for analysis</h4>

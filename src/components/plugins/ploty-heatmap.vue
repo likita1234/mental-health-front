@@ -73,7 +73,7 @@ const loadHeatMapData = () => {
     loadDatasets()
 
     // Creating the Plotly.js plot
-    Plotly.newPlot('plotyHeatmap', data, layout.value, { staticPlot: true });
+    Plotly.newPlot('plotyHeatmap', data, layout.value, { staticPlot: true, responsive: true });
 }
 
 const loadDatasets = () => {
