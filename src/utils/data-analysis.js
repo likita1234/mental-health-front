@@ -104,7 +104,7 @@ const pearsonCorrelation = (data1, data2) => {
 
 const calculateTValuesAndPValues = ({ correlationCoeff, sampleSize }) => {
   // Degrees of Freedom: - sampleSize - 2
-  const df = 20
+  const df = sampleSize - 2
 
   // Calculate tValue and pValue
   const tValue = (correlationCoeff * Math.sqrt(df)) / Math.sqrt(1 - Math.pow(correlationCoeff, 2))
