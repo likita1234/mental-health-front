@@ -1,5 +1,7 @@
 <!-- By Default we will search for a relationship dashboard and load the first one if it exists -->
 <script setup>
+import PlotyHeatmap from '@/components/plugins/ploty-heatmap.vue'
+
 import { ref, onMounted, computed, watch } from 'vue';
 import { storeToRefs } from 'pinia'
 
@@ -65,13 +67,15 @@ const generateCorrelation = () => {
         title: title,
         data: correlationData[index].map(value => parseFloat(value))
     }));
-
 }
 
 </script>
 
 <template>
-    <div>
-        {{ datasets }}
+    <div v-if="datasets && datasets.length < 0" class="p-card">
+        <PlotyHeatmap :datasets="datasets" />
+    </div>
+    <div v-else class="h-20rem flex justify-content-center align-items-center">
+        <h4 class="text-center"> Data not available for analysis</h4>
     </div>
 </template>
