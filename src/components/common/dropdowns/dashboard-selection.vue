@@ -43,7 +43,7 @@ const loadDashboards = async () => {
 
 <template>
     <div>
-        <BaseDropdown v-model="selectedDashboard" :label="'Start by selecting a dashboard'" :options="dashboards"
-            optionLabel="title" optionValue="_id" placeholder="Select a dashboard" :showClear="false" />
+        <BaseDropdown v-model="selectedDashboard" :label="'Select a dashboard'" :options="dashboards"
+            optionLabel="title" optionValue="_id" placeholder="Choose an option" :showClear="false" />
     </div>
 </template>

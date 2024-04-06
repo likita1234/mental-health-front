@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-import DashboardSelectionDropdown from '@/components/utils/DashboardSelectionDropdown.vue'
+import DashboardSelectionDropdown from '@/components/common/dropdowns/dashboard-selection.vue'
 import MetricData from '@/components/metric/MetricData.vue'
 import ComparativeDashboardTable from '@/components/charts/ComparativeDashboardTable.vue'
 
