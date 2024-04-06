@@ -107,7 +107,7 @@ export const useFormStore = defineStore('form', () => {
 
   // Edit form is for setting up form details for update on the UI
   const editForm = async (formDetails) => {
-    const { _id, title, description, type, sections } = formDetails
+    const { _id, title, description, type, sections } = { ...formDetails }
     // Setup basic section details first
     form.value.id = _id
     form.value.title = title
@@ -117,7 +117,7 @@ export const useFormStore = defineStore('form', () => {
     form.value.sections = sections?.map((sectionObj) => {
       return {
         order: sectionObj.order,
-        sectionId: sectionObj._id
+        sectionId: sectionObj.sectionId._id
       }
     })
   }
@@ -175,7 +175,7 @@ export const useFormStore = defineStore('form', () => {
   }
 
   const formatAssessmentDetails = (formData) => {
-    formDetails.value = formData
+    formDetails.value = { ...formData }
     formDetails.value.sections = formDetails.value?.sections?.map((sectionData) => {
       const section = sectionData.sectionId
       section.questions = section.questions?.map((questionData) => questionData.questionId)
