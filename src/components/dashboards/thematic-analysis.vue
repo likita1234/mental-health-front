@@ -73,5 +73,10 @@ const clearKeywords = () => {
             <h4 class="mx-auto">{{ questionTitle }}</h4>
             <custom-word-cloud :words="words" class="p-2" />
         </template>
+        <template v-else>
+            <div class="flex justify-content-center align-items-center h-5rem">
+                <h4>No data found. Please try another question</h4>
+            </div>
+        </template>
     </div>
 </template>

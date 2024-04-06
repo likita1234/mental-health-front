@@ -1,5 +1,6 @@
 export const DashboardType = Object.freeze({
   NORMAL: 'normal',
   COMPARATIVE: 'comparative',
-  PERSONAL: 'personal'
+  PERSONAL: 'personal',
+  RELATIONSHIP: 'relationship'
 })

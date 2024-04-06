@@ -29,6 +29,15 @@ class DashboardService {
       return new AppError(error.statusCode, 'Failed to fetch dashboard details')
     }
   }
+
+  // Fetch dashboard data by id
+  static async getDashboardData(dashboardId) {
+    try {
+      return await authApi.get(`${DASHBOARD_API}/${dashboardId}/data`)
+    } catch (error) {
+      return new AppError(error.statusCode, 'Failed to fetch dashboard data')
+    }
+  }
 }
 
 export default DashboardService

@@ -21,6 +21,15 @@ const router = createRouter({
               }
             },
             {
+              path: 'relationship-dashboard',
+              name: 'relationship-dashboard',
+              component: () =>
+                import('../components/dashboards/mental-health-relationship-analysis.vue'),
+              meta: {
+                breadcrumb: [{ parent: 'Home', label: 'Mental Health Relationship Analysis' }]
+              }
+            },
+            {
               path: 'comparative-dashboards',
               name: 'comparative-dashboards',
               component: () => import('../components/dashboards/ComparativeDashboard.vue'),

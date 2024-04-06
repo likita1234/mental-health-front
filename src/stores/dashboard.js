@@ -42,6 +42,12 @@ export const useDashboardStore = defineStore('dashboard', () => {
     return response.data
   }
 
+  // Get Dashboard data
+  const getDashboardData = async (dashboardId) => {
+    const response = await DashboardService.getDashboardData(dashboardId)
+    return response.data
+  }
+
   // Helpers
 
   // Returns
@@ -60,7 +66,8 @@ export const useDashboardStore = defineStore('dashboard', () => {
 
     // Actions
     fetchDashboards,
-    getDashboardDetails
+    getDashboardDetails,
+    getDashboardData
 
     // Helpers
   }
