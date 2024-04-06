@@ -151,42 +151,37 @@ const loadSurveyJson = async (jsonData) => {
 }
 </script>
 <template>
-    <div class="flex justify-content-center">
-        <div class="card p-5 h-full w-full md:w-8">
-            <div class="flex justify-content-center">
-                <language-selection />
-            </div>
-            <h2 class="text-center">{{ formTitle }}</h2>
-            <!-- Form Description -->
-            <p class="text-center"> {{ formDescription }}</p>
-            <div v-if="userRole === UserRole.SUPERADMIN" class="flex justify-content-center">
-                <csv-parser @json-created="loadSurveyJson" />
-            </div>
-            <Divider />
-            <div v-if="sectionItems.length">
-                <Steps v-model:activeStep="activeStep" :model="sectionItems" class="custom-steps">
-                    <!-- <template #item="{ item, active }">
-                        <span class="border-primary border-1 p-1 cursor-pointer"
-                            :class="{ 'bg-primary': active, 'surface-overlay text-primary': !active }">
-                            {{ item.label }}
-                        </span>
-                    </template> -->
-                </Steps>
-            </div>
-            <Divider />
-
-            <div v-if="activeSection" class="section-container">
-                <div class="flex flex-column justify-content-center align-items-center">
-                    <!-- Section Title Here -->
-                    <h4>{{ activeSection.title[appState.lang] }}</h4>
-                    <!-- Section Description Here -->
-                    <p v-if="activeSection.description">{{ activeSection.description[appState.lang] }}</p>
-                    <Divider />
+    <div class="my-5">
+        <div class="flex justify-content-center">
+            <div class="card p-5 h-full w-full md:w-8">
+                <div class="flex justify-content-center">
+                    <language-selection />
                 </div>
-                <div class="questions-container">
-                    <!-- Section Questions Here -->
-                    <CustomQuestion v-for="question in activeSection.questions" v-model="question.answer"
-                        :question="question" :key="question._id" />
+                <h2 class="text-center">{{ formTitle }}</h2>
+                <!-- Form Description -->
+                <p class="text-center"> {{ formDescription }}</p>
+                <div v-if="userRole === UserRole.SUPERADMIN" class="flex justify-content-center">
+                    <csv-parser @json-created="loadSurveyJson" />
+                </div>
+                <Divider />
+                <div v-if="sectionItems.length">
+                    <Steps v-model:activeStep="activeStep" :model="sectionItems" class="custom-steps" />
+                </div>
+                <Divider />
+
+                <div v-if="activeSection" class="section-container">
+                    <div class="flex flex-column justify-content-center align-items-center">
+                        <!-- Section Title Here -->
+                        <h4>{{ activeSection.title[appState.lang] }}</h4>
+                        <!-- Section Description Here -->
+                        <p v-if="activeSection.description">{{ activeSection.description[appState.lang] }}</p>
+                        <Divider />
+                    </div>
+                    <div class="questions-container">
+                        <!-- Section Questions Here -->
+                        <CustomQuestion v-for="question in activeSection.questions" v-model="question.answer"
+                            :question="question" :key="question._id" />
+                    </div>
                 </div>
                 <Divider />
                 <div class="flex mb-2 gap-2 justify-content-between">
@@ -197,3 +192,10 @@ const loadSurveyJson = async (jsonData) => {
         </div>
     </div>
 </template>
+
+<style scoped>
+.questions-container {
+    max-height: 50vh;
+    overflow-y: auto
+}
+</style>
