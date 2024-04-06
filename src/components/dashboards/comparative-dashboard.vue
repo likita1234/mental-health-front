@@ -1,6 +1,8 @@
 <template>
-    <div>
-        <dashboard-selection-dropdown :type="'comparative'" @dashboard-selected="loadSelectedDashboard" />
+    <div class="card">
+        <div class="flex justify-content-center">
+            <dashboard-selection-dropdown :type="'comparative'" @dashboard-selected="loadSelectedDashboard" />
+        </div>
         <!-- Comparative Dashboard Table -->
         <div v-if="comparativeTableData.length" class="p-card">
             <comparative-dashboard-table :data="comparativeTableData" />
@@ -19,8 +21,13 @@ import DashboardSelectionDropdown from '@/components/utils/DashboardSelectionDro
 import MetricData from '@/components/metric/MetricData.vue'
 import ComparativeDashboardTable from '@/components/charts/ComparativeDashboardTable.vue'
 
-import { computed, ref, watch } from 'vue';
+import { computed, ref, watch, onMounted } from 'vue';
+import { storeToRefs } from 'pinia'
+import { dashboardStore } from '@/stores'
 import { getComparativeAnalysisDashboardTableData } from '@/utils/chart-helpers';
+
+// Store states
+const { dashboards, params } = storeToRefs(dashboardStore)
 
 // Component states
 const metricIds = ref([])
@@ -39,7 +46,22 @@ watch(() => allMetricsLoaded.value, () => {
     }
 })
 
+onMounted(() => {
+    loadComparativeDashboard()
+})
+
 // Actions
+const loadComparativeDashboard = async () => {
+    // load dashboards (which type of dashboard)
+    params.value = { type: 'comparative' }
+    await dashboardStore.fetchDashboards()
+    // Load first dashboard by default
+    if (dashboards.value.length > 0) {
+        const firstDashboard = dashboards.value[0]
+        loadSelectedDashboard(firstDashboard)
+    }
+}
+
 const loadSelectedDashboard = async (dashboardDetails) => {
     const { _id, title, description, metrics } = dashboardDetails
     metricIds.value = metrics

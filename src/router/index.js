@@ -30,11 +30,11 @@ const router = createRouter({
               }
             },
             {
-              path: 'comparative-dashboards',
+              path: 'comparative-dashboard',
               name: 'comparative-dashboards',
-              component: () => import('../components/dashboards/ComparativeDashboard.vue'),
+              component: () => import('../components/dashboards/comparative-dashboard.vue'),
               meta: {
-                breadcrumb: [{ parent: 'Home', label: 'WHO-5 Index Dashboard' }]
+                breadcrumb: [{ parent: 'Home', label: 'Comparative Dashboard' }]
               }
             },
             {
