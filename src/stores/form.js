@@ -99,7 +99,6 @@ export const useFormStore = defineStore('form', () => {
   const fetchFormDetails = async (id) => {
     const response = await FormService.getFormDetails(id)
     if (response.statusCode === 200) {
-      formatAssessmentDetails(response.data)
       return response.data
     }
     return null
@@ -173,16 +172,7 @@ export const useFormStore = defineStore('form', () => {
     }
     return []
   }
-
-  const formatAssessmentDetails = (formData) => {
-    formDetails.value = { ...formData }
-    formDetails.value.sections = formDetails.value?.sections?.map((sectionData) => {
-      const section = sectionData.sectionId
-      section.questions = section.questions?.map((questionData) => questionData.questionId)
-      return section
-    })
-  }
-
+  
   const initFormData = () => {
     form.value = {
       title: {
