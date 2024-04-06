@@ -1,5 +1,4 @@
 import jStat from 'jstat'
-
 export const calculateWeightedMeanAndSD = (values, frequencies) => {
   //  Function to calculate weighted
   function calculateWeightedMean(values, frequencies) {
@@ -112,7 +111,7 @@ const calculateTValuesAndPValues = ({ correlationCoeff, sampleSize }) => {
   const pValue = jStat.ttest(tValue, df) * 2
 
   return {
-    tValue: tValue ? tValue?.toFixed(2) : null,
-    pValue: pValue ? pValue?.toFixed(2) : null
+    tValue: tValue ? tValue.toFixed(4) : null,
+    pValue: pValue ? pValue.toFixed(4) : null
   }
 }
