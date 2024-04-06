@@ -16,6 +16,7 @@ const { dashboards, params } = storeToRefs(dashboardStore)
 // Component states
 const dashboardData = ref(null)
 const datasets = ref([])
+const hypothesisData = ref([])
 
 // Computed properties
 const convertedDashboardData = computed(() => {
@@ -71,9 +72,9 @@ const generateCorrelation = async () => {
         // Once correlation have been calculated, make analysis of Hypothesis
         // params :- titles and first index of datasets.value
         const correlationDatasets = datasets.value[0]?.data
-        // const sampleSize = datasetsArray[0]?.length
-        const hypothesisData = await generateHypothesisAnalysis({ titles, correlationDatasets, sampleSize })
-        console.log(hypothesisData) // create table for this
+        const sampleSize = datasetsArray[0]?.length
+        // create table for this
+        hypothesisData.value = await generateHypothesisAnalysis({ titles, correlationDatasets, sampleSize })
     }
 }
 
@@ -85,5 +86,17 @@ const generateCorrelation = async () => {
     </div>
     <div v-else class="h-20rem flex justify-content-center align-items-center">
         <h4 class="text-center"> Data not available for analysis</h4>
+    </div>
+    <div v-if="hypothesisData && hypothesisData.length > 0" class="card">
+        <DataTable ref="hypothesisDataDt" :value="hypothesisData">
+            <template #header>
+                <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+                    <h4 class="m-0">P Value Analysis</h4>
+                </div>
+            </template>
+            <Column field="title" header="TITLE" style="width:10%" />
+            <Column field="tValue" header="T VALUE" style="width:10%" />
+            <Column field="pValue" header="P VALUE" style="width:10%" />
+        </DataTable>
     </div>
 </template>
