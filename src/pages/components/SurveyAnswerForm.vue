@@ -24,11 +24,11 @@ const appState = inject('appState')
 
 // Store states
 const { userRole } = storeToRefs(authStore)
-const { formDetails } = storeToRefs(formStore)
 
 // Component states
 const activeStep = ref(0) //starts with index 0
 const uploadingCsv = ref(false)
+const formDetails = ref(null)
 
 // Computed properties
 const formTitle = computed(() => {
@@ -74,8 +74,20 @@ const setupAssessmentDetails = async () => {
 
 const loadAssessmentDetails = async () => {
     const formId = props.id
-    await formStore.fetchFormDetails(formId)
+    const data = await formStore.fetchFormDetails(formId)
+    formatAssessmentDetails(data)
 }
+
+
+const formatAssessmentDetails = (formData) => {
+    formDetails.value = { ...formData }
+    formDetails.value.sections = formDetails.value?.sections?.map((sectionData) => {
+        const section = sectionData.sectionId
+        section.questions = section.questions?.map((questionData) => questionData.questionId)
+        return section
+    })
+}
+
 
 const submitForm = async () => {
     const response = await answerStore.submitAnswerForm(formDetails.value)
