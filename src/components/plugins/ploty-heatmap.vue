@@ -23,13 +23,21 @@ const zValues = ref([])
 
 
 const colorscaleValue = [
-    [0, '#FF0000'], // Color for minimum value (e.g., 0)
-    [0.5, '#FFFFFF'], // Intermediate color
-    [1, '#0000FF'], // Color for maximum value (e.g., 1)
+    [0, '#FF0000'],
+    [0.5, '#FFFFFF'],
+    [1, '#0000FF'],
 ];
 
 const layout = ref({
-    title: 'Correlation Heatmap',
+    title: {
+        text: 'Correlation Heatmap',
+        font: {
+            size: 20,
+            color: '#000',
+            family: 'Arial, sans-serif',
+            weight: 'bold'
+        }
+    },
     annotations: [],
     xaxis: {
         ticks: '',
@@ -38,7 +46,7 @@ const layout = ref({
             family: 'Arial, sans-serif',
             size: 14,
             color: '#000',
-            weight: 'bold' // This makes the tick labels bold
+            weight: 'bold'
         }
     },
     yaxis: {
@@ -48,17 +56,10 @@ const layout = ref({
             family: 'Arial, sans-serif',
             size: 14,
             color: '#000',
-            weight: 'bold' // This makes the tick labels bold
+            weight: 'bold'
         },
         automargin: true,
         autosize: true,
-    },
-    // Adjust margin to give space for the x-axis title
-    margin: {
-        l: 50, // Adjust this value as needed
-        r: 30,
-        t: 80,
-        b: 50,
     },
 })
 
@@ -71,7 +72,6 @@ const loadHeatMapData = () => {
     yValues.value = xValues.value
     zValues.value = props.datasets?.map((dataset) => dataset.data);
 
-    // Data for ploty
     const data = [
         {
             x: xValues.value,
@@ -85,14 +85,12 @@ const loadHeatMapData = () => {
 
     loadDatasets()
 
-    // Creating the Plotly.js plot
     Plotly.newPlot('plotyHeatmap', data, layout.value, { staticPlot: true, responsive: true });
 }
 
 const loadDatasets = () => {
     for (let i = 0; i < yValues.value?.length; i++) {
         for (let j = 0; j < xValues.value?.length; j++) {
-            // debugger
             const currentValue = zValues.value[i][j];
             const textColor = currentValue !== 0.0 ? 'white' : 'black';
             const result = {
