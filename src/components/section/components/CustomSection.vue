@@ -12,11 +12,11 @@ const props = defineProps({
 const appState = inject('appState')
 
 const title = computed(() => {
-    return props.section?.title[appState.lang]
+    return props.section?.title?.[appState.lang]
 })
 
 const description = computed(() => {
-    return props.section?.description[appState.lang]
+    return props.section?.description?.[appState.lang]
 })
 
 const questions = computed(() => {

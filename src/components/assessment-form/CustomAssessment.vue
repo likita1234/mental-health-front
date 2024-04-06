@@ -14,8 +14,8 @@ const props = defineProps({
 
 const router = useRouter()
 const appState = inject('appState')
-// Store states
-const { formDetails } = storeToRefs(formStore)
+
+const formDetails = ref(null)
 
 // Steps
 const activeStep = ref(0) //starts with index 0
@@ -41,12 +41,13 @@ const hasNextStep = computed(() => {
 // Returns formatted list of section on the basis of order
 // Later this order will represent each step
 const sections = computed(() => {
-    return formDetails.value?.sections?.map(sectionObj => {
-        return {
-            order: sectionObj.order,
-            ...sectionObj.sectionId,
-        }
-    })
+    return formDetails.value?.sections
+        ?.map(sectionObj => {
+            return {
+                order: sectionObj?.order,
+                section: sectionObj?.sectionId
+            }
+        })
 })
 
 const activeSection = computed(() => {
@@ -72,7 +73,7 @@ onMounted(() => {
 // Actions
 const loadFormDetails = async () => {
     const formId = props.id
-    await formStore.fetchFormDetails(formId)
+    formDetails.value = await formStore.fetchFormDetails(formId)
 }
 
 // Navigate the steps
@@ -115,7 +116,7 @@ const goBack = () => {
                 <!-- Sections -->
                 <div v-if="activeSection">
                     <!-- Steps of Each section -->
-                    <CustomSection :section="activeSection" />
+                    <CustomSection :section="activeSection.section" />
                 </div>
                 <Divider />
                 <div class="flex mb-2 gap-2 justify-content-between">
