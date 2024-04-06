@@ -17,16 +17,17 @@ export function useMenu() {
   const menuItems = [
     {
       icon: 'pi pi-fw pi-home',
+      label: 'Dashboards',
       //   in visiblity: check user role
       items: [
         {
-          label: 'Dashboard',
+          label: 'Default Dashboard',
           icon: 'pi pi-fw pi-database',
           visible: true,
           to: { name: 'default-dashboard' }
         },
         {
-          label: 'Relationship Dashboard',
+          label: 'Relationship Analysis',
           icon: 'pi pi-fw pi-sitemap',
           visible: true,
           to: { name: 'relationship-dashboard' }
@@ -52,33 +53,29 @@ export function useMenu() {
       ]
     },
     {
+      icon: 'pi pi-fw pi-file',
+      label: 'Manage Assessments',
       items: [
         {
-          label: 'Assessments',
-          icon: 'pi pi-fw pi-file',
-          items: [
-            {
-              label: 'Manage Questions',
-              icon: 'pi pi-fw pi-question',
-              to: { name: 'manage-questions' },
-              visible: true //check user role
-            },
-            {
-              label: 'Manage Sections',
-              icon: 'pi pi-fw pi-ellipsis-h',
-              to: { name: 'manage-sections' },
-              visible: true //check user role
-            },
-            {
-              label: 'Manage Forms',
-              icon: 'pi pi-fw pi-file-edit',
-              to: { name: 'manage-forms' },
-              visible: true //check user role
-            }
-          ],
-          visible: isAccessible([UserRole.ADMIN, UserRole.SUPERADMIN])
+          label: 'Questions',
+          icon: 'pi pi-fw pi-question',
+          to: { name: 'manage-questions' },
+          visible: true //check user role
+        },
+        {
+          label: 'Sections',
+          icon: 'pi pi-fw pi-th-large',
+          to: { name: 'manage-sections' },
+          visible: true //check user role
+        },
+        {
+          label: 'Forms',
+          icon: 'pi pi-fw pi-file-edit',
+          to: { name: 'manage-forms' },
+          visible: true //check user role
         }
-      ]
+      ],
+      visible: isAccessible([UserRole.ADMIN, UserRole.SUPERADMIN])
     }
   ]
   return {
