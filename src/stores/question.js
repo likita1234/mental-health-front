@@ -33,7 +33,9 @@ export const useQuestionStore = defineStore('question', () => {
   const questions = ref([])
   const totalQuestions = ref(null)
   // =========>Advanced filterings
-  const params = ref(null)
+  const params = ref({
+    type: null
+  })
   const page = ref(1)
   const limit = ref(10)
   const sort = ref('createdDate')

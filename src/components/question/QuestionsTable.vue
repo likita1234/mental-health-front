@@ -1,6 +1,7 @@
 <script setup>
 import QuestionForm from './QuestionForm.vue';
 import QuestionDetails from './QuestionDetails.vue'
+import QuestionTypeDropdown from '@/components/common/dropdowns/question-type.vue'
 
 import { ref, onMounted, inject } from 'vue'
 import { questionStore } from '@/stores'
@@ -11,7 +12,7 @@ import { stockClass } from '@/utils/table-styles'
 
 const { confirmRequest } = useConfirmComposable()
 // Store states
-const { allQuestions, totalQuestions, limit, page } = storeToRefs(questionStore)
+const { allQuestions, totalQuestions, params, limit, page } = storeToRefs(questionStore)
 
 // Component states
 const loading = ref(false)
@@ -48,6 +49,11 @@ const editQuestion = async (id) => {
     }
 }
 
+const changeQuestionType = async (event) => {
+    params.value.type = event
+    await loadQuestions()
+}
+
 const confirmDelete = (id) => {
     const message = 'Are you sure you want to delete this question?'
     confirmRequest(id, questionStore.deleteQuestion, message)
@@ -64,6 +70,10 @@ const onPage = async (event) => {
     <div>
         <CustomTable :allData="allQuestions" :totalRecords="totalQuestions" :entity="'Questions'" :loading="loading"
             @on-page="onPage">
+            <template #header>
+                <QuestionTypeDropdown @question-type-selected="changeQuestionType" />
+
+            </template>
             <template #columns>
                 <Column field="title[appState.lang]" header="TITLE" style="width: 20%">
                     <template #body="slotProps">
