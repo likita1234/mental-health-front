@@ -46,7 +46,7 @@ const questions = computed(() => {
     </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .section-container {
     height: 50vh;
     overflow-y: auto;
