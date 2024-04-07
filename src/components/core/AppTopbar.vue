@@ -67,7 +67,7 @@ const onTopbarSubItemClick = (event) => {
                                 <span><i class="pi pi-user" /></span>
                             </Badge>
                             <span class="profile-info mt-2 capitalize">
-                                <h6>{{ loggedUser.fullname ?? 'Guest' }}</h6>
+                                <h6>{{ loggedUser.username ?? 'Guest' }}</h6>
                             </span>
                         </a>
 
@@ -75,7 +75,7 @@ const onTopbarSubItemClick = (event) => {
                             <li class="layout-submenu-header">
                                 <!-- <img class="profile-image" src="layout/images/avatar-profile.png" alt="demo"> -->
                                 <div class="profile-info capitalize">
-                                    <h6>{{ loggedUser.fullname ?? 'Guest' }}</h6>
+                                    <h6>{{ loggedUser.username ?? 'Guest' }}</h6>
                                 </div>
                             </li>
                             <li role="menuitem">
