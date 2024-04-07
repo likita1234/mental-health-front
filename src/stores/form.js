@@ -30,6 +30,9 @@ export const useFormStore = defineStore('form', () => {
   const totalForms = ref(null)
   const formDetails = ref(null)
   // =========>Advanced filterings
+  const params = ref({
+    type: null
+  })
   const page = ref(1)
   const limit = ref(10)
   const sort = ref('createdDate')
@@ -58,19 +61,7 @@ export const useFormStore = defineStore('form', () => {
   // actions
   const fetchAllForms = async () => {
     const response = await FormService.getAllForms({
-      page: page.value,
-      limit: limit.value,
-      sort: sort.value,
-      fields: fields.value
-    })
-    if (response.statusCode === 200) {
-      forms.value = response.data.forms
-      totalForms.value = response.data.total
-    }
-  }
-
-  const fetchSurveyForms = async () => {
-    const response = await FormService.getSurveyForms({
+      params: params.value,
       page: page.value,
       limit: limit.value,
       sort: sort.value,
@@ -195,6 +186,7 @@ export const useFormStore = defineStore('form', () => {
 
   return {
     // states
+    params,
     page,
     limit,
     sort,
@@ -207,7 +199,6 @@ export const useFormStore = defineStore('form', () => {
     // activeForms,
     // actions
     fetchAllForms,
-    fetchSurveyForms,
     addForm,
     fetchFormDetails,
     editForm,
