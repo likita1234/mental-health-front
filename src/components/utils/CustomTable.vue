@@ -35,8 +35,13 @@ const onPage = async (event) => {
             paginatorTemplate="CurrentPageReport JumpToPageInput FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries :: Page No:">
             <template #header>
-                <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
-                    <h4 class="m-0">Manage {{ entity }}</h4>
+                <div class="flex flex-column">
+                    <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
+                        <h4 class="m-0">Manage {{ entity }}</h4>
+                    </div>
+                    <div class="flex justify-content-end">
+                        <slot name="header" />
+                    </div>
                 </div>
             </template>
 
