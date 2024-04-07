@@ -6,6 +6,17 @@ import { QuestionType } from '@/constants'
 import AppError from '@/utils/app-error'
 // ===============> Schemas here
 
+// ============> Registration Schema
+export const SignupSchema = yup.object({
+  username: yup.string().required('Username field is required'),
+  email: yup.string().email('Invalid Email').required('Email field is required'),
+  password: yup
+    .string()
+    .required('Password field cannot be empty')
+    .min(8, 'Password must be at least 8 characters'),
+  confirmPassword: yup.string().oneOf([yup.ref('password'), null], 'Both passwords must match')
+})
+
 // ============> Login Schema
 export const LoginSchema = yup.object({
   email: yup.string().email('Invalid Email').required('Email field is required'),
@@ -81,7 +92,7 @@ export const handleValidation = async (formData, schema) => {
       formErrorStore.addErrors(errors)
       showToast('info', 'Invalid Data', 'Please input valid data')
     } else {
-      return new AppError(error.status, error?.data?.message)
+      new AppError(error.status, error?.data?.message)
     }
   }
 }
