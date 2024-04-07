@@ -23,6 +23,12 @@ export function useMenu() {
           icon: 'pi pi-fw pi-home',
           visible: true,
           to: { name: 'default-dashboard' }
+        },
+        {
+          label: 'Self Assessments',
+          icon: 'pi pi-fw pi-table',
+          visible: true,
+          to: { name: 'self-assessments' }
         }
       ]
     },

@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
-import { UserRole } from '@/constants/user-role'
+import { AssessmentFormType, UserRole } from '@/constants'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -61,6 +61,21 @@ const router = createRouter({
               }
             }
           ]
+        },
+        {
+          path: 'self-assessments',
+          name: 'self-assessments',
+          props: { type: AssessmentFormType.PRIVATE },
+          component: () => import('../pages/components/SurveyForms.vue'),
+          meta: {
+            breadcrumb: [{ parent: 'Home', label: 'Self Assessments' }]
+          }
+        },
+        {
+          path: 'self-assessments/:id',
+          name: 'self-assessment-form',
+          props: true,
+          component: () => import('../pages/components/SurveyAnswerForm.vue')
         },
         {
           path: 'question',
