@@ -2,7 +2,11 @@
 import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
 
+import { authStore } from '@/stores';
+import { storeToRefs } from 'pinia';
+
 const route = useRoute()
+const { isLoggedIn } = storeToRefs(authStore)
 
 const hover = ref({
     home: false,
@@ -14,7 +18,6 @@ const hover = ref({
 const authActive = computed(() => {
     return route?.name === 'register' || route?.name === 'login'
 })
-
 
 </script>
 
@@ -33,19 +36,18 @@ const authActive = computed(() => {
                     icon="square-poll-vertical" size="3x" :bounce="hover.survey" />
             </router-link>
         </div>
-        <div class="icon" @mouseover="hover.auth = true" @mouseleave="hover.auth = false" v-tooltip="'Login'">
+        <div class="icon" @mouseover="hover.auth = true" @mouseleave="hover.auth = false"
+            v-tooltip="isLoggedIn ? 'Go to Dashboard' : 'Login'">
             <router-link :to="{ name: 'login' }">
                 <font-awesome-icon class="cursor-pointer" :class="{ 'text-white': hover.auth || authActive }"
-                    icon="right-to-bracket" size="3x" :bounce="hover.auth" />
+                    :icon="isLoggedIn ? 'user' : 'right-to-bracket'" size="3x" :bounce="hover.auth" />
             </router-link>
         </div>
         <!-- For Contacts -->
-        <div class="icon" @mouseover="hover.contact = true" @mouseleave="hover.contact = false"
+        <!-- <div class="icon" @mouseover="hover.contact = true" @mouseleave="hover.contact = false"
             v-tooltip="'Contact Us'">
-            <!-- <router-link :to="{ name: 'contact' }" v-slot="{ isActive }" > -->
             <font-awesome-icon class="cursor-pointer" :class="{ 'text-white': hover.contact }" icon="envelope" size="3x"
                 :bounce="hover.contact" />
-            <!-- </router-link> -->
-        </div>
+        </div> -->
     </div>
 </template>

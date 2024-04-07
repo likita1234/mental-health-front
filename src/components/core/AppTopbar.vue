@@ -41,7 +41,6 @@ const onTopbarSubItemClick = (event) => {
                 <router-link to="/">
                     <div class="layout-topbar-logo" id="logolink" style="cursor: pointer; outline: none;">
                         <img :src="'/images/logo/logo-transparent.png'" class="w-full h-4rem" id="app-logo" alt="logo">
-
                     </div>
                 </router-link>
             </div>
@@ -53,7 +52,7 @@ const onTopbarSubItemClick = (event) => {
                 <ul class="layout-topbar-actions">
                     <li class="topbar-item mr-2">
                         <div class="border-round p-2 bg-primary-100 font-bold">
-                            <RouterLink :to="{ name: 'survey' }">Go To Surveys</RouterLink>
+                            <RouterLink :to="{ name: 'survey' }">Go To Public Surveys</RouterLink>
                         </div>
                     </li>
                     <li class="topbar-item mr-2">
