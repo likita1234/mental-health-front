@@ -33,6 +33,15 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   // actions
+  const signup = async(body) =>{
+    return await AuthService.signup(body).then((user) => {
+      if (user) {
+        setupUserData(user)
+        return true
+      }
+    })
+  }
+
   const login = async (body) => {
     return await AuthService.login(body).then((currentUser) => {
       if (currentUser) {
@@ -60,6 +69,7 @@ export const useAuthStore = defineStore('auth', () => {
     isLoggedIn,
     userRole,
     // actions
+    signup,
     login,
     logout
   }
