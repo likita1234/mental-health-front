@@ -2,11 +2,11 @@
 import CsvParser from '@/components/global/CsvParser.vue'
 
 import { onMounted, ref, computed, inject } from 'vue';
+import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
 
 import { authStore, answerStore, formStore } from '@/stores';
-import { UserRole } from '../../constants/user-role'
-import { storeToRefs } from 'pinia';
+import { AssessmentFormType, UserRole } from '../../constants'
 import { showToast } from '@/utils/show-toast';
 import AppResponse from '@/utils/app-response';
 
@@ -23,7 +23,7 @@ const router = useRouter()
 const appState = inject('appState')
 
 // Store states
-const { userRole } = storeToRefs(authStore)
+const { userRole, isLoggedIn, loggedUser } = storeToRefs(authStore)
 
 // Component states
 const activeStep = ref(0) //starts with index 0
@@ -61,6 +61,10 @@ const isFinalStep = computed(() => {
     return (activeStep.value + 1) == formDetails.value?.sections?.length
 })
 
+const loggedUserId = computed(() => {
+    return isLoggedIn.value ? loggedUser.value?._id : null
+})
+
 onMounted(() => {
     setupAssessmentDetails()
 })
@@ -81,6 +85,8 @@ const loadAssessmentDetails = async () => {
 
 const formatAssessmentDetails = (formData) => {
     formDetails.value = { ...formData }
+    // userId is set to null if form is public to make it anonynomous
+    formDetails.value.userId = formData.type === AssessmentFormType.PRIVATE ? loggedUserId.value : null
     formDetails.value.sections = formDetails.value?.sections?.map((sectionData) => {
         const section = sectionData.sectionId
         section.questions = section.questions?.map((questionData) => questionData.questionId)
@@ -151,42 +157,37 @@ const loadSurveyJson = async (jsonData) => {
 }
 </script>
 <template>
-    <div class="flex justify-content-center">
-        <div class="card p-5 h-full w-full md:w-8">
-            <div class="flex justify-content-center">
-                <language-selection />
-            </div>
-            <h2 class="text-center">{{ formTitle }}</h2>
-            <!-- Form Description -->
-            <p class="text-center"> {{ formDescription }}</p>
-            <div v-if="userRole === UserRole.SUPERADMIN" class="flex justify-content-center">
-                <csv-parser @json-created="loadSurveyJson" />
-            </div>
-            <Divider />
-            <div v-if="sectionItems.length">
-                <Steps v-model:activeStep="activeStep" :model="sectionItems" class="custom-steps">
-                    <!-- <template #item="{ item, active }">
-                        <span class="border-primary border-1 p-1 cursor-pointer"
-                            :class="{ 'bg-primary': active, 'surface-overlay text-primary': !active }">
-                            {{ item.label }}
-                        </span>
-                    </template> -->
-                </Steps>
-            </div>
-            <Divider />
-
-            <div v-if="activeSection" class="section-container">
-                <div class="flex flex-column justify-content-center align-items-center">
-                    <!-- Section Title Here -->
-                    <h4>{{ activeSection.title[appState.lang] }}</h4>
-                    <!-- Section Description Here -->
-                    <p v-if="activeSection.description">{{ activeSection.description[appState.lang] }}</p>
-                    <Divider />
+    <div class="my-5">
+        <div class="flex justify-content-center">
+            <div class="card p-5 h-full w-full md:w-9">
+                <div class="flex justify-content-center">
+                    <language-selection />
                 </div>
-                <div class="questions-container">
-                    <!-- Section Questions Here -->
-                    <CustomQuestion v-for="question in activeSection.questions" v-model="question.answer"
-                        :question="question" :key="question._id" />
+                <h2 class="text-center">{{ formTitle }}</h2>
+                <!-- Form Description -->
+                <p class="text-center"> {{ formDescription }}</p>
+                <div v-if="userRole === UserRole.SUPERADMIN" class="flex justify-content-center">
+                    <csv-parser @json-created="loadSurveyJson" />
+                </div>
+                <Divider />
+                <div v-if="sectionItems.length">
+                    <Steps v-model:activeStep="activeStep" :model="sectionItems" class="custom-steps" />
+                </div>
+                <Divider />
+
+                <div v-if="activeSection" class="section-container">
+                    <div class="flex flex-column justify-content-center align-items-center">
+                        <!-- Section Title Here -->
+                        <h4>{{ activeSection.title[appState.lang] }}</h4>
+                        <!-- Section Description Here -->
+                        <p v-if="activeSection.description">{{ activeSection.description[appState.lang] }}</p>
+                        <Divider />
+                    </div>
+                    <div class="questions-container">
+                        <!-- Section Questions Here -->
+                        <CustomQuestion v-for="question in activeSection.questions" v-model="question.answer"
+                            :question="question" :key="question._id" />
+                    </div>
                 </div>
                 <Divider />
                 <div class="flex mb-2 gap-2 justify-content-between">
@@ -197,3 +198,10 @@ const loadSurveyJson = async (jsonData) => {
         </div>
     </div>
 </template>
+
+<style scoped>
+.questions-container {
+    max-height: 50vh;
+    overflow-y: auto
+}
+</style>
