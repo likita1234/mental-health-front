@@ -2,15 +2,22 @@
 import { onMounted, inject } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
-
 import { formStore } from '@/stores'
+import { AssessmentFormType } from '@/constants';
+
+const props = defineProps({
+    type: {
+        type: String,
+        default: 'public'
+    }
+})
 
 const router = useRouter()
 // Global states
 const appState = inject('appState')
 
 // Store states
-const { allForms } = storeToRefs(formStore)
+const { allForms, params } = storeToRefs(formStore)
 
 onMounted(() => {
     loadForms()
@@ -18,12 +25,16 @@ onMounted(() => {
 
 // Load all available survey forms
 const loadForms = async () => {
-    await formStore.fetchSurveyForms()
+    // Insert the type of assessment form being fetched
+    params.value = { type: props.type }
+    await formStore.fetchAllForms()
 }
 
 // Depending upon the selected survey form, redirect into the assessment form
 const enterSurvey = (surveyId) => {
-    router.push({ name: 'survey-form', params: { id: surveyId } })
+    const redirectRoute = props.type === AssessmentFormType.PUBLIC ? 'survey-form' : 'self-assessment-form'
+    router.push({ name: redirectRoute, params: { id: surveyId } })
+
 }
 
 </script>
@@ -56,6 +67,7 @@ const enterSurvey = (surveyId) => {
 .form-container {
     padding: 20px;
     transition: all 0.4s ease-in-out;
+
     &:hover {
         transform: translateY(-10px);
         cursor: pointer;
