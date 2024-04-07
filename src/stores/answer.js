@@ -85,7 +85,8 @@ export const useAnswerStore = defineStore('answer', () => {
     // First map them into new variable
     const submissionData = {
       formId: formDetails._id,
-      type: formDetails.type
+      // type: formDetails.type,
+      userId: formDetails.userId
     }
     // Now fetch all sections first
     const allSections = formDetails.sections
@@ -103,13 +104,12 @@ export const useAnswerStore = defineStore('answer', () => {
           answer: questionObj.answer?.toString()
         }
       })
-      
+
       // Now concat allQuestions to allAnswers, if you push them it will create array of array
       allAnswers = allAnswers.concat(allQuestions)
     }
     // After all questions have been concatenated, store it into submissionData as answers array
     submissionData.answers = allAnswers
-
     return submissionData
   }
 

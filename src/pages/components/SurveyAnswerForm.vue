@@ -2,11 +2,11 @@
 import CsvParser from '@/components/global/CsvParser.vue'
 
 import { onMounted, ref, computed, inject } from 'vue';
+import { storeToRefs } from 'pinia';
 import { useRouter } from 'vue-router';
 
 import { authStore, answerStore, formStore } from '@/stores';
-import { UserRole } from '../../constants/user-role'
-import { storeToRefs } from 'pinia';
+import { AssessmentFormType, UserRole } from '../../constants'
 import { showToast } from '@/utils/show-toast';
 import AppResponse from '@/utils/app-response';
 
@@ -23,7 +23,7 @@ const router = useRouter()
 const appState = inject('appState')
 
 // Store states
-const { userRole } = storeToRefs(authStore)
+const { userRole, isLoggedIn, loggedUser } = storeToRefs(authStore)
 
 // Component states
 const activeStep = ref(0) //starts with index 0
@@ -61,6 +61,10 @@ const isFinalStep = computed(() => {
     return (activeStep.value + 1) == formDetails.value?.sections?.length
 })
 
+const loggedUserId = computed(() => {
+    return isLoggedIn.value ? loggedUser.value?._id : null
+})
+
 onMounted(() => {
     setupAssessmentDetails()
 })
@@ -81,6 +85,8 @@ const loadAssessmentDetails = async () => {
 
 const formatAssessmentDetails = (formData) => {
     formDetails.value = { ...formData }
+    // userId is set to null if form is public to make it anonynomous
+    formDetails.value.userId = formData.type === AssessmentFormType.PRIVATE ? loggedUserId.value : null
     formDetails.value.sections = formDetails.value?.sections?.map((sectionData) => {
         const section = sectionData.sectionId
         section.questions = section.questions?.map((questionData) => questionData.questionId)
@@ -153,7 +159,7 @@ const loadSurveyJson = async (jsonData) => {
 <template>
     <div class="my-5">
         <div class="flex justify-content-center">
-            <div class="card p-5 h-full w-full md:w-8">
+            <div class="card p-5 h-full w-full md:w-9">
                 <div class="flex justify-content-center">
                     <language-selection />
                 </div>
