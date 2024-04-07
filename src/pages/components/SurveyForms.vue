@@ -32,8 +32,8 @@ const loadForms = async () => {
 
 // Depending upon the selected survey form, redirect into the assessment form
 const enterSurvey = (surveyId) => {
-    const redirectRoute = props.type === AssessmentFormType.PUBLIC ? 'survey-form' : 'self-assessment-form'
-    router.push({ name: redirectRoute, params: { id: surveyId } })
+    const toRouteName = props.type === AssessmentFormType.PUBLIC ? 'survey-form' : 'self-assessment-form'
+    router.push({ name: toRouteName, params: { id: surveyId } })
 
 }
 
@@ -44,17 +44,19 @@ const enterSurvey = (surveyId) => {
     <div class="flex justify-content-center">
         <div class="w-full lg:w-9 surface-section px-4 py-8 md:px-6 lg:px-8 text-center">
             <div class="font-bold text-3xl">
-                <span class="text-blue-600">Ongoing Surveys </span>
+                <span v-if="type === AssessmentFormType.PUBLIC" class="text-blue-600">Ongoing Surveys </span>
+                <span v-else class="text-green-600">Self Assessments </span>
             </div>
             <div class="flex justify-content-center flex-wrap">
-                <div class="form-container col-12 md:col-6 overflow-hidden" v-for="form in allForms" :key="form.id"
+                <div class="form-container col-12 md:col-4" v-for="form in allForms" :key="form.id"
                     @click="enterSurvey(form._id)">
-                    <div class="card shadow-3 h-18rem">
+                    <div class="card shadow-3 h-18rem overflow-hidden">
                         <span class="p-3 shadow-2 mb-3 inline-block surface-card" style="border-radius: 10px">
                             <font-awesome-icon :icon="['fas', 'brain']" size="3x" />
                         </span>
                         <div class="text-900 text-xl mb-3 font-bold text-primary">{{ form.title[appState.lang] }}</div>
-                        <span class="text-700 line-height-3">{{ form.description[appState.lang] }}</span>
+                        <span class="text-700 line-height-3">
+                            {{ form.description[appState.lang] ?? 'No Description' }}</span>
                     </div>
                 </div>
             </div>
