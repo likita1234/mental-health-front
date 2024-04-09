@@ -65,6 +65,10 @@ const loggedUserId = computed(() => {
     return isLoggedIn.value ? loggedUser.value?._id : null
 })
 
+const isPublicAsssesment = computed(() => {
+    return formDetails.value?.type === AssessmentFormType.PUBLIC
+})
+
 onMounted(() => {
     setupAssessmentDetails()
 })
@@ -97,11 +101,12 @@ const formatAssessmentDetails = (formData) => {
 
 const submitForm = async () => {
     const response = await answerStore.submitAnswerForm(formDetails.value)
+    const toRouteName = isPublicAsssesment.value ? 'survey' : 'self-assessments'
     if (response) {
         // clean the section object
         answerStore.initAnswerForm()
-        new AppResponse(201, 'Survey Form submitted successfully')
-        setTimeout(() => router.push({ name: 'survey' }), 2000)
+        new AppResponse(201, 'Form submitted successfully')
+        setTimeout(() => router.push({ name: toRouteName }), 2000)
     }
 }
 
@@ -160,7 +165,7 @@ const loadSurveyJson = async (jsonData) => {
     <div class="my-5">
         <div class="flex justify-content-center">
             <div class="card p-5 h-full w-full md:w-9">
-                <div class="flex justify-content-center">
+                <div v-if="isPublicAsssesment" class="flex justify-content-center">
                     <language-selection />
                 </div>
                 <h2 class="text-center">{{ formTitle }}</h2>

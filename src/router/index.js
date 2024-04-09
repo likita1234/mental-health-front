@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useAuthStore } from '@/stores/auth'
+import { AssessmentFormType, UserRole } from '@/constants'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,7 +27,8 @@ const router = createRouter({
               component: () =>
                 import('../components/dashboards/mental-health-relationship-analysis.vue'),
               meta: {
-                breadcrumb: [{ parent: 'Home', label: 'Mental Health Relationship Analysis' }]
+                breadcrumb: [{ parent: 'Dashboard', label: 'Mental Health Relationship Analysis' }],
+                requiredRoles: [UserRole.ADMIN, UserRole.SUPERADMIN]
               }
             },
             {
@@ -34,7 +36,8 @@ const router = createRouter({
               name: 'comparative-dashboards',
               component: () => import('../components/dashboards/comparative-dashboard.vue'),
               meta: {
-                breadcrumb: [{ parent: 'Home', label: 'Comparative Dashboard' }]
+                breadcrumb: [{ parent: 'Dashboard', label: 'Comparative Dashboard' }],
+                requiredRoles: [UserRole.ADMIN, UserRole.SUPERADMIN]
               }
             },
             {
@@ -42,7 +45,10 @@ const router = createRouter({
               name: 'section-analysis',
               component: () => import('../components/dashboards/form-section-analysis.vue'),
               meta: {
-                breadcrumb: [{ parent: 'Home', label: 'Assessment Form Section-Wise Analysis' }]
+                breadcrumb: [
+                  { parent: 'Dashboard', label: 'Assessment Form Section-Wise Analysis' }
+                ],
+                requiredRoles: [UserRole.ADMIN, UserRole.SUPERADMIN]
               }
             },
             {
@@ -50,17 +56,34 @@ const router = createRouter({
               name: 'thematic-analysis',
               component: () => import('../components/dashboards/thematic-analysis.vue'),
               meta: {
-                breadcrumb: [{ parent: 'Home', label: 'Thematic Analyis of open-end questions' }]
+                breadcrumb: [{ parent: 'Home', label: 'Thematic Analyis of open-end questions' }],
+                requiredRoles: [UserRole.ADMIN, UserRole.SUPERADMIN]
               }
             }
           ]
+        },
+        {
+          path: 'self-assessments',
+          name: 'self-assessments',
+          props: { type: AssessmentFormType.PRIVATE },
+          component: () => import('../pages/components/SurveyForms.vue'),
+          meta: {
+            breadcrumb: [{ parent: 'Home', label: 'Self Assessments' }]
+          }
+        },
+        {
+          path: 'self-assessments/:id',
+          name: 'self-assessment-form',
+          props: true,
+          component: () => import('../pages/components/SurveyAnswerForm.vue')
         },
         {
           path: 'question',
           name: 'manage-questions',
           component: () => import('../components/question/ManageQuestion.vue'),
           meta: {
-            breadcrumb: [{ parent: 'Assessments', label: 'Question' }]
+            breadcrumb: [{ parent: 'Assessments', label: 'Question' }],
+            requiredRoles: [UserRole.ADMIN, UserRole.SUPERADMIN]
           }
         },
         {
@@ -68,7 +91,8 @@ const router = createRouter({
           name: 'manage-sections',
           component: () => import('../components/section/ManageSection.vue'),
           meta: {
-            breadcrumb: [{ parent: 'Assessments', label: 'Section' }]
+            breadcrumb: [{ parent: 'Assessments', label: 'Section' }],
+            requiredRoles: [UserRole.ADMIN, UserRole.SUPERADMIN]
           }
         },
         {
@@ -79,7 +103,8 @@ const router = createRouter({
               name: 'manage-forms',
               component: () => import('../components/assessment-form/ManageAssessmentForm.vue'),
               meta: {
-                breadcrumb: [{ parent: 'Assessments', label: 'Forms' }]
+                breadcrumb: [{ parent: 'Assessments', label: 'Forms' }],
+                requiredRoles: [UserRole.ADMIN, UserRole.SUPERADMIN]
               }
             },
             {
@@ -88,7 +113,8 @@ const router = createRouter({
               props: true,
               component: () => import('../components/assessment-form/CustomAssessment.vue'),
               meta: {
-                breadcrumb: [{ parent: 'Assessments', label: 'Forms Details' }]
+                breadcrumb: [{ parent: 'Assessments', label: 'Forms Details' }],
+                requiredRoles: [UserRole.ADMIN, UserRole.SUPERADMIN]
               }
             }
           ]
@@ -133,12 +159,17 @@ const router = createRouter({
       ]
     },
     {
-      // path: '/about',
-      // name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      // component: () => import('../views/AboutView.vue')
+      path: '/access',
+      name: 'access',
+      component: () => import('../pages/Access.vue')
+    },
+    {
+      path: '/:resource(.*)',
+      name: 'not-found',
+      props: {
+        resource: 'The page you are requesting for does not exist'
+      },
+      component: () => import('../pages/NotFound.vue')
     }
   ],
   scrollBehavior() {
@@ -151,15 +182,23 @@ router.beforeEach((to, from, next) => {
   const authStore = useAuthStore()
   // Routes that doesnt need authentication
   const accessibleRoutes = ['login', 'register', 'landing', 'survey', 'survey-form']
+  // Roles who have access to the next route
+  const requiredRoles = to?.meta?.requiredRoles
   // 1) Check if the user has a valid token or not
   const isUserAuthenticated = authStore.isLoggedIn
   // If user is authenticated
   if (isUserAuthenticated) {
+    // Get logged user role
+    const loggedUserRole = authStore.userRole
+
     // If user tries to login, redirect to app page (except for when user is trying to register)
     if ((to.name === 'login' || to.name === 'app') && to.name !== 'register') {
       next('/dashboard')
     } else {
-      // Allow navigation to other pages for authenticated users
+      // Check if the route requires roles and user have enough role to access the route or not
+      if (requiredRoles?.length > 0 && !requiredRoles.includes(loggedUserRole)) {
+        router.push({ name: 'access' })
+      }
       next()
     }
   } else {

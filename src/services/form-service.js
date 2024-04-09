@@ -16,9 +16,10 @@ class FormService {
   // Fetch all existing form
   static async getAllForms(queryParams) {
     try {
-      const { page, limit, sort, fields } = queryParams
+      const { params, page, limit, sort, fields } = queryParams
       return await authApi.get(FORM_API, {
         params: {
+          ...params,
           page,
           limit,
           sort,

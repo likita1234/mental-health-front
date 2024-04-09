@@ -33,7 +33,7 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   // actions
-  const signup = async(body) =>{
+  const signup = async (body) => {
     return await AuthService.signup(body).then((user) => {
       if (user) {
         setupUserData(user)
@@ -48,6 +48,7 @@ export const useAuthStore = defineStore('auth', () => {
         setupUserData(currentUser)
         return true
       }
+      return false
     })
   }
 

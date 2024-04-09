@@ -17,15 +17,25 @@ export function useMenu() {
   const menuItems = [
     {
       icon: 'pi pi-fw pi-home',
-      label: 'Dashboards',
-      //   in visiblity: check user role
       items: [
         {
-          label: 'Default Dashboard',
-          icon: 'pi pi-fw pi-database',
+          label: 'Home',
+          icon: 'pi pi-fw pi-home',
           visible: true,
           to: { name: 'default-dashboard' }
         },
+        {
+          label: 'Self Assessments',
+          icon: 'pi pi-fw pi-table',
+          visible: true,
+          to: { name: 'self-assessments' }
+        }
+      ]
+    },
+    {
+      icon: 'pi pi-fw pi-home',
+      label: 'Dashboards',
+      items: [
         {
           label: 'Relationship Analysis',
           icon: 'pi pi-fw pi-sitemap',
@@ -50,7 +60,8 @@ export function useMenu() {
           visible: true,
           to: { name: 'thematic-analysis' }
         }
-      ]
+      ],
+      visible: isAccessible([UserRole.ADMIN, UserRole.SUPERADMIN])
     },
     {
       icon: 'pi pi-fw pi-file',
@@ -60,19 +71,19 @@ export function useMenu() {
           label: 'Questions',
           icon: 'pi pi-fw pi-question',
           to: { name: 'manage-questions' },
-          visible: true //check user role
+          visible: true
         },
         {
           label: 'Sections',
           icon: 'pi pi-fw pi-th-large',
           to: { name: 'manage-sections' },
-          visible: true //check user role
+          visible: true
         },
         {
           label: 'Forms',
           icon: 'pi pi-fw pi-file-edit',
           to: { name: 'manage-forms' },
-          visible: true //check user role
+          visible: true
         }
       ],
       visible: isAccessible([UserRole.ADMIN, UserRole.SUPERADMIN])
