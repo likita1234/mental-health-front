@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, inject } from 'vue'
+import { onMounted, inject, onUnmounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import { formStore } from '@/stores'
@@ -21,6 +21,10 @@ const { allForms, params } = storeToRefs(formStore)
 
 onMounted(() => {
     loadForms()
+})
+
+onUnmounted(() => {
+    params.value = {}
 })
 
 // Load all available survey forms

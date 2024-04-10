@@ -20,9 +20,9 @@ onMounted(() => {
 // At the moment assessment forms are very limited so we are not utilizing any parameters
 const loadAssessmentForms = async () => {
     // Check if allForms already have value, if yes then no need to make another request
-    if (allForms.value && allForms.value?.length <= 0) {
-        await formStore.fetchAllForms()
-    }
+    // if (allForms.value && allForms.value?.length <= 0) {
+    await formStore.fetchAllForms()
+    // }
 }
 </script>
 

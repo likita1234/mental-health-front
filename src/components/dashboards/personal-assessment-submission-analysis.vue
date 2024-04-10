@@ -1,7 +1,7 @@
 <script setup>
 import PlotyHeatmap from '@/components/plugins/ploty-heatmap.vue'
 
-import { ref, onMounted, computed, watch } from 'vue';
+import { ref, onMounted } from 'vue';
 import { dashboardStore } from '@/stores';
 import { correlationMatrix, generateHypothesisAnalysis } from '@/utils/data-analysis'
 
