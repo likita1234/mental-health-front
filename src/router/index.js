@@ -22,7 +22,7 @@ const router = createRouter({
               }
             },
             {
-              path: 'relationship-dashboard',
+              path: 'relationship',
               name: 'relationship-dashboard',
               component: () =>
                 import('../components/dashboards/mental-health-relationship-analysis.vue'),
@@ -32,7 +32,7 @@ const router = createRouter({
               }
             },
             {
-              path: 'submission-correlation',
+              path: 'self-assessment',
               name: 'submission-correlation-dashboard',
               component: () =>
                 import('../components/dashboards/personal-assessment-submission-analysis.vue'),
@@ -44,7 +44,7 @@ const router = createRouter({
               }
             },
             {
-              path: 'comparative-dashboard',
+              path: 'comparative',
               name: 'comparative-dashboards',
               component: () => import('../components/dashboards/comparative-dashboard.vue'),
               meta: {
