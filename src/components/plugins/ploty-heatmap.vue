@@ -47,7 +47,9 @@ const layout = ref({
             size: 14,
             color: '#000',
             weight: 'bold'
-        }
+        },
+        automargin: true,
+        autosize: true,
     },
     yaxis: {
         ticks: '',

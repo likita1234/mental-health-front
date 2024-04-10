@@ -52,11 +52,29 @@ export const correlationMatrix = (datasets) => {
   return matrix
 }
 
+// Function to calculate the correlation matrix between scores and submission count for each question
+export const calculatePersonalSubmissionCorrelationMatrix = (data) => {
+  const correlationMatrix = []
+  const numberOfQuestions = data.length
+
+  // Loop through each question data
+  for (let i = 0; i < numberOfQuestions; i++) {
+    const currData = data[i]
+    const scoresForQuestion = currData.scores
+    const submissionCounts = currData.submissionCounts
+
+    // Calculate the Pearson correlation coefficient for each question
+    const correlation = pearsonCorrelation(scoresForQuestion, submissionCounts)
+    correlationMatrix.push(correlation)
+  }
+
+  // Convert the correlation coefficients to a correlation matrix
+  return correlationMatrix
+}
+
 export const generateHypothesisAnalysis = ({ titles, correlationDatasets, sampleSize }) => {
   // Initiate new dataset for storing everything
   let hypothesisDatasets = []
-  // Extract the main variable
-  const mainVariable = titles[0]
   // Loop through all datasets except first one since first one is main and will always be 1
   for (let i = 1; i < correlationDatasets.length; i++) {
     const correlationCoeff = correlationDatasets[i]
@@ -68,7 +86,8 @@ export const generateHypothesisAnalysis = ({ titles, correlationDatasets, sample
       pValue
     })
   }
-  return hypothesisDatasets
+  // debugger
+  return hypothesisDatasets?.filter((obj) => obj.title !== 'Submission Frequency')
 }
 
 const mean = (data) => {
@@ -93,7 +112,6 @@ const standardDeviation = (data) => {
 }
 
 const pearsonCorrelation = (data1, data2) => {
-  // console.log(corrData)
   // const cov = covariance(data1, data2)
   // const stdDev1 = standardDeviation(data1)
   // const stdDev2 = standardDeviation(data2)

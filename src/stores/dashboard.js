@@ -48,6 +48,11 @@ export const useDashboardStore = defineStore('dashboard', () => {
     return response.data
   }
 
+  const getPersonalSubmissionAnalysisData = async () => {
+    const response = await DashboardService.getPersonalSubmissionAnalysisData()
+    return response.data
+  }
+
   // Helpers
 
   // Returns
@@ -67,7 +72,8 @@ export const useDashboardStore = defineStore('dashboard', () => {
     // Actions
     fetchDashboards,
     getDashboardDetails,
-    getDashboardData
+    getDashboardData,
+    getPersonalSubmissionAnalysisData
 
     // Helpers
   }
