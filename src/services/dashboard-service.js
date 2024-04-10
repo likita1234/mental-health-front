@@ -38,6 +38,14 @@ class DashboardService {
       return new AppError(error.statusCode, 'Failed to fetch dashboard data')
     }
   }
+
+  static async getPersonalSubmissionAnalysisData() {
+    try {
+      return await authApi.get(`${DASHBOARD_API}/personal/overall`)
+    } catch (error) {
+      return new AppError(error.statusCode, 'Failed to fetch personal submission analysis data')
+    }
+  }
 }
 
 export default DashboardService
