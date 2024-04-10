@@ -43,6 +43,12 @@ export function useMenu() {
           to: { name: 'relationship-dashboard' }
         },
         {
+          label: 'Submission Correlation Analysis',
+          icon: 'pi pi-fw pi-chart-line',
+          visible: true,
+          to: { name: 'submission-correlation-dashboard' }
+        },
+        {
           label: 'Comparative Analysis',
           icon: 'pi pi-fw pi-chart-bar',
           visible: true,

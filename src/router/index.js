@@ -32,6 +32,18 @@ const router = createRouter({
               }
             },
             {
+              path: 'submission-correlation',
+              name: 'submission-correlation-dashboard',
+              component: () =>
+                import('../components/dashboards/personal-assessment-submission-analysis.vue'),
+              meta: {
+                breadcrumb: [
+                  { parent: 'Dashboard', label: 'Personal Submission Correlation Analysis' }
+                ],
+                requiredRoles: [UserRole.ADMIN, UserRole.SUPERADMIN]
+              }
+            },
+            {
               path: 'comparative-dashboard',
               name: 'comparative-dashboards',
               component: () => import('../components/dashboards/comparative-dashboard.vue'),
