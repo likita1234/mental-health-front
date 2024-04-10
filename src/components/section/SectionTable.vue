@@ -76,7 +76,9 @@ const onPage = async (event) => {
 
                     <template #body="slotProps">
                         <template v-if="slotProps.data.description[appState.lang]">
-                            {{ slotProps.data.description[appState.lang] }}
+                            <div class="max-h-3rem overflow-hidden">
+                                <p> {{ slotProps.data.description[appState.lang] }} </p>
+                            </div>
                         </template>
 
                         <template v-else>
