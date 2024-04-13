@@ -30,15 +30,17 @@ describe('BaseRating', () => {
       }
     });
 
-     // Find the element that represents the rating control
-     const ratingControl = wrapper.find('.rating-control');
 
-    //  // Simulate a user interaction by triggering a click event
-    //  await ratingControl.trigger('click');
+   // Trigger the change event with the desired value
+   await wrapper.setValue(4);
 
-    // // Check if the emitted event is correct
-    // expect(wrapper.emitted('update:modelValue')).toBeTruthy();
-    // expect(wrapper.emitted('update:modelValue')).toHaveLength(1); // Check if only one event is emitted
-    // expect(wrapper.emitted('update:modelValue')[0]).toEqual([4]); 
-  });
+   // Ensure that the component has updated
+   await wrapper.vm.$nextTick();
+
+   // Check if the emitted event is correct
+   expect(wrapper.emitted('update:modelValue')).toBeTruthy();
+   expect(wrapper.emitted('update:modelValue')).toHaveLength(1);
+   expect(wrapper.emitted('update:modelValue')[0]).toEqual([4]);
+
+  })
 })

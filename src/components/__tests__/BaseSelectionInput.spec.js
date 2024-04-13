@@ -3,50 +3,70 @@ import BaseSelectionInput from '../../components/form-inputs/BaseSelectionInput.
 import { describe, it, expect } from 'vitest'
 
 describe('BaseSelectionInput', () => {
-    it('renders correctly with default props', () => {
-      const wrapper = shallowMount(BaseSelectionInput, {
-        props: {
-          label:'Custom Label',
-        }
+  it('renders correctly with default props', () => {
+    const wrapper = shallowMount(BaseSelectionInput, {
+      props: {
+        label: 'Custom Label'
+      }
     })
-  
-      expect(wrapper.exists()).toBe(true);
-      expect(wrapper.find('label').text()).toBe('Custom Label:');
-      expect(wrapper.find('.flex.flex-column')).toBeTruthy();
+
+    expect(wrapper.exists()).toBe(true)
+    expect(wrapper.find('label').text()).toBe('Custom Label:')
+    expect(wrapper.find('.flex.flex-column')).toBeTruthy()
+  })
+
+  it('renders RadioButton elements when radio prop is true', async () => {
+    // Mock props and injection
+    const options = [
+      { title: { en: 'Option 1', fr: 'Option 1' }, optionValue: 'value1' },
+      { title: { en: 'Option 2', fr: 'Option 2' }, optionValue: 'value2' },
+    ];
+    const appState = { lang: 'en' };
+
+    // Mount the component with props
+    const wrapper = mount(BaseSelectionInput, {
+      props: {
+        modelValue: null,
+        label: 'Field Label',
+        radio: true,
+        options,
+        disabled: false,
+      },
+      global: {
+        provide: {
+          appState,
+        },
+      },
+      // Register RadioButton as a global component
+      components: {
+        RadioButton: {
+          template: '<div><RadioButton/></div>', // Example template for testing purposes
+        },
+      },
     });
 
-    describe('YourComponent', () => {
-        it('renders radio buttons when radio prop is true', async () => {
-          const options = [
-            { title: { en: 'Option 1', fr: 'Option 1' }, optionValue: 'value1' },
-            { title: { en: 'Option 2', fr: 'Option 2' }, optionValue: 'value2' },
-          ];
-      
-          const appState = {
-            lang: 'en'
-          };
-      
-          // Mount the component with radio prop set to true
-          const wrapper = mount(YourComponent, {
-            props: {
-              options,
-              radio: true, // Set radio prop to true
-            },
-            global: {
-              provide: {
-                appState
-              }
-            }
-          });
-      
-          // Check if RadioButton components are rendered
-          const radioButtons = wrapper.findAllComponents(RadioButton);
-          expect(radioButtons).toHaveLength(options.length); // Ensure the correct number of radio buttons are rendered
-      
-          // Check if Checkbox components are not rendered
-          const checkboxes = wrapper.findAll('checkbox'); // Replace 'checkbox' with actual selector for the Checkbox component
-          expect(checkboxes).toHaveLength(0); // Ensure no checkbox components are rendered
-        });
-      });
+    // Find all RadioButton elements
+    const radioButtons = wrapper.findAllComponents({ name: 'RadioButton' });
+
+    // Assert the number of RadioButton elements
+    expect(radioButtons).toHaveLength(options.length);
+
+    options.forEach((option, index) => {
+      // Access the name attribute of each RadioButton component
+      const radioButton = radioButtons[index];
+      const nameAttribute = radioButton.attributes('name');
     
+      // Compare the name attribute with the expected value
+      expect(nameAttribute).toBe(option.title[appState.lang]);
+    });
+
+
+       // Trigger change event on each RadioButton element
+       await Promise.all(radioButtons.map(async radioButton => {
+        await radioButton.trigger('change');
+      }));
+  
+      // Assert that the change event was triggered on each RadioButton element
+      expect(wrapper.emitted('change')).toHaveLength(radioButtons.length);
+  });
 });
