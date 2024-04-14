@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, watch, inject } from 'vue'
+import { ref, onMounted, watch, inject, onUnmounted } from 'vue'
 
 // Global State
 const appState = inject('appState')
@@ -20,6 +20,10 @@ onMounted(() => {
     if (appState.tableMode) {
         tableModeSelected.value = appState.tableMode
     }
+})
+
+onUnmounted(()=>{
+    appState.tableMode = false
 })
 </script>
 
