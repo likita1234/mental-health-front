@@ -78,14 +78,14 @@ const onTopbarSubItemClick = (event) => {
                                     <h6>{{ loggedUser.username ?? 'Guest' }}</h6>
                                 </div>
                             </li>
-                            <li role="menuitem">
+                            <!-- <li role="menuitem">
                                 <a href="#" @click="onTopbarSubItemClick($event)">
                                     <i class="pi pi-cog"></i>
                                     <h6>Settings</h6>
                                 </a>
-                            </li>
-                            <li role="menuitem">
-                                <a href="#" @click="logout">
+                            </li> -->
+                            <li role="menuitem" @click="logout">
+                                <a href="#">
                                     <i class="pi pi-power-off"></i>
                                     <h6>Logout</h6>
                                 </a>
