@@ -1,63 +1,73 @@
 <script setup>
+import RelationshipSkeleton from '@/components/common/skeleton/relationship-dashboard.vue'
 import PlotyHeatmap from '@/components/plugins/ploty-heatmap.vue'
 
 import { ref, onMounted } from 'vue';
 import { dashboardStore } from '@/stores';
 import { correlationMatrix, generateHypothesisAnalysis } from '@/utils/data-analysis'
+import AppError from '@/utils/app-error';
 
 const datasets = ref([])
 const hypothesisData = ref([])
 const actualTitles = ref([])
 const blockContents = ref([])
+const isLoading = ref(false)
 
 onMounted(() => {
     loadDashboardData()
 })
 
 const loadDashboardData = async () => {
-    const { allTitles, data, total } = await dashboardStore.getPersonalSubmissionAnalysisData()
-    loadBlockContents(data)
-    actualTitles.value = allTitles
-    let formattedData = data?.map(rawObj => {
-        let formattedObj = {
-            title: rawObj.questionId,
-            data: [],
-            scores: [],
-            submissionCounts: []
-        }
-        rawObj?.data?.map(dataObj => {
-            formattedObj.data.push(dataObj.question?.answersTotal)
-            formattedObj.scores.push(dataObj.question?.answersTotal)
-            formattedObj.submissionCounts.push(dataObj.question?.totalSubmissions)
+    try {
+        isLoading.value = true;
+        const { allTitles, data, total } = await dashboardStore.getPersonalSubmissionAnalysisData()
+        loadBlockContents(data)
+        actualTitles.value = allTitles
+        let formattedData = data?.map(rawObj => {
+            let formattedObj = {
+                title: rawObj.questionId,
+                data: [],
+                scores: [],
+                submissionCounts: []
+            }
+            rawObj?.data?.map(dataObj => {
+                formattedObj.data.push(dataObj.question?.answersTotal)
+                formattedObj.scores.push(dataObj.question?.answersTotal)
+                formattedObj.submissionCounts.push(dataObj.question?.totalSubmissions)
+            })
+            return formattedObj
         })
-        return formattedObj
-    })
 
-    if (formattedData && formattedData.length) {
-        const submissionCountsArr = formattedData?.map(obj => obj.submissionCounts)[0]
-        const titles = formattedData?.map(dataset => dataset.title)
-        let datasetsArray = formattedData?.map(dataset => dataset.data)
-        // Manually add submission datasets
-        titles[total] = 'Submission Frequency'
-        datasetsArray[total] = submissionCountsArr
+        if (formattedData && formattedData.length) {
+            const submissionCountsArr = formattedData?.map(obj => obj.submissionCounts)[0]
+            const titles = formattedData?.map(dataset => dataset.title)
+            let datasetsArray = formattedData?.map(dataset => dataset.data)
+            // Manually add submission datasets
+            titles[total] = 'Submission Frequency'
+            datasetsArray[total] = submissionCountsArr
 
-        if (titles.length && datasetsArray.length) {
-            const correlationData = correlationMatrix(datasetsArray)
-            datasets.value = titles.map((title, index) => {
-                const questionId = title;
-                const actualTitle = getActualTitleByQuestionId(questionId)
-                // debugger
-                return {
-                    title: actualTitle,
-                    data: correlationData[index].map(value => parseFloat(value))
-                }
-            });
-            // Once correlation have been calculated, make analysis of Hypothesis
-            let correlationDatasets = datasets.value[total]?.data
-            const sampleSize = datasetsArray[total]?.length
-            // create table for this
-            hypothesisData.value = await generateHypothesisAnalysis({ titles, correlationDatasets, sampleSize })
+            if (titles.length && datasetsArray.length) {
+                const correlationData = correlationMatrix(datasetsArray)
+                datasets.value = titles.map((title, index) => {
+                    const questionId = title;
+                    const actualTitle = getActualTitleByQuestionId(questionId)
+                    // debugger
+                    return {
+                        title: actualTitle,
+                        data: correlationData[index].map(value => parseFloat(value))
+                    }
+                });
+                // Once correlation have been calculated, make analysis of Hypothesis
+                let correlationDatasets = datasets.value[total]?.data
+                const sampleSize = datasetsArray[total]?.length
+                // create table for this
+                hypothesisData.value = await generateHypothesisAnalysis({ titles, correlationDatasets, sampleSize })
+            }
         }
+    } catch (error) {
+        new AppError(400, error?.message ?? 'Failed to Load Personal Assessment Dashboard')
+    } finally {
+        isLoading.value = false
     }
 }
 
@@ -92,7 +102,8 @@ const loadBlockContents = (allData) => {
 </script>
 
 <template>
-    <div>
+    <relationship-skeleton v-if="isLoading" />
+    <div v-else>
         <div>
             <div class="grid">
                 <div v-for="block in blockContents" :key="block" class="col-12 md:col-4">
