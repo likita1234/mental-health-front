@@ -21,15 +21,15 @@ const router = createRouter({
                 breadcrumb: [{ parent: 'Home', label: 'Default Dashboard' }]
               }
             },
-            {
-              path: 'self-assessment',
-              name: 'self-assessment-dashboard',
-              component: () => import('../components/dashboards/self-assessment.vue'),
-              meta: {
-                breadcrumb: [{ parent: 'Dashboard', label: 'Self Assessment Dashboard' }],
-                requiredRoles: [UserRole.ADMIN, UserRole.SUPERADMIN, UserRole.USER]
-              }
-            },
+            // {
+            //   path: 'self-assessment',
+            //   name: 'self-assessment-dashboard',
+            //   component: () => import('../components/dashboards/self-assessment.vue'),
+            //   meta: {
+            //     breadcrumb: [{ parent: 'Dashboard', label: 'Self Assessment Dashboard' }],
+            //     requiredRoles: [UserRole.ADMIN, UserRole.SUPERADMIN, UserRole.USER]
+            //   }
+            // },
             {
               path: 'relationship',
               name: 'relationship-dashboard',
@@ -37,7 +37,7 @@ const router = createRouter({
                 import('../components/dashboards/mental-health-relationship-analysis.vue'),
               meta: {
                 breadcrumb: [{ parent: 'Dashboard', label: 'Mental Health Relationship Analysis' }],
-                requiredRoles: [UserRole.ADMIN, UserRole.SUPERADMIN]
+                requiredRoles: [UserRole.ADMIN, UserRole.SUPERADMIN, UserRole.TESTADMIN]
               }
             },
             {
@@ -49,7 +49,7 @@ const router = createRouter({
                 breadcrumb: [
                   { parent: 'Dashboard', label: 'Personal Submission Correlation Analysis' }
                 ],
-                requiredRoles: [UserRole.ADMIN, UserRole.SUPERADMIN]
+                requiredRoles: [UserRole.ADMIN, UserRole.SUPERADMIN, UserRole.TESTADMIN]
               }
             },
             {
@@ -58,7 +58,7 @@ const router = createRouter({
               component: () => import('../components/dashboards/comparative-dashboard.vue'),
               meta: {
                 breadcrumb: [{ parent: 'Dashboard', label: 'Comparative Dashboard' }],
-                requiredRoles: [UserRole.ADMIN, UserRole.SUPERADMIN]
+                requiredRoles: [UserRole.ADMIN, UserRole.SUPERADMIN, UserRole.TESTADMIN]
               }
             },
             {
@@ -69,7 +69,7 @@ const router = createRouter({
                 breadcrumb: [
                   { parent: 'Dashboard', label: 'Assessment Form Section-Wise Analysis' }
                 ],
-                requiredRoles: [UserRole.ADMIN, UserRole.SUPERADMIN]
+                requiredRoles: [UserRole.ADMIN, UserRole.SUPERADMIN, UserRole.TESTADMIN]
               }
             },
             {
@@ -78,7 +78,7 @@ const router = createRouter({
               component: () => import('../components/dashboards/thematic-analysis.vue'),
               meta: {
                 breadcrumb: [{ parent: 'Home', label: 'Thematic Analyis of open-end questions' }],
-                requiredRoles: [UserRole.ADMIN, UserRole.SUPERADMIN]
+                requiredRoles: [UserRole.ADMIN, UserRole.SUPERADMIN, UserRole.TESTADMIN]
               }
             }
           ]
@@ -104,7 +104,7 @@ const router = createRouter({
           component: () => import('../components/question/ManageQuestion.vue'),
           meta: {
             breadcrumb: [{ parent: 'Assessments', label: 'Question' }],
-            requiredRoles: [UserRole.ADMIN, UserRole.SUPERADMIN]
+            requiredRoles: [UserRole.ADMIN, UserRole.SUPERADMIN, UserRole.TESTADMIN]
           }
         },
         {
@@ -113,7 +113,7 @@ const router = createRouter({
           component: () => import('../components/section/ManageSection.vue'),
           meta: {
             breadcrumb: [{ parent: 'Assessments', label: 'Section' }],
-            requiredRoles: [UserRole.ADMIN, UserRole.SUPERADMIN]
+            requiredRoles: [UserRole.ADMIN, UserRole.SUPERADMIN, UserRole.TESTADMIN]
           }
         },
         {
@@ -125,7 +125,7 @@ const router = createRouter({
               component: () => import('../components/assessment-form/ManageAssessmentForm.vue'),
               meta: {
                 breadcrumb: [{ parent: 'Assessments', label: 'Forms' }],
-                requiredRoles: [UserRole.ADMIN, UserRole.SUPERADMIN]
+                requiredRoles: [UserRole.ADMIN, UserRole.SUPERADMIN, UserRole.TESTADMIN]
               }
             },
             {
@@ -135,7 +135,7 @@ const router = createRouter({
               component: () => import('../components/assessment-form/CustomAssessment.vue'),
               meta: {
                 breadcrumb: [{ parent: 'Assessments', label: 'Forms Details' }],
-                requiredRoles: [UserRole.ADMIN, UserRole.SUPERADMIN]
+                requiredRoles: [UserRole.ADMIN, UserRole.SUPERADMIN, UserRole.TESTADMIN]
               }
             }
           ]

@@ -29,13 +29,13 @@ export function useMenu() {
           icon: 'pi pi-fw pi-table',
           visible: isAccessible([UserRole.USER]),
           to: { name: 'self-assessments' }
-        },
-        {
-          label: 'Self Assessments Dashboard',
-          icon: 'pi pi-fw pi-chart-pie',
-          visible: false,
-          to: { name: 'self-assessment-dashboard' }
         }
+        // {
+        //   label: 'Self Assessments Dashboard',
+        //   icon: 'pi pi-fw pi-chart-pie',
+        //   visible: false,
+        //   to: { name: 'self-assessment-dashboard' }
+        // }
       ]
     },
     {
@@ -73,7 +73,7 @@ export function useMenu() {
           to: { name: 'thematic-analysis' }
         }
       ],
-      visible: isAccessible([UserRole.ADMIN, UserRole.SUPERADMIN])
+      visible: isAccessible([UserRole.ADMIN, UserRole.SUPERADMIN, UserRole.TESTADMIN])
     },
     {
       icon: 'pi pi-fw pi-file',
@@ -98,7 +98,7 @@ export function useMenu() {
           visible: true
         }
       ],
-      visible: isAccessible([UserRole.ADMIN, UserRole.SUPERADMIN])
+      visible: isAccessible([UserRole.ADMIN, UserRole.SUPERADMIN, UserRole.TESTADMIN])
     }
   ]
   return {
