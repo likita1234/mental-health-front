@@ -83,6 +83,18 @@ class FormService {
       return new AppError(error.statusCode, 'Failed to submit answer form')
     }
   }
+
+  // Toggle Assessment Form
+  static async toggleAssessmentForm(formId) {
+    try {
+      return await authApi.patch(`${FORM_API}/pollSwitch/${formId}`)
+    } catch (error) {
+      return new AppError(
+        error.statusCode,
+        error.data?.message ?? 'Failed to toggle assessment poll'
+      )
+    }
+  }
 }
 
 export default FormService
