@@ -19,7 +19,8 @@ export const SignupSchema = yup.object({
 
 // ============> Login Schema
 export const LoginSchema = yup.object({
-  email: yup.string().email('Invalid Email').required('Email field is required'),
+  username: yup.string().required('Username is required'),
+  // email: yup.string().email('Invalid Email').required('Email field is required'),
   password: yup.string().required('Password field cannot be empty')
 })
 
