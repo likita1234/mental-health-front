@@ -2,7 +2,7 @@
 import AssessmentFormSelection from '../common/dropdowns/assessment-form-selection.vue';
 import QuestionSelection from '../common/dropdowns/question-selection.vue';
 
-import { ref, computed, watch, inject } from 'vue';
+import { ref, computed, watch, inject, onUnmounted } from 'vue';
 import { metricStore, questionStore } from '@/stores';
 import { QuestionType } from '@/constants'
 
@@ -27,6 +27,11 @@ const questionTitle = computed(() => {
 watch([() => selectedForm.value, () => selectedQuestion.value], () => {
     loadData();
 });
+
+onUnmounted(() => {
+    // Reset params in question store
+    questionStore.params = null
+})
 
 // Action
 const loadData = () => {
