@@ -1,8 +1,8 @@
 <template>
     <div class="card">
-        <div class="flex justify-content-center">
+        <!-- <div class="flex justify-content-center">
             <dashboard-selection-dropdown :type="'comparative'" @dashboard-selected="loadSelectedDashboard" />
-        </div>
+        </div> -->
         <!-- Comparative Dashboard Table -->
         <div v-if="comparativeTableData.length" class="p-card">
             <comparative-dashboard-table :data="comparativeTableData" />
