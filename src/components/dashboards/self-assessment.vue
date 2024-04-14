@@ -46,7 +46,7 @@ const loadDashboardData = async () => {
     overallData.value.push(answerByQuestion)
   }
     //   Do the same for keywords data
-    for(let i = 0; i < keywordsData.length; i++){
+    for(let i = 0; i < keywordsData?.length; i++){
         const element = keywordsData[i]
         const title = allTitles?.find((titleObj) => titleObj.questionId === element.questionId)?.title
         const innerData = Object.entries(element?.data).map(([label, value]) => ({ label, value }));
@@ -61,7 +61,7 @@ const loadDashboardData = async () => {
 
 <template>
     <div class="flex flex-column md:flex-row gap-2 text-center">
-        <div class="col-12 md:col-6">
+        <div class="col-12 md:col-6 p-card">
             <h5>Self Assessment Submission Wise Analysis</h5>
             <Divider />
             <div v-if="overallData && overallData.length > 0" class="flex flex-column gap-3">
@@ -80,7 +80,7 @@ const loadDashboardData = async () => {
             </div>
         </div>
         <Divider layout="vertical" ></Divider>
-        <div class="col-12  md:col-6">
+        <div class="col-12 md:col-6 p-card">
             <h5>Self Assessment Keywords Analysis</h5>
             <Divider />
             <div v-if="overallKeywordsData && overallKeywordsData.length > 0" class="flex flex-column gap-3">
@@ -93,6 +93,9 @@ const loadDashboardData = async () => {
                         <base-chart type="radar" :jsonData="data.data" />  
                     </div>
                 </div>
+            </div>
+            <div v-else>
+                <span>Data not available</span>
             </div>
         </div>
     </div>
