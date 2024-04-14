@@ -84,11 +84,17 @@ const hideDialog = () => {
                     </div>
                 </div>
                 <!-- Question Type -->
-                <div class="formgrid grid">
+                <div class="formgrid flex justify-content-start flex-wrap">
                     <div class="field col">
                         <BaseDropdown v-model="question.type" :options="questionTypeOption" label="Type"
                             :optionValue="'value'" placeholder="Select a question type" :showClear="false"
                             :errorMessage="formErrors.type" :disabled="editMode"/>
+                    </div>
+                    <div class="field col">
+                        <label for="required">Required Field</label>
+                        <div class="w-9rem">
+                            <ToggleButton id="required" v-model="question.required" onLabel="True" offLabel="False" class="w-full" aria-label="Do you confirm" />
+                        </div>
                     </div>
                 </div>
                 <!-- Question Options -->

@@ -27,7 +27,8 @@ export const useQuestionStore = defineStore('question', () => {
         },
         optionValue: null
       }
-    ]
+    ],
+    required: false
   })
 
   const questions = ref([])
@@ -97,7 +98,7 @@ export const useQuestionStore = defineStore('question', () => {
   }
   // Edit question is for setting up question details for update on the UI
   const editQuestion = async (questionDetails) => {
-    const { _id, title, description, type, options } = questionDetails
+    const { _id, title, description, type, options, required } = questionDetails
     // Setup basic question details first
     question.value.id = _id
     question.value.title = title
@@ -111,6 +112,7 @@ export const useQuestionStore = defineStore('question', () => {
         optionValue: option.optionValue
       }
     })
+    question.value.required = required
   }
 
   const updateQuestionDetails = async () => {
