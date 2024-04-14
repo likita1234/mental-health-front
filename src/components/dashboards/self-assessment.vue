@@ -1,19 +1,28 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { dashboardStore } from '@/stores'
+import { authStore } from '@/stores';
 import {formatLineChartDateLabels} from '@/utils/date-formatter'
-// const actualTitles = ref([])
+import { storeToRefs } from 'pinia';
+
+const {loggedUser} = storeToRefs(authStore)
+
+const userId = ref(null)
 const overallData = ref([])
 const overallKeywordsData = ref([])
 const overallSubmissions = ref(null)
 
 onMounted(() => {
+  loadUserData()
   loadDashboardData()
 })
 
+const loadUserData = ()=>{
+    userId.value = loggedUser.value?._id
+}
+
 const loadDashboardData = async () => {
-  const userId = '20240408_195203_238'
-  const { allTitles, data, keywordsData } = await dashboardStore.getPersonalSubmissionAnalysisData(userId)
+  const { allTitles, data, keywordsData } = await dashboardStore.getPersonalSubmissionAnalysisData(userId.value)
   // Map data into overallData also attach the question titles
   for (let i = 0; i < data?.length; i++) {
     const element = data[i]
@@ -37,7 +46,7 @@ const loadDashboardData = async () => {
     overallData.value.push(answerByQuestion)
   }
     //   Do the same for keywords data
-    for(let i =0; i < keywordsData.length; i++){
+    for(let i = 0; i < keywordsData.length; i++){
         const element = keywordsData[i]
         const title = allTitles?.find((titleObj) => titleObj.questionId === element.questionId)?.title
         const innerData = Object.entries(element?.data).map(([label, value]) => ({ label, value }));
@@ -65,6 +74,9 @@ const loadDashboardData = async () => {
                         <base-chart :type="'line'" :jsonData="data.answersJson" />
                     </div>
                 </div>
+            </div>
+            <div v-else>
+                <span>Data not available</span>
             </div>
         </div>
         <Divider layout="vertical" ></Divider>
