@@ -43,7 +43,10 @@ class SectionService {
     try {
       return await authApi.patch(`${SECTION_API}/${body.id}`, body)
     } catch (error) {
-      return new AppError(error.statusCode, 'Failed to update section details')
+      return new AppError(
+        error.statusCode,
+        error.data?.message ?? 'Failed to update section details'
+      )
     }
   }
 
@@ -52,7 +55,7 @@ class SectionService {
     try {
       return await authApi.delete(`${SECTION_API}/${sectionId}`)
     } catch (error) {
-      return new AppError(error.statusCode, 'Failed to delete section')
+      return new AppError(error.statusCode, error.data?.message ?? 'Failed to delete section')
     }
   }
 }

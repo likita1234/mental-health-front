@@ -2,7 +2,7 @@
 import AssessmentFormSelection from '../common/dropdowns/assessment-form-selection.vue';
 import QuestionSelection from '../common/dropdowns/question-selection.vue';
 
-import { ref, computed, watch, inject } from 'vue';
+import { ref, computed, watch, inject, onUnmounted } from 'vue';
 import { metricStore, questionStore } from '@/stores';
 import { QuestionType } from '@/constants'
 
@@ -27,6 +27,11 @@ const questionTitle = computed(() => {
 watch([() => selectedForm.value, () => selectedQuestion.value], () => {
     loadData();
 });
+
+onUnmounted(() => {
+    // Reset params in question store
+    questionStore.params = null
+})
 
 // Action
 const loadData = () => {
@@ -64,8 +69,8 @@ const clearKeywords = () => {
     <div class="flex flex-column gap-3">
         <!-- Selection -->
         <div class="flex justify-content-center gap-2 flex-wrap">
-            <assessment-form-selection @form-selected="selectedForm = $event" />
-            <question-selection :params="questionParams" @question-selected="selectedQuestion = $event" />
+            <assessment-form-selection v-model="selectedForm" />
+            <question-selection v-model="selectedQuestion" :params="questionParams" />
 
         </div>
         <!-- Word Cloud -->

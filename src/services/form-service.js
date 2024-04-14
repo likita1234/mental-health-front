@@ -62,7 +62,7 @@ class FormService {
     try {
       return await authApi.patch(`${FORM_API}/${body.id}`, body)
     } catch (error) {
-      return new AppError(error.statusCode, 'Failed to update form details')
+      return new AppError(error.statusCode, error.data?.message ?? 'Failed to update form details')
     }
   }
 
@@ -71,7 +71,7 @@ class FormService {
     try {
       return await authApi.delete(`${FORM_API}/${id}`)
     } catch (error) {
-      return new AppError(error.statusCode, 'Failed to delete form')
+      return new AppError(error.statusCode, error.data?.message ?? 'Failed to delete form')
     }
   }
 

@@ -50,9 +50,10 @@ const submit = async () => {
         </template>
 
         <template #form-inputs>
-            <BaseTextInput v-model="form.username" label="Username" size="large" :errorMessage="formErrors.username" />
+            <BaseTextInput v-model="form.username" label="Username" size="large" :errorMessage="formErrors.username"
+                @keyup.enter="submit" />
             <BaseTextInput v-model="form.password" type="password" label="Password" size="large"
-                :errorMessage="formErrors.password" />
+                :errorMessage="formErrors.password" @keyup.enter="submit" />
         </template>
 
         <template #action-button>

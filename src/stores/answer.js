@@ -101,7 +101,7 @@ export const useAnswerStore = defineStore('answer', () => {
       const allQuestions = currentSection.questions?.map((questionObj) => {
         return {
           questionId: questionObj._id,
-          answer: questionObj.answer?.toString()
+          answer: questionObj.answer?.toString() ?? ''
         }
       })
 

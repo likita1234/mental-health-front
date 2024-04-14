@@ -1,10 +1,15 @@
 <script setup>
-import { ref, onMounted, } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { storeToRefs } from 'pinia'
-
 import { formStore } from '@/stores'
 
-const emit = defineEmits(['form-selected'])
+const emit = defineEmits(['update:modelValue', 'form-sections'])
+
+const props = defineProps({
+    modelValue: {
+        type: String
+    }
+})
 
 // Store states
 const { allForms } = storeToRefs(formStore)
@@ -12,22 +17,32 @@ const { allForms } = storeToRefs(formStore)
 // Component States
 const selectedForm = ref(null)
 
+// Watchers
+watch(() => props.modelValue, () => {
+    selectedForm.value = props.modelValue
+})
+
 onMounted(() => {
+    selectedForm.value = props.modelValue
     loadAssessmentForms()
 })
 
 // Actions
 // At the moment assessment forms are very limited so we are not utilizing any parameters
 const loadAssessmentForms = async () => {
-    // Check if allForms already have value, if yes then no need to make another request
-    // if (allForms.value && allForms.value?.length <= 0) {
     await formStore.fetchAllForms()
-    // }
+}
+
+const formSelected = (event) => {
+    const selectedForm = allForms.value?.find(form => form._id === event)
+    const selectedFormSections = selectedForm?.sections?.map(section => section.sectionId)
+    emit('update:modelValue', event)
+    emit('form-sections', selectedFormSections)
 }
 </script>
 
 <template>
     <BaseDropdown v-model="selectedForm" label="Select an assessment form" :options="allForms"
         :optionLabel="'title.' + [appState.lang]" optionValue="_id" placeholder="Choose an option"
-        @change="emit('form-selected', $event)" />
+        @change="formSelected" />
 </template>
