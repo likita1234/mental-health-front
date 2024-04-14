@@ -56,7 +56,7 @@ const loadDashboardData = async () => {
 <style scoped>
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); 
+  grid-template-columns: repeat(auto-fill, minmax(600px, 1fr)); 
   gap: 20px; 
 }
 
