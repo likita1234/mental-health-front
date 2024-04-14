@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="jsonData && jsonData.length > 0">
         <template v-if="!onlyTableMode">
             <!-- Pie Chart -->
             <pie-chart v-if="type === ChartType.PIE" :chartOptions="chartOptions" :jsonData="jsonData" />
@@ -8,8 +8,12 @@
                 :chartOptions="chartOptions" :groupBy="groupBy" :jsonData="jsonData" />
             <line-chart v-else-if="type === ChartType.LINE" :chartOptions="chartOptions" :groupBy="groupBy"
                 :jsonData="jsonData" />
+            <radar-chart v-else-if="type === ChartType.RADAR" :chartOptions="chartOptions" :jsonData="jsonData"/>
         </template>
         <chart-table v-else :jsonData="jsonData" />
+    </div>
+    <div v-else>
+        No data available
     </div>
 </template>
 
@@ -26,6 +30,8 @@ import {
     Title,
     Legend,
     Tooltip,
+    RadialLinearScale,
+    Filler,
 } from 'chart.js'
 
 import ChartDataLabels from 'chartjs-plugin-datalabels';
@@ -38,6 +44,8 @@ ChartJS.register(
     LinearScale,
     LineElement,
     PointElement,
+    RadialLinearScale,
+    Filler,
     Title,
     Legend,
     Tooltip)
@@ -48,7 +56,7 @@ ChartJS.defaults.set('plugins.datalabels', {
 
 import { ChartType } from '@/constants';
 // Props
-const props = defineProps({
+defineProps({
     type: {
         type: String,
         default: 'table'

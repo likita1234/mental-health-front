@@ -98,6 +98,7 @@ import BaseChart from './components/charts/BaseChart.vue'
 import PieChart from './components/charts/PieChart.vue'
 import BarChart from './components/charts/BarChart.vue'
 import LineChart from './components/charts/LineChart.vue'
+import RadarChart from './components/charts/RadarChart.vue'
 import ChartTable from './components/charts/ChartTable.vue'
 
 // Font awesome plugins
@@ -219,6 +220,7 @@ app.component('BaseChart', BaseChart)
 app.component('PieChart', PieChart)
 app.component('BarChart', BarChart)
 app.component('LineChart', LineChart)
+app.component('RadarChart', RadarChart)
 app.component('ChartTable', ChartTable)
 
 // FONT awesome

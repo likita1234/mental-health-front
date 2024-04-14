@@ -48,8 +48,8 @@ export const useDashboardStore = defineStore('dashboard', () => {
     return response.data
   }
 
-  const getPersonalSubmissionAnalysisData = async () => {
-    const response = await DashboardService.getPersonalSubmissionAnalysisData()
+  const getPersonalSubmissionAnalysisData = async (userId = null) => {
+    const response = await DashboardService.getPersonalSubmissionAnalysisData(userId)
     return response.data
   }
 

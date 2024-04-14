@@ -22,6 +22,15 @@ const router = createRouter({
               }
             },
             {
+              path: 'self-assessment',
+              name: 'self-assessment-dashboard',
+              component: () => import('../components/dashboards/self-assessment.vue'),
+              meta: {
+                breadcrumb: [{ parent: 'Dashboard', label: 'Self Assessment Dashboard' }],
+                requiredRoles: [UserRole.ADMIN, UserRole.SUPERADMIN, UserRole.USER]
+              }
+            },
+            {
               path: 'relationship',
               name: 'relationship-dashboard',
               component: () =>

@@ -39,9 +39,10 @@ class DashboardService {
     }
   }
 
-  static async getPersonalSubmissionAnalysisData() {
+  static async getPersonalSubmissionAnalysisData(userId = null) {
     try {
-      return await authApi.get(`${DASHBOARD_API}/personal/overall`)
+      const URL = userId ? `personal/overall/${userId}` : 'personal/overall'
+      return await authApi.get(`${DASHBOARD_API}/${URL}`)
     } catch (error) {
       return new AppError(error.statusCode, 'Failed to fetch personal submission analysis data')
     }

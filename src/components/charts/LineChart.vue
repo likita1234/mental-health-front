@@ -31,6 +31,7 @@ const chartData = computed(() => {
             label: props.groupBy,
             backgroundColor: bgColors,
             data: metricData?.map(dataObj => dataObj.count),
+            lineTension: 0.5, 
         }]
     }
 })

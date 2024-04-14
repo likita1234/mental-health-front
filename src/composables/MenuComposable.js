@@ -29,6 +29,12 @@ export function useMenu() {
           icon: 'pi pi-fw pi-table',
           visible: true,
           to: { name: 'self-assessments' }
+        },
+        {
+          label: 'Self Assessments Dashboard',
+          icon: 'pi pi-fw pi-chart-pie',
+          visible: true,
+          to: { name: 'self-assessment-dashboard' }
         }
       ]
     },
