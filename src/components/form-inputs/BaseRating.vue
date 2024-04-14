@@ -37,7 +37,7 @@ watch(() => propsModelValue.value, () => {
     <div class="flex flex-column gap-3">
         <label :for="label">{{ label }}</label>
         <div class="flex justify-content-center">
-            <Rating :id="label" v-model="value" :stars="stars" :cancel="cancel" :readOnly="readOnly"
+            <Rating ref="rating" :id="label" v-model="value" :stars="stars" :cancel="cancel" :readOnly="readOnly"
                 @change="emit('update:modelValue', value)">
                 <!-- <template #cancelicon>
                     <img src="/images/icons/cancel.png" height="24" width="24" />

@@ -3,6 +3,7 @@
         <div class="flex flex-column">
             <label v-if="fieldLabel" class="mb-2" :class="{ 'font-bold': bold }" :for="fieldLabel">{{ fieldLabel }}:</label>
             <Autocomplete
+                ref="autocomplete"
                 :id="fieldLabel"
                 v-model="selectedValue"
                 :suggestions="suggestions"
