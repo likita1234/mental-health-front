@@ -4,6 +4,7 @@ import { dashboardStore } from '@/stores'
 import {formatLineChartDateLabels} from '@/utils/date-formatter'
 // const actualTitles = ref([])
 const overallData = ref([])
+const overallKeywordsData = ref([])
 const overallSubmissions = ref(null)
 
 onMounted(() => {
@@ -12,7 +13,7 @@ onMounted(() => {
 
 const loadDashboardData = async () => {
   const userId = '20240408_195203_238'
-  const { allTitles, data, total } = await dashboardStore.getPersonalSubmissionAnalysisData(userId)
+  const { allTitles, data, keywordsData } = await dashboardStore.getPersonalSubmissionAnalysisData(userId)
   // Map data into overallData also attach the question titles
   for (let i = 0; i < data?.length; i++) {
     const element = data[i]
@@ -35,40 +36,52 @@ const loadDashboardData = async () => {
     }
     overallData.value.push(answerByQuestion)
   }
+    //   Do the same for keywords data
+    for(let i =0; i < keywordsData.length; i++){
+        const element = keywordsData[i]
+        const title = allTitles?.find((titleObj) => titleObj.questionId === element.questionId)?.title
+        const innerData = Object.entries(element?.data).map(([label, value]) => ({ label, value }));
+        const dataObj = {
+            title,
+            data:innerData
+        }
+        overallKeywordsData.value.push(dataObj)
+    }
 }
 </script>
 
 <template>
-  <div v-if="overallData && overallData.length > 0" class="grid-container">
-    <div v-for="data in overallData" :key="data" class="grid-item p-card my-2">
-        <div>
-            <h5 class="text-center">{{ data.title }}</h5>
+    <div class="flex flex-column md:flex-row gap-2 text-center">
+        <div class="col-12 md:col-6">
+            <h5>Self Assessment Submission Wise Analysis</h5>
             <Divider />
+            <div v-if="overallData && overallData.length > 0" class="flex flex-column gap-3">
+                <div v-for="data in overallData" :key="data" class="p-card my-2">
+                    <div>
+                        <h5 class="text-center my-2">{{ data.title }}</h5>
+                        <Divider />
+                    </div>
+                    <div class="card-body">
+                        <base-chart :type="'line'" :jsonData="data.answersJson" />
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-            <base-chart :type="'line'" :jsonData="data.answersJson" />
+        <Divider layout="vertical" ></Divider>
+        <div class="col-12  md:col-6">
+            <h5>Self Assessment Keywords Analysis</h5>
+            <Divider />
+            <div v-if="overallKeywordsData && overallKeywordsData.length > 0" class="flex flex-column gap-3">
+                <div v-for="data in overallKeywordsData" :key="data" class="p-card my-2">
+                    <div>
+                        <h5 class="text-center  my-2">{{ data.title }}</h5>
+                        <Divider />
+                    </div>
+                    <div class="card-body">
+                        <base-chart type="radar" :jsonData="data.data" />  
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-  </div>
 </template>
-
-
-<style scoped>
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(600px, 1fr)); 
-  gap: 20px; 
-}
-
-.grid-item {
-  padding: 20px; 
-  text-align: center;
-}
-
-@media screen and (max-width: 768px) {
-  .grid-container {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  }
-}
-
-</style>
