@@ -17,7 +17,7 @@ const { formErrors } = storeToRefs(formErrorStore)
 const loading = ref(false)
 
 const form = ref({
-    email: null,
+    username: null,
     password: null
 })
 
@@ -50,7 +50,7 @@ const submit = async () => {
         </template>
 
         <template #form-inputs>
-            <BaseTextInput v-model="form.email" label="Email" size="large" :errorMessage="formErrors.email" />
+            <BaseTextInput v-model="form.username" label="Username" size="large" :errorMessage="formErrors.username" />
             <BaseTextInput v-model="form.password" type="password" label="Password" size="large"
                 :errorMessage="formErrors.password" />
         </template>
