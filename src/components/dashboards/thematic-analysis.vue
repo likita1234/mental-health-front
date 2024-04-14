@@ -69,7 +69,7 @@ const clearKeywords = () => {
     <div class="flex flex-column gap-3">
         <!-- Selection -->
         <div class="flex justify-content-center gap-2 flex-wrap">
-            <assessment-form-selection @form-selected="selectedForm = $event" />
+            <assessment-form-selection v-model="selectedForm" />
             <question-selection :params="questionParams" @question-selected="selectedQuestion = $event" />
 
         </div>

@@ -10,6 +10,7 @@ import { formatFormSectionMetricToTableJson } from '@/utils/json-formatter'
 // Component states
 const selectedForm = ref(null)
 const selectedSection = ref(null)
+const sectionFilters = ref([])
 const tableHeader = ref(null)
 const tableData = ref([])
 const dataLoading = ref(false)
@@ -18,6 +19,12 @@ const dataLoading = ref(false)
 watch([() => selectedForm.value, () => selectedSection.value], () => {
     loadData();
 });
+
+watch(() => selectedForm.value, () => {
+    if (selectedSection.value) {
+        selectedSection.value = null
+    }
+})
 
 // Actions
 const loadData = () => {
@@ -53,8 +60,8 @@ const clearDataTable = () => {
     <div>
         <!-- Selection -->
         <div class="flex justify-content-center gap-2 flex-wrap">
-            <assessment-form-selection @form-selected="selectedForm = $event" />
-            <section-selection @section-selected="selectedSection = $event" />
+            <assessment-form-selection v-model="selectedForm" @form-sections="sectionFilters = $event" />
+            <section-selection v-model="selectedSection" :sectionFilters="sectionFilters" />
         </div>
         <!-- Analysis Table -->
         <div class="flex justify-content-center">
