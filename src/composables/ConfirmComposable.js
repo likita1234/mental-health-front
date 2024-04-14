@@ -5,12 +5,12 @@ export function useConfirmComposable() {
   const confirm = useConfirm()
 
   const confirmRequest = (id, callback, message) => {
-    confirm.require({
+    return confirm.require({
       header: 'Confirmation',
       message,
       icon: 'pi pi-exclamation-triangle',
-      accept: () => {
-        callback(id)
+      accept: async () => {
+        await callback(id)
       },
       reject: () => {
         // do nothing

@@ -9,6 +9,7 @@ import { authStore, answerStore, formStore } from '@/stores';
 import { AssessmentFormType, UserRole } from '../../constants'
 import { showToast } from '@/utils/show-toast';
 import AppResponse from '@/utils/app-response';
+import AppError from '@/utils/app-error';
 
 // props
 const props = defineProps({
@@ -69,6 +70,10 @@ const isPublicAsssesment = computed(() => {
     return formDetails.value?.type === AssessmentFormType.PUBLIC
 })
 
+const isPollActive = computed(() => {
+    return formDetails.value?.pollActive
+})
+
 onMounted(() => {
     setupAssessmentDetails()
 })
@@ -100,13 +105,17 @@ const formatAssessmentDetails = (formData) => {
 
 
 const submitForm = async () => {
-    const response = await answerStore.submitAnswerForm(formDetails.value)
-    const toRouteName = isPublicAsssesment.value ? 'survey' : 'self-assessments'
-    if (response) {
-        // clean the section object
-        answerStore.initAnswerForm()
-        new AppResponse(201, 'Form submitted successfully')
-        setTimeout(() => router.push({ name: toRouteName }), 2000)
+    if (isPollActive.value) {
+        const response = await answerStore.submitAnswerForm(formDetails.value)
+        const toRouteName = isPublicAsssesment.value ? 'survey' : 'self-assessments'
+        if (response) {
+            // clean the section object
+            answerStore.initAnswerForm()
+            new AppResponse(201, 'Form submitted successfully')
+            setTimeout(() => router.push({ name: toRouteName }), 2000)
+        }
+    } else {
+        new AppError(401, 'The Survey Data collection for the form has already ended.')
     }
 }
 
@@ -135,7 +144,7 @@ const toggleStep = (stepFlag) => {
 }
 
 const checkRequiredAnswers = () => {
-    // filter out all required questions with no answer 
+    // filter out all required questions with no answer
     const unansweredQuestions = activeSection.value?.questions?.filter(question => question.required && question.answer == null)
 
     // If there is unanswered questions with required fields then
@@ -197,6 +206,8 @@ const loadSurveyJson = async (jsonData) => {
                 <Divider />
                 <div class="flex mb-2 gap-2 justify-content-between">
                     <Button @click="toggleStep(false)" label="Previous" :disabled="!hasPreviousStep" />
+                    <Tag v-if="!isPollActive" icon="pi pi-exclamation-triangle" severity="warning"
+                        value="Warning: The Survey Data collection for this form has already ended. Data won't be submitted." />
                     <Button @click="toggleStep(true)" :label="isFinalStep ? 'Submit' : 'Next'" />
                 </div>
             </div>
@@ -207,6 +218,6 @@ const loadSurveyJson = async (jsonData) => {
 <style scoped>
 .questions-container {
     max-height: 50vh;
-    overflow-y: auto
+    overflow-y: auto;
 }
 </style>

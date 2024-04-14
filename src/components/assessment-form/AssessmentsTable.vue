@@ -48,9 +48,15 @@ const viewDetails = async (formId) => {
     return router.push({ name: 'form-details', params: { id: formId } })
 }
 
-const confirmDelete = (formId) => {
+const confirmDelete = async (formId) => {
     const message = 'Are you sure you want to delete this form?'
-    confirmRequest(formId, formStore.deleteForm, message)
+    await confirmRequest(formId, formStore.deleteForm, message)
+}
+
+const confirmPollChange = async (formId, flag) => {
+    const stringVal = flag ? 'disable' : 'enable'
+    const message = `Are you sure you want to ${stringVal} poll?`
+    await confirmRequest(formId, formStore.toggleAssessmentForm, message)
 }
 
 const onPage = async (event) => {
@@ -65,14 +71,14 @@ const onPage = async (event) => {
         <CustomTable :allData="allForms" :totalRecords="totalForms" :entity="'Assessment Form'" :loading="loading"
             @on-page="onPage">
             <template #columns>
-                <Column field="title[appState.lang]" header="TITLE" style="width: 20%">
+                <Column field="title[appState.lang]" header="TITLE" style="width: 15%">
                     <template #body="slotProps">
                         <div>
                             {{ slotProps.data.title[appState.lang] }}
                         </div>
                     </template>
                 </Column>
-                <Column field="description[appState.lang]" header="DESCRIPTION" style="width: 22%">
+                <Column field="description[appState.lang]" header="DESCRIPTION" style="width: 18%">
                     <template #body="slotProps">
                         <template v-if="slotProps.data.description[appState.lang]">
                             {{ slotProps.data.description[appState.lang] }}
@@ -83,9 +89,14 @@ const onPage = async (event) => {
                     </template>
                 </Column>
                 <Column field="type" header="TYPE" style="width: 8%">
-
                     <template #body="{ data }">
                         <DataTypeTag :entity="'form'" :type="data.type" />
+                    </template>
+                </Column>
+                <Column field="pollActive" header="POLL" style="width: 8%;">
+                    <template #body="slotProps">
+                        <Tag :value="slotProps.data.pollActive"
+                            :severity="slotProps.data.pollActive ? 'success' : 'danger'" />
                     </template>
                 </Column>
                 <Column field="sectionsCount" header="SECTIONS" style="width: 10%;">
@@ -95,7 +106,6 @@ const onPage = async (event) => {
                                 {{ slotProps.data.sectionsCount }}
                             </div>
                         </template>
-
                         <template v-else>
                             <div>
                                 None
@@ -111,8 +121,10 @@ const onPage = async (event) => {
                         <Button icon="pi pi-eye" rounded class="mr-2" @click="viewDetails(slotProps.data._id)" />
                         <Button icon="pi pi-pencil" rounded severity="secondary" class="mr-2"
                             @click="editAssessmentForm(slotProps.data._id)" />
-                        <Button icon="pi pi-trash" rounded severity="danger"
-                            @click="confirmDelete(slotProps.data._id)" />
+                        <Button icon="pi pi-trash" rounded severity="danger" @click="confirmDelete(slotProps.data._id)"
+                            class="mr-2" />
+                        <Button icon="pi pi-briefcase" rounded severity="success"
+                            @click="confirmPollChange(slotProps.data._id, slotProps.data.pollActive)" />
                     </template>
                 </Column>
             </template>
