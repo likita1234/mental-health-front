@@ -44,7 +44,10 @@ class QuestionService {
     try {
       return await authApi.patch(`${QUESTION_API}/${body.id}`, body)
     } catch (error) {
-      return new AppError(error.statusCode, 'Failed to update question details')
+      return new AppError(
+        error.statusCode,
+        error.data?.message ?? 'Failed to update question details'
+      )
     }
   }
 
@@ -53,7 +56,7 @@ class QuestionService {
     try {
       return await authApi.delete(`${QUESTION_API}/${questionId}`)
     } catch (error) {
-      return new AppError(error.statusCode, 'Failed to delete question')
+      return new AppError(error.statusCode, error.data?.message ?? 'Failed to delete question')
     }
   }
 }
