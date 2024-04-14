@@ -5,9 +5,6 @@
             <Divider />
         </div>
         <div class="card-body">
-            <div v-if="type === 'line'">
-                {{ jsonData }}
-            </div>
             <base-chart :type="type" :groupBy="defaultGroupings" :jsonData="jsonData" />
         </div>
     </div>
