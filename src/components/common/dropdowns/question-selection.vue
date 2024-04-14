@@ -1,11 +1,14 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { storeToRefs } from 'pinia'
 import { questionStore } from '@/stores'
 
-const emit = defineEmits(['question-selected'])
+const emit = defineEmits(['update:modelValue'])
 
 const props = defineProps({
+    modelValue: {
+        type: String
+    },
     params: {
         type: Object,
         default: {}
@@ -18,7 +21,12 @@ const { allQuestions, params } = storeToRefs(questionStore)
 // Component states
 const selectedQuestion = ref(null)
 
+watch(() => props.modelValue, () => {
+    selectedQuestion.value = props.modelValue
+})
+
 onMounted(() => {
+    selectedQuestion.value = props.modelValue
     loadQuestions()
 })
 
@@ -34,6 +42,6 @@ const loadQuestions = async () => {
     <div>
         <BaseDropdown v-model="selectedQuestion" :options="allQuestions" label="Select a question"
             :placeholder="'Select a question'" :optionLabel="'title.' + [appState.lang]" :optionValue="'_id'" filter
-            @change="emit('question-selected', $event)" />
+            @change="emit('update:modelValue', $event)" />
     </div>
 </template>
