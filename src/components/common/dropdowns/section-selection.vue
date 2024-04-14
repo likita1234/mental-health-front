@@ -4,7 +4,7 @@ import { storeToRefs } from 'pinia'
 
 import { sectionStore } from '@/stores'
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue', 'section-questions'])
 
 const props = defineProps({
     modelValue: {
@@ -42,10 +42,17 @@ const loadSections = async () => {
     await sectionStore.fetchAllSections(true)
 }
 
+const selectionSelected = (event) => {
+    const selectedSection = allSections.value?.find(section => section._id === event)
+    const selectedSectionQuestions = selectedSection?.questions?.map(question => question.questionId)
+    emit('update:modelValue', event)
+    emit('section-questions', selectedSectionQuestions)
+}
+
 </script>
 
 <template>
     <BaseDropdown v-model="selectedSection" label="Select a section" :options="filteredSections"
         :optionLabel="'title.' + [appState.lang]" optionValue="_id" placeholder="Choose an option"
-        @change="emit('update:modelValue', $event)" />
+        @change="selectionSelected" />
 </template>
