@@ -70,7 +70,7 @@ const clearKeywords = () => {
         <!-- Selection -->
         <div class="flex justify-content-center gap-2 flex-wrap">
             <assessment-form-selection v-model="selectedForm" />
-            <question-selection :params="questionParams" @question-selected="selectedQuestion = $event" />
+            <question-selection v-model="selectedQuestion" :params="questionParams" />
 
         </div>
         <!-- Word Cloud -->
