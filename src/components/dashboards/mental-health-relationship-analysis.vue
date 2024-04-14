@@ -10,7 +10,7 @@ import { dashboardStore } from '@/stores'
 import { convertRatingsDataToObject } from '@/utils/chart-helpers'
 import { correlationMatrix, generateHypothesisAnalysis } from '@/utils/data-analysis'
 import { DashboardType } from '@/constants'
-import AppResponse from '@/utils/app-response';
+import AppError from '@/utils/app-error';
 
 // Store states
 const { dashboards, params } = storeToRefs(dashboardStore)
@@ -58,7 +58,7 @@ const loadRelationshipDashboardId = async () => {
             await loadDashboardData(dashboardId)
         }
     } catch (error) {
-        new AppResponse(400, error?.message ?? 'Something went wrong')
+        new AppError(400, error?.message ?? 'Failed to load Mental Health Dashboard')
     } finally {
         isLoading.value = false
     }
