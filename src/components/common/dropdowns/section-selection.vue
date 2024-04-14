@@ -19,10 +19,7 @@ onMounted(() => {
 // Actions
 // At the moment sections are very limited so we are not utilizing any parameters
 const loadSections = async () => {
-    // Check if allSections already have value, if yes then no need to make another request
-    if (allSections.value && allSections.value?.length <= 0) {
-        await sectionStore.fetchAllSections()
-    }
+    await sectionStore.fetchAllSections(true)
 }
 </script>
 

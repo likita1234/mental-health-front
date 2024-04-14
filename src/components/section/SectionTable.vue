@@ -2,7 +2,7 @@
 import SectionForm from './SectionForm.vue';
 import SectionDetails from './SectionDetails.vue'
 
-import { ref, onMounted, inject } from 'vue'
+import { ref, onMounted, inject, onUnmounted } from 'vue'
 import { sectionStore } from '@/stores'
 import { storeToRefs } from 'pinia';
 
@@ -22,6 +22,11 @@ const appState = inject('appState')
 
 onMounted(() => {
     loadSections()
+})
+
+onUnmounted(() => {
+    page.value = 1;
+    limit.value = 10
 })
 
 const loadSections = async () => {
