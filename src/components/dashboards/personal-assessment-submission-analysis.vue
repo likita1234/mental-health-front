@@ -78,7 +78,7 @@ const getActualTitleByQuestionId = (questionId) => {
 const loadBlockContents = (allData) => {
     blockContents.value[0] = {
         label: 'Total Respondents',
-        total: allData[0]?.data?.length - 1,
+        total: allData[0]?.data?.length,
         icon: 'pi-user',
         color: 'text-blue-500',
         bgColor: 'bg-blue-100'
