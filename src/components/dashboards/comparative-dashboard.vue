@@ -1,23 +1,23 @@
 <template>
-    <div class="card">
-        <!-- <div class="flex justify-content-center">
-            <dashboard-selection-dropdown :type="'comparative'" @dashboard-selected="loadSelectedDashboard" />
-        </div> -->
-        <!-- Comparative Dashboard Table -->
-        <div v-if="comparativeTableData.length" class="p-card">
-            <comparative-dashboard-table :data="comparativeTableData" />
-        </div>
-        <!-- Charts  -->
-        <div v-if="metricIds && metricIds.length > 0" class="flex flex-wrap">
-            <!-- dataRequested props allows metricdata component to know that we are expecting a data -->
-            <metric-data v-for="metric in metricIds" :metricId="metric.metricId" :key="metric.metricId" dataRequested
-                class="col-12" @metric-data-loaded="loadMetrics" />
+    <comparative-dashboard-skeleton v-if="isLoading" />
+    <div v-else>
+        <div class="card">
+            <!-- Comparative Dashboard Table -->
+            <div v-if="comparativeTableData.length" class="p-card">
+                <comparative-dashboard-table :data="comparativeTableData" />
+            </div>
+            <!-- Charts  -->
+            <div v-if="metricIds && metricIds.length > 0" class="flex flex-wrap">
+                <!-- dataRequested props allows metricdata component to know that we are expecting a data -->
+                <metric-data v-for="metric in metricIds" :metricId="metric.metricId" :key="metric.metricId"
+                    dataRequested class="col-12" @metric-data-loaded="loadMetrics" />
+            </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import DashboardSelectionDropdown from '@/components/common/dropdowns/dashboard-selection.vue'
+import ComparativeDashboardSkeleton from '../common/skeleton/comparative-dashboard.vue';
 import MetricData from '@/components/metric/MetricData.vue'
 import ComparativeDashboardTable from '@/components/charts/ComparativeDashboardTable.vue'
 
@@ -25,6 +25,7 @@ import { computed, ref, watch, onMounted } from 'vue';
 import { storeToRefs } from 'pinia'
 import { dashboardStore } from '@/stores'
 import { getComparativeAnalysisDashboardTableData } from '@/utils/chart-helpers';
+import AppError from '@/utils/app-error';
 
 // Store states
 const { dashboards, params } = storeToRefs(dashboardStore)
@@ -33,6 +34,7 @@ const { dashboards, params } = storeToRefs(dashboardStore)
 const metricIds = ref([])
 const comparativeMetrics = ref([])
 const comparativeTableData = ref([])
+const isLoading = ref(false)
 
 // Keeps track of metrics data loaded by comparing it with the length of the loaded metrics 
 const allMetricsLoaded = computed(() => {
@@ -52,13 +54,20 @@ onMounted(() => {
 
 // Actions
 const loadComparativeDashboard = async () => {
-    // load dashboards (which type of dashboard)
-    params.value = { type: 'comparative' }
-    await dashboardStore.fetchDashboards()
-    // Load first dashboard by default
-    if (dashboards.value.length > 0) {
-        const firstDashboard = dashboards.value[0]
-        loadSelectedDashboard(firstDashboard)
+    try {
+        isLoading.value = true
+        // load dashboards (which type of dashboard)
+        params.value = { type: 'comparative' }
+        await dashboardStore.fetchDashboards()
+        // Load first dashboard by default
+        if (dashboards.value.length > 0) {
+            const firstDashboard = dashboards.value[0]
+            await loadSelectedDashboard(firstDashboard)
+        }
+    } catch (error) {
+        new AppError(400, error?.message ?? 'Failed to load Comparative Dashboard')
+    } finally {
+        isLoading.value = false
     }
 }
 

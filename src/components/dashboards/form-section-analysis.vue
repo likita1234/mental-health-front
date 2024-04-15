@@ -67,6 +67,9 @@ const clearDataTable = () => {
         <div class="flex justify-content-center">
             <form-section-analysis-table v-if="selectedForm !== null && selectedSection !== null"
                 :tableHeader="tableHeader" :tableData="tableData" />
+            <div v-else class="flex justify-content-center align-items-center h-5rem">
+                <h4>No data found. Please try different options.</h4>
+            </div>
         </div>
     </div>
 </template>

@@ -80,7 +80,7 @@ const clearKeywords = () => {
         </template>
         <template v-else>
             <div class="flex justify-content-center align-items-center h-5rem">
-                <h4>No data found. Please try another question</h4>
+                <h4>No data found. Please try different options</h4>
             </div>
         </template>
     </div>
