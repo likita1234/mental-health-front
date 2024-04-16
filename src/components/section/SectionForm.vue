@@ -1,7 +1,7 @@
 <script setup>
 import SectionQuestions from './SectionQuestions.vue';
 
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { sectionStore, formErrorStore, questionStore } from '@/stores';
 import { SectionSchema, handleValidation } from '@/validations/schemas';
@@ -28,6 +28,11 @@ const formHeader = computed(() => {
 // Initial Events
 onMounted(() => {
     loadQuestions()
+})
+
+onUnmounted(() => {
+    // Reset params in formError store
+    formErrorStore.clearErrors()
 })
 
 // Actions

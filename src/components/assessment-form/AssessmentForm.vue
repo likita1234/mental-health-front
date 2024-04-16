@@ -1,7 +1,7 @@
 <script setup>
 import AssessmentSections from './AssessmentSections.vue';
 
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { formStore, formErrorStore, sectionStore } from '@/stores';
 import { AssessmentFormSchema, handleValidation } from '@/validations/schemas';
@@ -30,6 +30,11 @@ const formHeader = computed(() => {
 // Initial Events
 onMounted(() => {
     loadSections()
+})
+
+onUnmounted(() => {
+    // Reset params in formError store
+    formErrorStore.clearErrors()
 })
 
 // Actions
