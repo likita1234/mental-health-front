@@ -137,6 +137,16 @@ export const useFormStore = defineStore('form', () => {
     return false
   }
 
+  const toggleAssessmentForm = async (formId) => {
+    const response = await FormService.toggleAssessmentForm(formId)
+    if (response.statusCode === 200) {
+      new AppResponse(response.statusCode, 'Form poll switched successfully')
+      await fetchAllForms()
+      return true
+    }
+    return false
+  }
+
   // Helpers
   const addFormSection = () => {
     // Check sections length and place it as a new id on each
@@ -163,7 +173,7 @@ export const useFormStore = defineStore('form', () => {
     }
     return []
   }
-  
+
   const initFormData = () => {
     form.value = {
       title: {
@@ -204,6 +214,7 @@ export const useFormStore = defineStore('form', () => {
     editForm,
     updateFormDetails,
     deleteForm,
+    toggleAssessmentForm,
     // helpers
     addFormSection,
     removeFormSection,
