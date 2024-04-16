@@ -1,12 +1,13 @@
 <script setup>
 import QuestionOptions from './QuestionOptions.vue';
 
-import { ref, computed } from 'vue';
+import { ref, computed, onUnmounted } from 'vue';
 import { storeToRefs } from 'pinia';
 import { questionStore, formErrorStore } from '@/stores';
 import { QuestionType } from '@/constants';
 import { getQuestionType } from '@/utils/array-helpers';
 import { QuestionSchema, handleValidation } from '@/validations/schemas';
+
 
 const emit = defineEmits(['hide-dialog'])
 const props = defineProps({
@@ -30,6 +31,11 @@ const formHeader = computed(() => {
 
 const hasOptions = computed(() => {
     return question.value.type === QuestionType.RADIO || question.value.type === QuestionType.CHECKBOX
+})
+
+onUnmounted(() => {
+    // Reset params in formError store
+    formErrorStore.clearErrors()
 })
 
 // Actions
