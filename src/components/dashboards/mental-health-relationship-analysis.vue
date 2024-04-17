@@ -9,6 +9,7 @@ import { storeToRefs } from 'pinia'
 import { dashboardStore } from '@/stores'
 import { convertRatingsDataToObject } from '@/utils/chart-helpers'
 import { correlationMatrix, generateHypothesisAnalysis } from '@/utils/data-analysis'
+import { exportCSV } from '@/utils/csv-export'
 import { DashboardType } from '@/constants'
 import AppError from '@/utils/app-error';
 
@@ -95,6 +96,15 @@ const loadBlockContents = () => {
     }
 }
 
+const exportingCSV = () => {
+    const title = convertedDashboardData.value?.map(dataset => dataset.title)
+    const data = convertedDashboardData.value?.map(dataset => dataset.data)
+    if (title.length && data.length) {
+        exportCSV(title, data)
+    }
+}
+
+
 // generate correlation matrix
 const generateCorrelation = async () => {
     const titles = convertedDashboardData.value?.map(dataset => dataset.title)
@@ -136,6 +146,9 @@ const generateCorrelation = async () => {
                     </div>
                 </div>
             </div>
+        </div>
+        <div>
+            <Button class="p-button-warning mx-2" label="Export CSV" @click="exportingCSV" />
         </div>
         <div v-if="datasets && datasets.length > 0" class="card p-5">
             <ploty-heatmap :datasets="datasets" />

@@ -5,9 +5,12 @@ import PlotyHeatmap from '@/components/plugins/ploty-heatmap.vue'
 import { ref, onMounted } from 'vue';
 import { dashboardStore } from '@/stores';
 import { correlationMatrix, generateHypothesisAnalysis } from '@/utils/data-analysis'
+import { exportCSV } from '@/utils/csv-export'
 import AppError from '@/utils/app-error';
 
 const datasets = ref([])
+const dataToExport = ref([])
+const titleToExport = ref([])
 const hypothesisData = ref([])
 const actualTitles = ref([])
 const blockContents = ref([])
@@ -45,6 +48,8 @@ const loadDashboardData = async () => {
             // Manually add submission datasets
             titles[total] = 'Submission Frequency'
             datasetsArray[total] = submissionCountsArr
+            dataToExport.value = datasetsArray
+            titleToExport.value = titles
 
             if (titles.length && datasetsArray.length) {
                 const correlationData = correlationMatrix(datasetsArray)
@@ -99,6 +104,13 @@ const loadBlockContents = (allData) => {
     }
 }
 
+const exportingCSV = () => {
+    const title = titleToExport.value.map((title, index) => getActualTitleByQuestionId(title))
+    if (title.length && dataToExport.value.length) {
+        exportCSV(title, dataToExport.value)
+    }
+}
+
 </script>
 
 <template>
@@ -122,6 +134,7 @@ const loadBlockContents = (allData) => {
                 </div>
             </div>
         </div>
+        <Button class="p-button-warning mx-2" label="Export CSV" @click="exportingCSV" />
         <div v-if="datasets && datasets.length > 0" class="card p-5">
             <ploty-heatmap :datasets="datasets" />
         </div>
