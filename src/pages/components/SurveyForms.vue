@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, inject, onUnmounted } from 'vue'
+import { onMounted, inject, onUnmounted, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRouter } from 'vue-router'
 import { formStore } from '@/stores'
@@ -13,6 +13,7 @@ const props = defineProps({
 })
 
 const router = useRouter()
+const loading = ref(false)
 // Global states
 const appState = inject('appState')
 
@@ -29,9 +30,14 @@ onUnmounted(() => {
 
 // Load all available survey forms
 const loadForms = async () => {
-    // Insert the type of assessment form being fetched
-    params.value = { type: props.type }
-    await formStore.fetchAllForms()
+    try {         
+        loading.value = true  
+        // Insert the type of assessment form being fetched
+        params.value = { type: props.type }
+        await formStore.fetchAllForms()
+    }finally{
+        loading.value = false
+    }
 }
 
 // Depending upon the selected survey form, redirect into the assessment form
@@ -51,6 +57,7 @@ const enterSurvey = (surveyId) => {
                 <span v-if="type === AssessmentFormType.PUBLIC" class="text-blue-600">Ongoing Surveys </span>
                 <span v-else class="text-green-600">Self Assessments </span>
             </div>
+            <ProgressSpinner  v-if="loading"   class="flex mt-5" />
             <div class="flex justify-content-center flex-wrap">
                 <div class="form-container col-12 md:col-4" v-for="form in allForms" :key="form.id"
                     @click="enterSurvey(form._id)">
