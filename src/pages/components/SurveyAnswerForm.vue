@@ -30,6 +30,7 @@ const { userRole, isLoggedIn, loggedUser } = storeToRefs(authStore)
 const activeStep = ref(0) //starts with index 0
 const uploadingCsv = ref(false)
 const formDetails = ref(null)
+const loading = ref(false)
 
 // Computed properties
 const formTitle = computed(() => {
@@ -75,20 +76,19 @@ const isPollActive = computed(() => {
 })
 
 onMounted(() => {
-    setupAssessmentDetails()
+    loadAssessmentDetails()
 })
 
 // Actions
-
-const setupAssessmentDetails = async () => {
-    // First load assessment details
-    await loadAssessmentDetails()
-}
-
 const loadAssessmentDetails = async () => {
-    const formId = props.id
-    const data = await formStore.fetchFormDetails(formId)
-    formatAssessmentDetails(data)
+    try{
+        loading.value = true
+        const formId = props.id
+        const data = await formStore.fetchFormDetails(formId)
+        formatAssessmentDetails(data)
+    }finally{ 
+        loading.value = false
+    }
 }
 
 
@@ -173,7 +173,8 @@ const loadSurveyJson = async (jsonData) => {
 <template>
     <div class="my-5">
         <div class="flex justify-content-center">
-            <div class="card p-5 h-full w-full md:w-9">
+            <div class="card p-5 h-full w-full md:w-9">                
+                <ProgressSpinner  v-if="loading"  class="flex mx-auto" />
                 <div v-if="isPublicAsssesment" class="flex justify-content-center">
                     <language-selection />
                 </div>

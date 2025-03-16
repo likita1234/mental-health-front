@@ -58,7 +58,7 @@ const enterSurvey = (surveyId) => {
                 <span v-else class="text-green-600">Self Assessments </span>
             </div>
             <ProgressSpinner  v-if="loading"   class="flex mt-5" />
-            <div class="flex justify-content-center flex-wrap">
+            <div v-if="allForms" class="flex justify-content-center flex-wrap">
                 <div class="form-container col-12 md:col-4" v-for="form in allForms" :key="form.id"
                     @click="enterSurvey(form._id)">
                     <div class="card shadow-3 h-18rem p-2 overflow-hidden">
@@ -70,6 +70,9 @@ const enterSurvey = (surveyId) => {
                             {{ form.description[appState.lang] ?? 'No Description' }}</span>
                     </div>
                 </div>
+            </div>
+            <div v-else>
+                <p>Sorry ! There are no ongoing surverys at the moment</p>
             </div>
         </div>
     </div>
